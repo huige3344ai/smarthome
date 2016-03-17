@@ -20,21 +20,25 @@ public class SpringUtils
   public void setApplicationContext(ApplicationContext applicationContext)
     throws BeansException
   {
-    applicationContext = applicationContext;
+	  
+	  SpringUtils.applicationContext = applicationContext;
   }
 
-  public static <T> T getBeanById(String paramString)
+  public static <T> T getBeanById(String id)
   {
-    throw new Error("Unresolved compilation problem: \n\tType mismatch: cannot convert from Object to T\n");
+	 checkApplicationContextIsNull();
+	return (T)applicationContext.getBean(id);
   }
 
   public static <T> T getBeanByClass(Class paramClass)
-  {
-    throw new Error("Unresolved compilation problem: \n\tType mismatch: cannot convert from Object to T\n");
+  {		
+	  checkApplicationContextIsNull();
+	  return (T)applicationContext.getBean(paramClass);
   }
 
   public static Map getBean(Class clazz)
   {
+	checkApplicationContextIsNull();
     return applicationContext.getBeansOfType(clazz);
   }
 
@@ -44,6 +48,6 @@ public class SpringUtils
   public static void checkApplicationContextIsNull()
   {
     if (applicationContext == null)
-      throw new IllegalStateException("applicaitonContext未注入,请在applicationContext.xml中定义SpringContextHolder");
+      throw new IllegalStateException("applicaitonContext未注入,请在applicationContext.xml中定义SpringUtils");
   }
 }

@@ -40,8 +40,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <a href=""><b>SMARTHOME</b>C</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-        <p class="login-box-msg"></p>
-        <form action="page/loginAction.action" method="post" >
+        		
+            	<s:if test="#request.message!=null">
+            	<p class="login-box-msg" style="color: red;">
+            		<s:property value="#request.message"/>
+            	</p>	            		
+            	</s:if>      		
+            	<s:else>
+            	<p class="login-box-msg">
+					请输入您的帐号和密码.
+            	</p>            	
+            	</s:else>         	
+        
+        <form action="page/loginAction_login.action" method="post" >
           <div class="form-group has-feedback">
             <input  class="form-control" name="query.userName" placeholder="用户名">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -63,9 +74,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div><!-- /.col -->
             
             <div class="col-xs-6" >
-				<select class="form-control">
-				  <option>管理员</option>
-				  <option>普通用户</option>
+				<select class="form-control" name="query.isAdmin"> 
+				  <option value="1" >管理员</option>
+				  <option value="0" >普通用户</option>
 				</select>             
             </div><!-- /.col -->
          

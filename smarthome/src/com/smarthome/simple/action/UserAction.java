@@ -1,13 +1,13 @@
 package com.smarthome.simple.action;
 
-import com.smarthome.base.Authority;
+import javax.annotation.Resource;
+
 import com.smarthome.base.BaseAction;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 import com.smarthome.simple.services.ServiceException;
 import com.smarthome.simple.services.UserServices;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import com.smarthome.util.StringUtils;
 
 public class UserAction extends BaseAction<User, UserQuery>
 {
@@ -16,15 +16,42 @@ public class UserAction extends BaseAction<User, UserQuery>
   @Resource
   protected UserServices userService;
 
-  @Authority(roles="adminB", privilege="login")
+  /**
+   * 登陆
+   * @return
+   */
   public String login()
   {
     try
     {
-      this.userService.login((UserQuery)this.query);
-      return "login_sucess";
+      String returnStr = this.userService.login(getQuery());
+      if(StringUtils.isEmpty(returnStr)){
+    	  return LOGIN;
+      }else
+      return returnStr;
     } catch (ServiceException e) {
       this.request.setAttribute("message", e.getMessage());
-    }return "login_failed";
+      return LOGIN;
+    }
+  }
+  
+  /**
+   * 注销登录
+   * @return
+   */
+  public  String logout()
+  {
+	  User user =(User)request.getSession().getAttribute("user");
+	  try {
+		if(userService.loginOut(user)){
+			request.getSession().removeAttribute("user");
+			request.getSession().invalidate();
+			return "logout_sucess";
+		}else
+		return INPUT;
+	} catch (ServiceException e) {
+		return INPUT;
+	}
+
   }
 }

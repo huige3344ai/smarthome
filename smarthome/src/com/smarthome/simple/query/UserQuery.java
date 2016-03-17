@@ -10,6 +10,11 @@ public class UserQuery extends Query
   private String phone;
   private String sessionid;
   private String autologin;
+  /**
+   * 是否为管理员的标识  1表示是 0或者空表示不是 或
+   */
+  private Short isAdmin;
+  
 
   public String getUserName()
   {
@@ -42,4 +47,11 @@ public class UserQuery extends Query
   public void setSessionid(String sessionid) {
     this.sessionid = sessionid;
   }
+public Short getIsAdmin() {
+	return isAdmin;
+}
+public void setIsAdmin(Short isAdmin) {
+	this.isAdmin = isAdmin;
+}
+
 }

@@ -121,11 +121,9 @@
 	<bean id="LoginInterceptor" class="com.smarthome.base.LoginInterceptor">
 		<property name="userDao" ref="userDao"></property>	
 	</bean>	
-	<bean id="springUtils" class="com.smarthome.util.SpringUtils" lazy-init="false">
+	<bean id="springUtils" class="com.smarthome.util.SpringUtils">
 	</bean>
-<!-- 	<bean id="login" class="com.smarthome.base.LoginCheck">
-		<property name="service" ref="userService"></property>		
-	</bean> -->
+
 	<!--BASEBEAN END-->
 	
 	

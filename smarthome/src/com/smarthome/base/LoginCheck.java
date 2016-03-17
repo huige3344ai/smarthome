@@ -1,16 +1,10 @@
 package com.smarthome.base;
 
-import com.smarthome.simple.entity.User;
-import com.smarthome.simple.query.UserQuery;
-import com.smarthome.simple.services.UserServices;
-import com.smarthome.util.CookieManager;
-import com.smarthome.util.OwnUtil;
-import com.smarthome.util.SpringUtils;
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,8 +12,16 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.smarthome.simple.entity.User;
+import com.smarthome.simple.query.UserQuery;
+import com.smarthome.simple.services.UserServices;
+import com.smarthome.util.CookieManager;
+import com.smarthome.util.OwnUtil;
+import com.smarthome.util.SpringUtils;
 
 public class LoginCheck
   implements Filter
@@ -62,7 +64,7 @@ public class LoginCheck
       user.setSessionId(query.getSessionid());
       session.setAttribute("user", user);
       chain.doFilter(request, response);
-    } else if ((OwnUtil.objectIsEmpty(user)) || (OwnUtil.stringIsEmpty(user.getSessionId())) || (OwnUtil.stringIsEmpty(user.getUserName()))) {
+    } else if ((OwnUtil.objectIsEmpty(user)) || (OwnUtil.stringIsEmpty(user.getUserName()))) {
       session.setAttribute("message", "你还没有登录，请登录之后再尝试");
       req.getRequestDispatcher("/page/login.jsp").forward(req, res);
     } else {

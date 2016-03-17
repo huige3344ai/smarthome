@@ -19,6 +19,19 @@ public class OwnUtil
     }
     return false;
   }
+  
+  /**
+   * 判断两个对象是否一致
+   * @param ob
+   * @param ob2
+   * @return
+   */
+  public static boolean objectIsEqual(Object ob,Object ob2){
+	  if(ob!=null&&ob2!=null&&ob.equals(ob2)){
+		  return true;
+	  }
+	  return false;
+  }
 
   /**
    * 判断集合是否为空

@@ -1,5 +1,13 @@
 package com.smarthome.simple.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.smarthome.base.BaseDaoImpl;
 import com.smarthome.simple.dao.PermissionDao;
 import com.smarthome.simple.dao.UserDao;
@@ -7,11 +15,6 @@ import com.smarthome.simple.entity.Permission;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 import com.smarthome.simple.services.ServiceException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.transaction.annotation.Transactional;
 
 public class UserDaoImpl extends BaseDaoImpl<User>
   implements UserDao

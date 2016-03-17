@@ -17,23 +17,25 @@ import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 import com.smarthome.simple.services.ServiceException;
 import com.smarthome.simple.services.UserServices;
+import com.smarthome.util.CookieManager;
 import com.smarthome.util.DateUtil;
 import com.smarthome.util.MD5Util;
+import com.smarthome.util.OwnUtil;
 
 @Transactional
 public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
   implements UserServices
 {
 
+	
   @Resource
   UserDao baseDao;
 
   @Transactional(rollbackFor={ServiceException.class})
-  public void login(UserQuery query)
+  public String login(UserQuery query)
     throws ServiceException
   {
-    HttpServletRequest request = ServletActionContext.getRequest();
-    HttpServletResponse response = ServletActionContext.getResponse();
+	  
     String userName = query.getUserName();
     String hql = "select status from User as u where userName =  '" + userName + "' or phone ='" + userName + "'";
     List user_status = this.baseDao.findByhql(hql);
@@ -47,19 +49,27 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
         if ((users != null) && (users.size() > 0)) {
           User user = (User)users.get(0);
 
+          boolean f = OwnUtil.objectIsEqual(query.getIsAdmin(), user.getIsAdmin());
+          if(query.getIsAdmin()!=null&&query.getIsAdmin()==1&&OwnUtil.objectIsEqual(query.getIsAdmin(), user.getIsAdmin())){    	  
+        	  returnStr="login_admin_sucess";
+          }else if(query.getIsAdmin()!=null&&query.getIsAdmin()==1&&query.getIsAdmin()!=user.getIsAdmin()){
+        	  throw new ServiceException("非管理员用户无法登录后台的呢！");
+          }else
+        	  returnStr="login_deault_sucess";         
+
           String usersessionid = "";
-          if (query.getAutologin().equals("on"))
+          if (OwnUtil.stringIsEqual(query.getAutologin(), "on"))
           {
             Cookie ckUsername = new Cookie("autoLogin", query.getUserName());
             ckUsername.setMaxAge(1209600);
-            response.addCookie(ckUsername);
+            getResponse().addCookie(ckUsername);
 
-            usersessionid = request.getSession().getId();
+            usersessionid = getRequest().getSession().getId();
             user.setSessionId(usersessionid);
 
             Cookie ckSessionid = new Cookie("sessionid", usersessionid);
             ckSessionid.setMaxAge(1209600);
-            response.addCookie(ckSessionid);
+            getResponse().addCookie(ckSessionid);
           }
 
           Date date = new Date();
@@ -69,7 +79,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
           hql = "update from User set loginTime = '" + loginTime + "', sessionId ='" + 
             usersessionid + "' where (email = '" + userName + "' or phone = '" + userName + "') and pwd = '" + password + "'";
           this.baseDao.update(hql);
-          request.getSession().setAttribute("user", user);
+          getRequest().getSession().setAttribute("user", user);
         }
         else {
           throw new ServiceException("用户名或者密码错误！");
@@ -77,9 +87,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
       } else {
         throw new ServiceException("用户名暂时无法登录，请联系客服~");
       }
+    }else{
+    	throw new ServiceException("用户名或者密码错误！");
     }
-    else
-      throw new ServiceException("用户名或者密码错误！");
+    
+    return returnStr;
   }
 
   @Transactional(rollbackFor={ServiceException.class})
@@ -87,4 +99,25 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
   {
     return this.baseDao.getAutoLoginStauts(query);
   }
+	@Transactional(rollbackFor={ServiceException.class})
+	@Override
+	public boolean loginOut(User user)  throws ServiceException{
+
+		if(!OwnUtil.objectIsEmpty(user)){
+			String hql = "update from User set sessionId ='' where (email = '" + user.getUserName() + "' or phone = '" + user.getPhone() + "') and pwd = '" + user.getPwd() + "'";
+			this.baseDao.update(hql);	
+			
+			CookieManager cm = new CookieManager(); 			 
+			Cookie[] cookies = getRequest().getCookies();
+			//清空cookie
+			if(OwnUtil.stringIsEqual(cm.getCookieValue(cookies, "usersessionid"), user.getSessionId())){
+				Cookie cookie =cm.findCookieByName(cookies, "usersessionid");
+				cookie.setMaxAge(0);
+				getResponse().addCookie(cookie);
+			}
+			 
+			return true;
+		}else
+		return false;		
+	}
 }
