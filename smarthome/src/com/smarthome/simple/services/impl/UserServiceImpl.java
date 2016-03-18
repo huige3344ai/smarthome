@@ -110,10 +110,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 			CookieManager cm = new CookieManager(); 			 
 			Cookie[] cookies = getRequest().getCookies();
 			//清空cookie
-			if(OwnUtil.stringIsEqual(cm.getCookieValue(cookies, "usersessionid"), user.getSessionId())){
-				Cookie cookie =cm.findCookieByName(cookies, "usersessionid");
-				cookie.setMaxAge(0);
-				getResponse().addCookie(cookie);
+			if(OwnUtil.stringIsEqual(cm.getCookieValue(cookies, "autoLogin"), user.getUserName())){
+				Cookie sessionCookie =cm.findCookieByName(cookies, "sessionid");
+				Cookie autoLogin = cm.findCookieByName(cookies, "autoLogin");
+				sessionCookie.setMaxAge(0);
+				autoLogin.setMaxAge(0);
+				getResponse().addCookie(sessionCookie);
+				getResponse().addCookie(autoLogin);
 			}
 			 
 			return true;
