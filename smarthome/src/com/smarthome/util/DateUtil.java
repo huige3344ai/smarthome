@@ -47,6 +47,11 @@ public class DateUtil {
 	 * ʱ���ʽ
 	 */
 	public final static String TIME_FORMAT = "HH:mm:ss:SS";
+	
+	/**
+	 * HH:mm 时分
+	 */
+	public final static String TIME_SHORT_FORMAT="HH:mm";
 
 	/**
 	 * ȱʡ�����ڸ�ʽ
@@ -54,9 +59,9 @@ public class DateUtil {
 	public final static String DEFAULT_SHORT_DATE_FORMAT = "yyyy-MM-dd";
 
 	/**
-	 * ȱʡ�����ڸ�ʽ
+	 * 中国
 	 */
-	public final static String DEFAULT_SHORT_DATE_FORMAT_ZH = "yyyy��M��d��";
+	public final static String DEFAULT_SHORT_DATE_FORMAT_ZH = "yyyy年MM月dd日";
 
 	/**
 	 * ȱʡ�����ڸ�ʽ
@@ -179,6 +184,15 @@ public class DateUtil {
 	 */
 	public static Date strToDate(String str) throws ParseException {
 		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(str);
+	}
+	/**
+	 * 精确到分鍾 "2001-12-11 22:59"
+	 * @param str
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date strToDate2(String str) throws ParseException {
+		return new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(str);
 	}
 
 	/**
@@ -1146,4 +1160,41 @@ public class DateUtil {
 		cal.setTime(date);
 		return cal.getTimeInMillis() / 1000;
 	}
+	
+	/**
+	 * 通过 Unix 转换成字符串形式
+	 * @param time
+	 * @param format
+	 * @return
+	 */
+	public static String TimeStampToDate(String time,String format){
+		  Long timestamp = Long.parseLong(time)*1000;  
+		  String date = new java.text.SimpleDateFormat(format).format(new java.util.Date(timestamp));  
+		  return date;  	
+	}
+	
+	/**
+	 * TimeStamp 转换成 2016-12-13 10:00
+	 * @param time
+	 * @return
+	 */
+	public static String TimeStampToShortDate(String time){
+		Long timestamp = Long.parseLong(time)*1000;  
+		String date = new java.text.SimpleDateFormat(DEFAULT_SHORT_DATE_FORMAT+" "+TIME_SHORT_FORMAT).format(new java.util.Date(timestamp));  
+		return date;  	
+	}
+	
+	/**
+	 * 去掉分隔符 
+	 * @param split
+	 * 分隔符 
+	 * @return
+	 */
+	public static String TimeByAngSplit(String time,String split){
+		
+		return time.replace(split, " ");
+		
+	}
+	
+	
 }

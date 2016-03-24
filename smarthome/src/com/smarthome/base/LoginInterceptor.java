@@ -6,16 +6,20 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.smarthome.simple.dao.UserDao;
 import com.smarthome.simple.entity.User;
+import com.smarthome.util.Constans;
 import com.smarthome.util.DateUtil;
 import com.smarthome.util.OwnUtil;
+
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,16 +38,14 @@ public class LoginInterceptor extends AbstractInterceptor
   {
     ActionContext acontext = invocation.getInvocationContext();
     HttpServletRequest request = ServletActionContext.getRequest();
-    Map session = acontext.getSession();
-    User user = (User)session.get("user");
+    User user = (User)request.getSession().getAttribute("user");
 
     String methodName = invocation.getProxy().getMethod();
     Class clazz = invocation.getAction().getClass();
     Method currentMethod = clazz.getMethod(methodName, new Class[0]);
-    if (OwnUtil.isAdmin(user))
-      return invocation.invoke();
-    if ((user != null) && (currentMethod.isAnnotationPresent(Authority.class)))
-    {
+    if (OwnUtil.isAdmin(user)){
+    	return invocation.invoke();
+    }else if ((user != null) && (currentMethod.isAnnotationPresent(Authority.class))){
       Authority authority = (Authority)currentMethod.getAnnotation(Authority.class);
 
       String privilege = authority.privilege();
@@ -69,7 +71,7 @@ public class LoginInterceptor extends AbstractInterceptor
   public boolean checkIsNotPower(String power, int rid)
   {
     boolean flag = false;
-    if (this.userDao.hasPower(rid).size() > 0) {
+    if (this.userDao.hasPower(rid).size() > 0) {  	
       List powers = this.userDao.hasPower(rid);
       Iterator iterator = powers.iterator();
       while (iterator.hasNext()) {

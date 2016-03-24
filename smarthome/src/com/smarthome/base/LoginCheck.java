@@ -60,14 +60,18 @@ public class LoginCheck
     }
 
     if (OwnUtil.stringIsEqual(query.getAutologin(), "on")) {
-      user.setUserName(query.getUserName());
-      user.setSessionId(query.getSessionid());
-      session.setAttribute("user", user);
-      chain.doFilter(request, response);
+      user = service.findBySessionUserName(query);
+      if(!OwnUtil.objectIsEmpty(user)){
+    	  session.setAttribute("user", user);
+    	  chain.doFilter(request, response);  	  
+      }else{
+    	  session.setAttribute("message", "自动登录失败，请登录之后再尝试!!!");
+    	  req.getRequestDispatcher("/page/login.jsp").forward(req, res);
+      }
     } else if ((OwnUtil.objectIsEmpty(user)) || (OwnUtil.stringIsEmpty(user.getUserName()))) {
       session.setAttribute("message", "你还没有登录，请登录之后再尝试");
       req.getRequestDispatcher("/page/login.jsp").forward(req, res);
-    } else {
+    } else {    	
       chain.doFilter(request, response);
     }
   }

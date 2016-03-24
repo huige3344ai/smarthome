@@ -2,11 +2,14 @@ package com.smarthome.base;
 
 import com.smarthome.util.OwnUtil;
 import com.smarthome.util.Page;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -80,7 +83,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     }
   }
 
-  public Query createQuery(String hql, Object[] objects)
+  public Query createQuery(String hql, Object... objects)
   {
     Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
     if (objects != null) {
@@ -91,7 +94,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     return query;
   }
 
-  public Query createExcelQuery(String hql, Object[] objects)
+  public Query createEQuery(String hql, Object... objects)
   {
     Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
     if (objects != null) {
@@ -120,26 +123,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     }
   }
 
-  public List<T> findAllByhql(String hql)
-  {
-    List list_t = new ArrayList();
-    try {
-      Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
-      List list = query.list();
-      if (OwnUtil.ListisNotEmpty(list))
-        for (int i = 0; i < list.size(); i++)
-        {
-          Object t = list.get(i);
-          list_t.add(t);
-        }
-    }
-    catch (RuntimeException e) {
-      log.error("findAllByenable  failed");
-      e.printStackTrace();
-    }
 
-    return list_t;
-  }
 
   public List<?> findByhql(String hql)
   {
@@ -182,12 +166,23 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     }
   }
 
-  public List<T> findAllByCondition(String hql, Object[] values)
+  public List<T> findAllByCondition(String hql, Object... values)
   {
     Query query = createQuery(hql, values);
     List list = query.list();
     return list;
   }
+  
+  @Override
+  public List<T> findAllByProperty(String param, Object object,String orderBy,boolean isAsc) {
+	  String hql = "from "+entityClass+" where "+param+"=? ";
+	  if(orderBy!=null&&!isAsc){
+		  hql =hql+" order by "+orderBy+" desc";
+	  }
+	  Query query = createQuery(hql, object);	  
+  	return query.list();
+  }
+  
 
   public void deleteById(Serializable id)
   {
@@ -271,4 +266,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
       log.error(sql + "：操作失败！！！");
     }
   }
+
+
 }

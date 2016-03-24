@@ -12,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smarthome.base.BaseServiceImpl;
+import com.smarthome.base.Query;
 import com.smarthome.simple.dao.UserDao;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
@@ -45,7 +46,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
         String password = MD5Util.encode2hex(query.getPwd());
         hql = "from User where (userName = '" + 
           userName + "' or phone = '" + userName + "') and pwd = '" + password + "'";
-        List users = this.baseDao.findAllByhql(hql);
+        List users = this.baseDao.findByhql(hql);
         if ((users != null) && (users.size() > 0)) {
           User user = (User)users.get(0);
 
@@ -58,8 +59,18 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
         	  returnStr="login_deault_sucess";         
 
           String usersessionid = "";
+
+          Date date = new Date();
+          String loginTime = DateUtil.dateToString(date);
+          user.setLoginTime(loginTime);
+
+
+          
           if (OwnUtil.stringIsEqual(query.getAutologin(), "on"))
           {
+            hql = "update from User set loginTime = '" + loginTime + "', sessionId ='" + 
+                      usersessionid + "' where (email = '" + userName + "' or phone = '" + userName + "') and pwd = '" + password + "'";
+            this.baseDao.update(hql);      	  
             Cookie ckUsername = new Cookie("autoLogin", query.getUserName());
             ckUsername.setMaxAge(1209600);
             getResponse().addCookie(ckUsername);
@@ -70,15 +81,10 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
             Cookie ckSessionid = new Cookie("sessionid", usersessionid);
             ckSessionid.setMaxAge(1209600);
             getResponse().addCookie(ckSessionid);
-          }
-
-          Date date = new Date();
-          String loginTime = DateUtil.dateToString(date);
-          user.setLoginTime(loginTime);
-
-          hql = "update from User set loginTime = '" + loginTime + "', sessionId ='" + 
-            usersessionid + "' where (email = '" + userName + "' or phone = '" + userName + "') and pwd = '" + password + "'";
-          this.baseDao.update(hql);
+          } else{
+              hql = "update from User set loginTime = '" + loginTime + "' where (email = '" + userName + "' or phone = '" + userName + "') and pwd = '" + password + "'";
+              this.baseDao.update(hql);    	  
+          }       
           getRequest().getSession().setAttribute("user", user);
         }
         else {
@@ -99,6 +105,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
   {
     return this.baseDao.getAutoLoginStauts(query);
   }
+  
+  
 	@Transactional(rollbackFor={ServiceException.class})
 	@Override
 	public boolean loginOut(User user)  throws ServiceException{
@@ -111,16 +119,21 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 			Cookie[] cookies = getRequest().getCookies();
 			//清空cookie
 			if(OwnUtil.stringIsEqual(cm.getCookieValue(cookies, "autoLogin"), user.getUserName())){
-				Cookie sessionCookie =cm.findCookieByName(cookies, "sessionid");
-				Cookie autoLogin = cm.findCookieByName(cookies, "autoLogin");
-				sessionCookie.setMaxAge(0);
-				autoLogin.setMaxAge(0);
-				getResponse().addCookie(sessionCookie);
-				getResponse().addCookie(autoLogin);
+				Cookie cksessionID =cm.findCookieByName(cookies, "sessionid");
+				Cookie ckUsername = cm.findCookieByName(cookies, "autoLogin");
+				cksessionID.setMaxAge(0);
+				ckUsername.setMaxAge(0);
+				getResponse().addCookie(cksessionID);
+				getResponse().addCookie(ckUsername);
 			}
 			 
 			return true;
 		}else
 		return false;		
+	}
+
+	@Override
+	public User findBySessionUserName(UserQuery query) {
+		return baseDao.findBySessionUserName(query);
 	}
 }

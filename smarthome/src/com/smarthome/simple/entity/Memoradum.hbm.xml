@@ -15,13 +15,13 @@
                 <comment>事件主题</comment>
             </column>
         </property>
-        <property name="startTime" type="java.sql.Timestamp">
-            <column name="startTime" length="19" not-null="true">
+        <property name="startTime" type="java.lang.String">
+            <column name="startTime" length="200" not-null="true">
                 <comment>开始提醒时间</comment>
             </column>
         </property>
-        <property name="endTime" type="java.sql.Timestamp">
-            <column name="endTime" length="19" not-null="true">
+        <property name="endTime" type="java.lang.String">
+            <column name="endTime" length="200" not-null="true">
                 <comment>结束时间</comment>
             </column>
         </property>
@@ -43,6 +43,11 @@
         </property>
         <property name="userId" type="java.lang.Integer">
             <column name="userID" not-null="true" />
+        </property>
+        <property name="color" type="java.lang.String">
+            <column name="color" length="20">
+                <comment>事件颜色</comment>
+            </column>
         </property>
     </class>
 </hibernate-mapping>

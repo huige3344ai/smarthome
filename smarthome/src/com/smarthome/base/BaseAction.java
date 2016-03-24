@@ -2,6 +2,7 @@ package com.smarthome.base;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.smarthome.simple.entity.User;
 import com.smarthome.util.OwnUtil;
 import com.smarthome.util.Page;
 
@@ -43,10 +44,24 @@ public class BaseAction<T extends Serializable, Q extends Query> extends ActionS
     return this.query;
   }
 
-  public void setQuery(Q query) {	
+  public void setQuery(Q query) {
     this.query = query;
   }
 
+  public BaseAction(){
+	  try {
+			ParameterizedType type = (ParameterizedType) this.getClass()
+					.getGenericSuperclass();
+			Class clazz = (Class) type.getActualTypeArguments()[0];
+			Class Q = (Class) type.getActualTypeArguments()[1];
+			model =(T)clazz.newInstance();
+			query = (Q)Q.newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+		}	  
+  }
+  
   public <entity> Page<entity> createPage(Page page)
   {
     page.setNumPerPage(getNumPerPage());
@@ -88,6 +103,21 @@ public class BaseAction<T extends Serializable, Q extends Query> extends ActionS
   protected HttpSession getSession() {
     return ServletActionContext.getRequest().getSession();
   }
+  
+  protected HttpServletResponse getResponse(){
+	  ServletActionContext.getResponse().setContentType("text/html;charset=UTF-8");
+	  return ServletActionContext.getResponse();
+  }
+  
+  /**
+   * 获取当前用户
+   * @return
+   */
+  protected User getCurrentUser(){
+	 return (User)getSession().getAttribute("user");
+  }
+  
+  
 
   public int getPageNum() {
     return this.pageNum;

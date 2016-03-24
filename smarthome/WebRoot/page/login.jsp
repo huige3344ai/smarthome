@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-xs-8">
               <div class="checkbox icheck">
                 <label>
-                  <input type="checkbox" name="query.autologin" value="#request.query.autologin"> 两周内自动登录
+                  <input type="checkbox" name="query.autologin"> 两周内自动登录
                 </label>
               </div>
             </div><!-- /.col -->

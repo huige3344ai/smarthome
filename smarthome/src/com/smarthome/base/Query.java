@@ -7,6 +7,10 @@ public class Query
 {
   private static final long serialVersionUID = 1L;
   protected Integer id;
+  /**
+   * 用户id
+   */
+  protected Integer uid;
   protected String URI;
 
   public Integer getId()
@@ -25,4 +29,12 @@ public class Query
   public void setURI(String uRI) {
     this.URI = uRI;
   }
+
+public Integer getUid() {
+	return uid;
+}
+
+public void setUid(Integer uid) {
+	this.uid = uid;
+}
 }

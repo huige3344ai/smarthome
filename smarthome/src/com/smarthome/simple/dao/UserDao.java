@@ -10,4 +10,6 @@ public abstract interface UserDao extends BaseDao<User>
   public abstract String getAutoLoginStauts(UserQuery paramUserQuery);
 
   public abstract List<String> hasPower(int paramInt);
+  
+  public User findBySessionUserName(UserQuery paramUserQuery);
 }

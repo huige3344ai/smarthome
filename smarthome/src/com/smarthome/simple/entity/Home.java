@@ -1,131 +1,141 @@
 package com.smarthome.simple.entity;
 
-import java.io.Serializable;
+/**
+ * Home entity. @author MyEclipse Persistence Tools
+ */
 
-public class Home
-  implements Serializable
-{
-  private Integer id;
-  private String country;
-  private String address;
-  private Integer ownerId;
-  private Integer deviceNum;
-  private String temperature;
-  private String humidity;
-  private String recordTime;
-  private String exchangeTime;
-  private Integer usreId;
-  private String logoImage;
+public class Home implements java.io.Serializable {
 
-  public Home()
-  {
-  }
+	// Fields
 
-  public Home(Integer ownerId)
-  {
-    this.ownerId = ownerId;
-  }
+	private Integer id;
+	private String country;
+	private String address;
+	private Integer ownerId;
+	private Integer deviceNum;
+	private String temperature;
+	private String humidity;
+	private String recordTime;
+	private String exchangeTime;
+	private Integer usreId;
+	private String logoImage;
 
-  public Home(String country, String address, Integer ownerId, Integer deviceNum, String temperature, String humidity, String recordTime, String exchangeTime, Integer usreId, String logoImage)
-  {
-    this.country = country;
-    this.address = address;
-    this.ownerId = ownerId;
-    this.deviceNum = deviceNum;
-    this.temperature = temperature;
-    this.humidity = humidity;
-    this.recordTime = recordTime;
-    this.exchangeTime = exchangeTime;
-    this.usreId = usreId;
-    this.logoImage = logoImage;
-  }
+	// Constructors
 
-  public Integer getId()
-  {
-    return this.id;
-  }
+	/** default constructor */
+	public Home() {
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	/** minimal constructor */
+	public Home(Integer ownerId) {
+		this.ownerId = ownerId;
+	}
 
-  public String getCountry() {
-    return this.country;
-  }
+	/** full constructor */
+	public Home(String country, String address, Integer ownerId,
+			Integer deviceNum, String temperature, String humidity,
+			String recordTime, String exchangeTime, Integer usreId,
+			String logoImage) {
+		this.country = country;
+		this.address = address;
+		this.ownerId = ownerId;
+		this.deviceNum = deviceNum;
+		this.temperature = temperature;
+		this.humidity = humidity;
+		this.recordTime = recordTime;
+		this.exchangeTime = exchangeTime;
+		this.usreId = usreId;
+		this.logoImage = logoImage;
+	}
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+	// Property accessors
 
-  public String getAddress() {
-    return this.address;
-  }
+	public Integer getId() {
+		return this.id;
+	}
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-  public Integer getOwnerId() {
-    return this.ownerId;
-  }
+	public String getCountry() {
+		return this.country;
+	}
 
-  public void setOwnerId(Integer ownerId) {
-    this.ownerId = ownerId;
-  }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-  public Integer getDeviceNum() {
-    return this.deviceNum;
-  }
+	public String getAddress() {
+		return this.address;
+	}
 
-  public void setDeviceNum(Integer deviceNum) {
-    this.deviceNum = deviceNum;
-  }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-  public String getTemperature() {
-    return this.temperature;
-  }
+	public Integer getOwnerId() {
+		return this.ownerId;
+	}
 
-  public void setTemperature(String temperature) {
-    this.temperature = temperature;
-  }
+	public void setOwnerId(Integer ownerId) {
+		this.ownerId = ownerId;
+	}
 
-  public String getHumidity() {
-    return this.humidity;
-  }
+	public Integer getDeviceNum() {
+		return this.deviceNum;
+	}
 
-  public void setHumidity(String humidity) {
-    this.humidity = humidity;
-  }
+	public void setDeviceNum(Integer deviceNum) {
+		this.deviceNum = deviceNum;
+	}
 
-  public String getRecordTime() {
-    return this.recordTime;
-  }
+	public String getTemperature() {
+		return this.temperature;
+	}
 
-  public void setRecordTime(String recordTime) {
-    this.recordTime = recordTime;
-  }
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
+	}
 
-  public String getExchangeTime() {
-    return this.exchangeTime;
-  }
+	public String getHumidity() {
+		return this.humidity;
+	}
 
-  public void setExchangeTime(String exchangeTime) {
-    this.exchangeTime = exchangeTime;
-  }
+	public void setHumidity(String humidity) {
+		this.humidity = humidity;
+	}
 
-  public Integer getUsreId() {
-    return this.usreId;
-  }
+	public String getRecordTime() {
+		return this.recordTime;
+	}
 
-  public void setUsreId(Integer usreId) {
-    this.usreId = usreId;
-  }
+	public void setRecordTime(String recordTime) {
+		this.recordTime = recordTime;
+	}
 
-  public String getLogoImage() {
-    return this.logoImage;
-  }
+	public String getExchangeTime() {
+		return this.exchangeTime;
+	}
 
-  public void setLogoImage(String logoImage) {
-    this.logoImage = logoImage;
-  }
+	public void setExchangeTime(String exchangeTime) {
+		this.exchangeTime = exchangeTime;
+	}
+
+	public Integer getUsreId() {
+		return this.usreId;
+	}
+
+	public void setUsreId(Integer usreId) {
+		this.usreId = usreId;
+	}
+
+	public String getLogoImage() {
+		return this.logoImage;
+	}
+
+	public void setLogoImage(String logoImage) {
+		this.logoImage = logoImage;
+	}
+
 }

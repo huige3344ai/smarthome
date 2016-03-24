@@ -1,116 +1,136 @@
 package com.smarthome.simple.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+/**
+ * Memoradum entity. @author MyEclipse Persistence Tools
+ */
 
-public class Memoradum
-  implements Serializable
-{
-  private Integer id;
-  private String theme;
-  private Timestamp startTime;
-  private Timestamp endTime;
-  private String contents;
-  private Integer num;
-  private String recordTime;
-  private String exchangeTime;
-  private Integer userId;
+public class Memoradum implements java.io.Serializable {
 
-  public Memoradum()
-  {
-  }
+	// Fields
 
-  public Memoradum(String theme, Timestamp startTime, Timestamp endTime, String recordTime, Integer userId)
-  {
-    this.theme = theme;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.recordTime = recordTime;
-    this.userId = userId;
-  }
+	private Integer id;
+	private String theme;
+	private String startTime;
+	private String endTime;
+	private String contents;
+	private Integer num;
+	private String recordTime;
+	private String exchangeTime;
+	private Integer userId;
+	private String color;
 
-  public Memoradum(String theme, Timestamp startTime, Timestamp endTime, String contents, Integer num, String recordTime, String exchangeTime, Integer userId)
-  {
-    this.theme = theme;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.contents = contents;
-    this.num = num;
-    this.recordTime = recordTime;
-    this.exchangeTime = exchangeTime;
-    this.userId = userId;
-  }
+	// Constructors
 
-  public Integer getId()
-  {
-    return this.id;
-  }
+	/** default constructor */
+	public Memoradum() {
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	/** minimal constructor */
+	public Memoradum(String theme, String startTime, String endTime,
+			String recordTime, Integer userId,String contents) {
+		this.theme = theme;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.recordTime = recordTime;
+		this.userId = userId;
+		this.contents=contents;
+	}
 
-  public String getTheme() {
-    return this.theme;
-  }
+	/** full constructor */
+	public Memoradum(String theme, String startTime, String endTime,
+			String contents, Integer num, String recordTime,
+			String exchangeTime, Integer userId, String color) {
+		this.theme = theme;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.contents = contents;
+		this.num = num;
+		this.recordTime = recordTime;
+		this.exchangeTime = exchangeTime;
+		this.userId = userId;
+		this.color = color;
+	}
 
-  public void setTheme(String theme) {
-    this.theme = theme;
-  }
+	// Property accessors
 
-  public Timestamp getStartTime() {
-    return this.startTime;
-  }
+	public Integer getId() {
+		return this.id;
+	}
 
-  public void setStartTime(Timestamp startTime) {
-    this.startTime = startTime;
-  }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-  public Timestamp getEndTime() {
-    return this.endTime;
-  }
+	public String getTheme() {
+		return this.theme;
+	}
 
-  public void setEndTime(Timestamp endTime) {
-    this.endTime = endTime;
-  }
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
 
-  public String getContents() {
-    return this.contents;
-  }
+	public String getStartTime() {
+		return this.startTime;
+	}
 
-  public void setContents(String contents) {
-    this.contents = contents;
-  }
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 
-  public Integer getNum() {
-    return this.num;
-  }
+	public String getEndTime() {
+		return this.endTime;
+	}
 
-  public void setNum(Integer num) {
-    this.num = num;
-  }
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 
-  public String getRecordTime() {
-    return this.recordTime;
-  }
+	public String getContents() {
+		return this.contents;
+	}
 
-  public void setRecordTime(String recordTime) {
-    this.recordTime = recordTime;
-  }
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
 
-  public String getExchangeTime() {
-    return this.exchangeTime;
-  }
+	public Integer getNum() {
+		return this.num;
+	}
 
-  public void setExchangeTime(String exchangeTime) {
-    this.exchangeTime = exchangeTime;
-  }
+	public void setNum(Integer num) {
+		this.num = num;
+	}
 
-  public Integer getUserId() {
-    return this.userId;
-  }
+	public String getRecordTime() {
+		return this.recordTime;
+	}
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
+	public void setRecordTime(String recordTime) {
+		this.recordTime = recordTime;
+	}
+
+	public String getExchangeTime() {
+		return this.exchangeTime;
+	}
+
+	public void setExchangeTime(String exchangeTime) {
+		this.exchangeTime = exchangeTime;
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 }

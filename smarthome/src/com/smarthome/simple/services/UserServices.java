@@ -1,9 +1,10 @@
 package com.smarthome.simple.services;
 
+import com.smarthome.base.BaseService;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 
-public abstract interface UserServices
+public abstract interface UserServices extends BaseService<User, UserQuery>
 {
 	/**
 	 * 登陆操作
@@ -25,6 +26,13 @@ public abstract interface UserServices
    * @param query
    */
   public boolean loginOut(User  user) throws ServiceException;
+  
+  /**
+   * 通过用户明和sessionId查询用户
+   * @param query
+   * @return
+   */
+  public User findBySessionUserName(UserQuery query);
   
   
 }
