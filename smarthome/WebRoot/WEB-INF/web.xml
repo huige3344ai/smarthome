@@ -4,6 +4,14 @@
   <welcome-file-list>
     <welcome-file>/page/login.jsp</welcome-file>
   </welcome-file-list>
+	<servlet> 
+	 <servlet-name>Encodeing</servlet-name> 
+	 <servlet-class>cn.hncu.com.encode.Encodeing</servlet-class> 
+	 <init-param> 
+	 <param-name>charset</param-name> 
+	 <param-value>utf-8</param-value>
+	 </init-param> 
+	 </servlet> 
   <filter>
     <filter-name>struts2</filter-name>
     <filter-class>

@@ -1,17 +1,10 @@
-<%@page import="com.smarthome.util.OwnUtil"%>
-<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags"  prefix="s"%>
-
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String message = request.getParameter("message");
-if(!OwnUtil.stringIsEmpty(message)){
-	message = URLDecoder.decode(message,"UTF-8");
-}
-
 %>
+  
 
 
 <!DOCTYPE html>
@@ -20,7 +13,7 @@ if(!OwnUtil.stringIsEmpty(message)){
     <base href="<%=basePath%>">
     <meta charset="utf-8">
     
-    <title>智能家居控制系统登录</title>
+    <title>智能家居控制系统找回密码</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -52,55 +45,39 @@ if(!OwnUtil.stringIsEmpty(message)){
        <a href="page/login.jsp"><b>SMARTHOME</b>C</a> 
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-<%--         		<c:if test="${param.message}!=null">
-        		${param.message}
-        		</c:if> --%>
-            	<s:if test="message!=null">
-	            	<p class="login-box-msg" style="color: red;">
-	            		<s:property value="message"/>
-	            	</p>	            		
-            	</s:if>   
-            	<s:elseif test="#messages!=null&&#messages!=''">
-            		<p class="login-box-msg"><%=message %></p>
-            	</s:elseif>  		
-            	<s:else>
-	            	<p class="login-box-msg">
-						请输入您的帐号和密码.
+      			<s:if test="message!=null">
+	            	<p class="login-box-msg" style="color: red">
+						<s:property value="message"/>
 	            	</p>            	
-            	</s:else>         	
+      			</s:if>
+      			<s:else>
+	            	<p class="login-box-msg" style="color: red">
+						请输入需要找回密码的邮箱后，点击发送.
+	            	</p>            	
+      			</s:else>
         
-        <form action="page/loginAction_login.action" method="post" >
+        <form action="page/loginAction_checkCode.action" id="hy_returnpwd" method="post" >
           <div class="form-group has-feedback">
-            <input  class="form-control" name="query.userName" placeholder="用户名" required> 
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <input  type="email" id="email" class="form-control" name="query.email" placeholder="邮箱" required> 
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" name="query.pwd" placeholder="密码" required>
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          	<div class="input-group input-group-sm">
+          		<input type="text" class="form-control" name="query.emailVer" placeholder="验证码" data-inputmask="'mask': 'AAAAAA'" >
+	            <span class="input-group-btn"><button type="button" id="send_email" class="btn btn-info btn-flat">发送</button></span>
+          	</div>
           </div>
+
           <div class="row">
             <div class="col-xs-8">
-              <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox" name="query.autologin"> 两周内自动登录
-                </label>
-              </div>
             </div><!-- /.col -->
             <div class="col-xs-4" >
-              <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
+              <button type="submit" class="btn btn-primary btn-block btn-flat">确认</button>
             </div><!-- /.col -->
-            
-            <div class="col-xs-6" >
-				<select class="form-control" name="query.isAdmin"> 
-				  <option value="0" >普通用户</option>
-				  <option value="1" >管理员</option>
-				</select>             
-            </div><!-- /.col -->
-         
+
           </div>
         </form>
-        <a href="page/returnpwd.jsp" style="color: red">找回密码</a><br>
-        <a href="page/register.jsp" class="text-center">注册新用户</a>
+
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
@@ -113,11 +90,37 @@ if(!OwnUtil.stringIsEmpty(message)){
     <script src="<%=basePath%>plugins/iCheck/icheck.min.js"></script>
     <script>
       $(function () {
-        $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
+ 
+        $('#send_email').click(function(){
+        	if($('#email').val()!=''){
+        		$('.login-box-msg').text('请输入需要找回密码的邮箱后，点击发送.');
+	        	$.ajax({
+	        	url: "page/loginAction_sendValidate.action",
+	        	async : false,
+	        	data:{"query.email":$("#email").val()},
+	        	tyep:"post",
+	        	dataType:"json",
+	        	success:function(msg){
+	        		if(msg){
+	        			$('.login-box-msg').text('您的验证码已经发送到你绑定你的邮箱,请你在30分钟内尝试。');
+	        			$(':submit').removeAttr('disabled');
+	        		}else{
+	        			$('.login-box-msg').text('您输入的邮箱不存在，请核实之后再继续尝试。');
+	        			$(':submit').attr('disabled','disabled');
+	        		}
+	        	},
+	        	error:function(){
+	        		alret("网络异常发送失败，请重试。");
+	        	},
+	        	
+	        	});
+	        	
+        	}else
+        	$('.login-box-msg').text('邮箱不能为空呢。');
+        
         });
+        
+        
       });
     </script>
   </body>

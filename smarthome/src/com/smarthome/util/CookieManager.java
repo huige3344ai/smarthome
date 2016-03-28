@@ -1,5 +1,8 @@
 package com.smarthome.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.Cookie;
 
 public class CookieManager
@@ -9,8 +12,9 @@ public class CookieManager
 	 * @param cookies
 	 * @param value
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
-  public String getCookieValue(Cookie[] cookies, String value)
+  public String getCookieValue(Cookie[] cookies, String value) throws UnsupportedEncodingException
   {
     String cookieValue = "";
     if (cookies != null) {
@@ -19,7 +23,7 @@ public class CookieManager
           cookieValue = cookies[i].getValue().split("-")[0];
       }
     }
-    return cookieValue;
+    return URLDecoder.decode(cookieValue,"utf-8") ;
   }
   
   /**

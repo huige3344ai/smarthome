@@ -24,6 +24,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">主菜单</li>
+            
+            <li>
+              <a href="page/background/userm/personcenter.jsp">
+                <i class="fa fa-user-secret"></i> <span>个人中心</span>
+                <small class="label pull-right bg-red">3</small>
+              </a>
+            </li>
+            
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>

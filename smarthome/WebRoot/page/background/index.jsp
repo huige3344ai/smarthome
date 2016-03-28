@@ -23,11 +23,9 @@
 <!-- Bootstrap 3.3.5 -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
 <!-- Ionicons -->
-<link rel="stylesheet"
-	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"> 
 <!-- Theme style -->
 <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -64,9 +62,9 @@
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
-		<s:include value="nav/topnav.jsp"></s:include>
+		<jsp:include page="/page/background/nav/topnav.jsp"></jsp:include>
 
-		<s:include value="nav/leftnav.jsp"></s:include>
+		<jsp:include page="/page/background/nav/leftnav.jsp"></jsp:include>
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">

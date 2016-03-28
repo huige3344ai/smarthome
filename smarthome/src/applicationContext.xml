@@ -102,6 +102,7 @@
 				</value>
 				<value>com/smarthome/simple/entity/Roles.hbm.xml</value>
 				<value>com/smarthome/simple/entity/User.hbm.xml</value>
+				<value>com/smarthome/simple/entity/ResetPwd.hbm.xml</value>
 				
 			</list>
 		</property>	
@@ -160,6 +161,10 @@
 	<bean id="memoradumDao" class="com.smarthome.simple.dao.impl.TaskDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>	
 	</bean>
+	<bean id="resetPwdDao" class="com.smarthome.simple.dao.impl.ResetPwdDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>	
+	</bean>
+	
 	
 	<!-- DAO层 ENDING -->
 	

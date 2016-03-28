@@ -50,7 +50,7 @@ public class SendEmail {
 	 * send msg
 	 * 
 	 */	
-	public static void send (String toEmail,String content){
+	public static void send (String toEmail,String content,String title){
 		
 		Session session = getSession();
 
@@ -61,18 +61,16 @@ public class SendEmail {
 				//set msg
 				InternetAddress []internetAddress = {new InternetAddress(toEmail)};
 				msg.setRecipients(Message.RecipientType.TO, internetAddress);
-				msg.setSubject("五牛帐号激活邮件");
+				msg.setSubject(title);//设置主题
 				msg.setSentDate(new Date());
 				msg.setContent(content, "text/html;charset=utf-8");
 				//send msg
 				Transport.send(msg);
 				
 			} catch (AddressException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.print("地址出错");
 			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.print("信息异常");
 				

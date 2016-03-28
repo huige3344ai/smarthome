@@ -602,7 +602,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * �Ƚ�ʱ���С Ĭ�Ϻ͵�ǰʱ��Ƚ�
+	 * 跟当前的时间相比较
 	 * 
 	 * @param time1
 	 * @return
@@ -623,7 +623,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * �Ƚ�ʱ���С
+	 * 时间1 是否在 时间2之前
 	 * 
 	 * @param time1
 	 * @param time2
@@ -1195,6 +1195,67 @@ public class DateUtil {
 		return time.replace(split, " ");
 		
 	}
+	/**
+	 * 通过生日生成年龄
+	 * @param birtday
+	 * @return
+	 */
+	public static int getAge(Date birtday){
+		int age=0;
+		Calendar cal=Calendar.getInstance();//目前
+		
+		
+		if(birtday!=null){
+			if(cal.before(birtday)){
+				throw new IllegalArgumentException("Can't be born in the future");
+			}
+			int yearNow = cal.get(Calendar.YEAR);
+			int monthNow = cal.get(Calendar.MONTH) + 1;
+			int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+			
+			cal.setTime(birtday);
+			int yearBirth = cal.get(Calendar.YEAR);
+			int monthBirth = cal.get(Calendar.MONTH) + 1;
+			int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+			
+			age = yearNow-yearBirth;
+			
+			if(monthNow<=monthBirth){
+				if(monthNow==monthBirth){
+					if(dayOfMonthNow<dayOfMonthBirth){
+						age--;
+					}
+				}
+			}else{
+				age--;
+			}
+		}
+		
+		return age;
+	}
 	
+	/**
+	 * 判断是否超过有效期
+	 * @param time
+	 * @param howlong  分钟
+	 * @throws ParseException 
+	 * 
+	 */
+	public static boolean compareTime(String time,int howlong) throws ParseException{
+		long now = System.currentTimeMillis();
+	    long date = strToDate(time).getTime();
+	    date+=howlong*1000*60;
+		if(now<=date){//有效期内
+			return true;
+		}else
+		return false;
+	}
+	
+	
+	
+//	public static void main(String[] args) throws ParseException {
+//		int age = getAge(strToDate("2012-12-11","yyyy-MM-dd"));
+//		System.err.print(age);
+//	}
 	
 }

@@ -85,7 +85,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
 
   public Query createQuery(String hql, Object... objects)
   {
-    Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+    Query query = sessionFactory.getCurrentSession().createQuery(hql);
     if (objects != null) {
       for (int i = 0; i < objects.length; i++) {
         query.setParameter(i, "%" + objects[i] + "%");
@@ -96,7 +96,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
 
   public Query createEQuery(String hql, Object... objects)
   {
-    Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+    Query query = sessionFactory.getCurrentSession().createQuery(hql);
     if (objects != null) {
       for (int i = 0; i < objects.length; i++) {
         query.setParameter(i, objects[i]);
@@ -129,7 +129,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
   {
     List list_t = new ArrayList();
     try {
-      Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+      Query query = sessionFactory.getCurrentSession().createQuery(hql);
       List list = query.list();
       if (OwnUtil.ListisNotEmpty(list)) {
         return list;
@@ -179,7 +179,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
 	  if(orderBy!=null&&!isAsc){
 		  hql =hql+" order by "+orderBy+" desc";
 	  }
-	  Query query = createQuery(hql, object);	  
+	  Query query = createEQuery(hql, object);	  
   	return query.list();
   }
   
@@ -245,7 +245,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
   {
     log.debug(hql);
     try {
-      Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+      Query query = sessionFactory.getCurrentSession().createQuery(hql);
       query.executeUpdate();
     }
     catch (RuntimeException e) {
@@ -258,7 +258,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
   {
     log.debug(sql);
     try {
-      Query query = this.sessionFactory.getCurrentSession().createSQLQuery(sql);
+      Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
       query.executeUpdate();
     }
     catch (RuntimeException e) {

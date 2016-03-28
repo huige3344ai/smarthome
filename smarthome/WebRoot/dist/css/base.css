@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+ToolTip { 
+        fontSize: 18; 
+        color: #FFFFFF; 
+        backgroundColor: #000000;
+ }

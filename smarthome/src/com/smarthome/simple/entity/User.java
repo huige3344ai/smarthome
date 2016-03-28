@@ -1,199 +1,222 @@
 package com.smarthome.simple.entity;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class User
-  implements Serializable
-{
-  private Integer id;
-  private String userName;
-  private String pwd;
-  private String loginTime;
-  private Short status;
-  private String registerTime;
-  private String email;
-  private Timestamp birthday;
-  private Integer age;
-  private Short period;
-  private Timestamp exchangeTime;
-  private Integer adminId;
-  private String preloginTime;
-  private String logoImage;
-  private String phone;
-  private String sessionId;
-  private Short isAdmin;
+/**
+ * User entity. @author MyEclipse Persistence Tools
+ */
 
-  public User()
-  {
-  }
+public class User implements java.io.Serializable {
 
-  public User(Short status)
-  {
-    this.status = status;
-  }
+	// Fields
 
-  public User(String userName, String pwd, Short status)
-  {
-    this.userName = userName;
-    this.pwd = pwd;
-    this.status = status;
-  }
+	private Integer id;
+	private String userName;
+	private String pwd;
+	private String loginTime;
+	private Short status;
+	private Timestamp registerTime;
+	private String email;
+	private String birthday;
+	private Integer age;
+	private Short period;
+	private String exchangeTime;
+	private Integer adminId;
+	private String preloginTime;
+	private String logoImage;
+	private String phone;
+	private String sessionId;
+	private Short isAdmin;
+	private String note;
 
-  public User(String userName, String pwd, String loginTime, Short status, String registerTime, String email, Timestamp birthday, Integer age, Short period, Timestamp exchangeTime, Integer adminId, String preloginTime, String logoImage, String phone, String sessionId, Short isAdmin)
-  {
-    this.userName = userName;
-    this.pwd = pwd;
-    this.loginTime = loginTime;
-    this.status = status;
-    this.registerTime = registerTime;
-    this.email = email;
-    this.birthday = birthday;
-    this.age = age;
-    this.period = period;
-    this.exchangeTime = exchangeTime;
-    this.adminId = adminId;
-    this.preloginTime = preloginTime;
-    this.logoImage = logoImage;
-    this.phone = phone;
-    this.sessionId = sessionId;
-    this.isAdmin = isAdmin;
-  }
+	// Constructors
 
-  public Integer getId()
-  {
-    return this.id;
-  }
+	/** default constructor */
+	public User() {
+	}
+	
+	/** 自定义*/
+   public User(Short status)
+   {
+     this.status = status;
+   }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	/** minimal constructor */
+	public User(String userName, String pwd, Short status) {
+		this.userName = userName;
+		this.pwd = pwd;
+		this.status = status;
+	}
 
-  public String getUserName() {
-    return this.userName;
-  }
+	/** full constructor */
+	public User(String userName, String pwd, String loginTime, Short status,
+			Timestamp registerTime, String email, String birthday, Integer age,
+			Short period, String exchangeTime, Integer adminId,
+			String preloginTime, String logoImage, String phone,
+			String sessionId, Short isAdmin, String note) {
+		this.userName = userName;
+		this.pwd = pwd;
+		this.loginTime = loginTime;
+		this.status = status;
+		this.registerTime = registerTime;
+		this.email = email;
+		this.birthday = birthday;
+		this.age = age;
+		this.period = period;
+		this.exchangeTime = exchangeTime;
+		this.adminId = adminId;
+		this.preloginTime = preloginTime;
+		this.logoImage = logoImage;
+		this.phone = phone;
+		this.sessionId = sessionId;
+		this.isAdmin = isAdmin;
+		this.note = note;
+	}
 
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
+	// Property accessors
 
-  public String getPwd() {
-    return this.pwd;
-  }
+	public Integer getId() {
+		return this.id;
+	}
 
-  public void setPwd(String pwd) {
-    this.pwd = pwd;
-  }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-  public String getLoginTime() {
-    return this.loginTime;
-  }
+	public String getUserName() {
+		return this.userName;
+	}
 
-  public void setLoginTime(String loginTime) {
-    this.loginTime = loginTime;
-  }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-  public Short getStatus() {
-    return this.status;
-  }
+	public String getPwd() {
+		return this.pwd;
+	}
 
-  public void setStatus(Short status) {
-    this.status = status;
-  }
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 
-  public String getRegisterTime() {
-    return this.registerTime;
-  }
+	public String getLoginTime() {
+		return this.loginTime;
+	}
 
-  public void setRegisterTime(String registerTime) {
-    this.registerTime = registerTime;
-  }
+	public void setLoginTime(String loginTime) {
+		this.loginTime = loginTime;
+	}
 
-  public String getEmail() {
-    return this.email;
-  }
+	public Short getStatus() {
+		return this.status;
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	public void setStatus(Short status) {
+		this.status = status;
+	}
 
-  public Timestamp getBirthday() {
-    return this.birthday;
-  }
+	public Timestamp getRegisterTime() {
+		return this.registerTime;
+	}
 
-  public void setBirthday(Timestamp birthday) {
-    this.birthday = birthday;
-  }
+	public void setRegisterTime(Timestamp registerTime) {
+		this.registerTime = registerTime;
+	}
 
-  public Integer getAge() {
-    return this.age;
-  }
+	public String getEmail() {
+		return this.email;
+	}
 
-  public void setAge(Integer age) {
-    this.age = age;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  public Short getPeriod() {
-    return this.period;
-  }
+	public String getBirthday() {
+		return this.birthday;
+	}
 
-  public void setPeriod(Short period) {
-    this.period = period;
-  }
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
 
-  public Timestamp getExchangeTime() {
-    return this.exchangeTime;
-  }
+	public Integer getAge() {
+		return this.age;
+	}
 
-  public void setExchangeTime(Timestamp exchangeTime) {
-    this.exchangeTime = exchangeTime;
-  }
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 
-  public Integer getAdminId() {
-    return this.adminId;
-  }
+	public Short getPeriod() {
+		return this.period;
+	}
 
-  public void setAdminId(Integer adminId) {
-    this.adminId = adminId;
-  }
+	public void setPeriod(Short period) {
+		this.period = period;
+	}
 
-  public String getPreloginTime() {
-    return this.preloginTime;
-  }
+	public String getExchangeTime() {
+		return this.exchangeTime;
+	}
 
-  public void setPreloginTime(String preloginTime) {
-    this.preloginTime = preloginTime;
-  }
+	public void setExchangeTime(String exchangeTime) {
+		this.exchangeTime = exchangeTime;
+	}
 
-  public String getLogoImage() {
-    return this.logoImage;
-  }
+	public Integer getAdminId() {
+		return this.adminId;
+	}
 
-  public void setLogoImage(String logoImage) {
-    this.logoImage = logoImage;
-  }
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
+	}
 
-  public String getPhone() {
-    return this.phone;
-  }
+	public String getPreloginTime() {
+		return this.preloginTime;
+	}
 
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
+	public void setPreloginTime(String preloginTime) {
+		this.preloginTime = preloginTime;
+	}
 
-  public String getSessionId() {
-    return this.sessionId;
-  }
+	public String getLogoImage() {
+		return this.logoImage;
+	}
 
-  public void setSessionId(String sessionId) {
-    this.sessionId = sessionId;
-  }
+	public void setLogoImage(String logoImage) {
+		this.logoImage = logoImage;
+	}
 
-  public Short getIsAdmin() {
-    return this.isAdmin;
-  }
+	public String getPhone() {
+		return this.phone;
+	}
 
-  public void setIsAdmin(Short isAdmin) {
-    this.isAdmin = isAdmin;
-  }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getSessionId() {
+		return this.sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public Short getIsAdmin() {
+		return this.isAdmin;
+	}
+
+	public void setIsAdmin(Short isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public String getNote() {
+		return this.note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 }

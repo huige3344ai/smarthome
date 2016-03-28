@@ -24,8 +24,8 @@
                 <comment>状态</comment>
             </column>
         </property>
-        <property name="registerTime" type="java.lang.String">
-            <column name="registerTime" length="100">
+        <property name="registerTime" type="java.sql.Timestamp">
+            <column name="registerTime" length="19">
                 <comment>注册时间</comment>
             </column>
         </property>
@@ -34,8 +34,8 @@
                 <comment>邮箱</comment>
             </column>
         </property>
-        <property name="birthday" type="java.sql.Timestamp">
-            <column name="birthday" length="19">
+        <property name="birthday" type="java.lang.String">
+            <column name="birthday" length="200">
                 <comment>出生年月日</comment>
             </column>
         </property>
@@ -49,8 +49,8 @@
                 <comment>处于人生那个阶段</comment>
             </column>
         </property>
-        <property name="exchangeTime" type="java.sql.Timestamp">
-            <column name="exchangeTime" length="19">
+        <property name="exchangeTime" type="java.lang.String">
+            <column name="exchangeTime" length="200">
                 <comment>修改时间</comment>
             </column>
         </property>
@@ -78,6 +78,11 @@
         <property name="isAdmin" type="java.lang.Short">
             <column name="isAdmin">
                 <comment>是否为后台管理员</comment>
+            </column>
+        </property>
+        <property name="note" type="java.lang.String">
+            <column name="note" length="2000">
+                <comment>个人说明</comment>
             </column>
         </property>
     </class>
