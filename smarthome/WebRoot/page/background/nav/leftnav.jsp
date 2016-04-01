@@ -6,6 +6,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+
+
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -17,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="pull-left info">
               <p>${session.user.userName}</p>
-              <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+              <i class="fa fa-circle text-success"></i> 在线
             </div>
           </div>
 
@@ -32,22 +34,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </a>
             </li>
             
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-laptop"></i>
-                <span>设备管理</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                <span class="label label-primary pull-right">4</span>
+            <li>
+              <a href="devicesActionb_devicesList.action">
+                <i class="fa fa-laptop"></i> <span>设备管理</span>
+                <small class="label pull-right bg-red">3</small>
               </a>
-              <ul class="treeview-menu">
-                <li><a href=""><i class="fa fa-circle-o"></i> General</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Icons</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Buttons</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Sliders</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Timeline</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Modals</a></li>
-              </ul>
             </li>
+            
           </ul>
         </section>
         <!-- /.sidebar -->

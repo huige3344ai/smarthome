@@ -63,7 +63,7 @@ public User findBySessionUserName(UserQuery paramUserQuery) {
 	String[] str ={paramUserQuery.getUserName(),paramUserQuery.getSessionid()};
 	Query query = createEQuery(hql,str);
     List<User> list_t = query.list();
-    if(OwnUtil.ListisNotEmpty(list_t)){
+    if(OwnUtil.listisNotEmpty(list_t)){
     	user =  list_t.get(0);
     }   
 	return user;

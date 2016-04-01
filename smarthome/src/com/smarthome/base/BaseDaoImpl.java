@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -55,32 +56,32 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     }
   }
 
-  public Page<T> findByPage(final String hql, final Integer offset, final Integer length, final Object[] values)
+  public Page<T> findByPage(final String hql, final Integer offset,final Integer length,  
+          final Object... values)
   {
-    try
-    {
-      if (this.logger.isDebugEnabled()) {
-        this.logger.debug("开始查找指定HQL分页数据," + hql);
+	  try {    
+          if (logger.isDebugEnabled()) {    
+              logger.debug("开始查找指定HQL分页数据," + hql);    
+          }    
+          return (Page<T>) getHibernateTemplate().execute(    
+                  new HibernateCallback() {    
+                      public Object doInHibernate(Session s)    
+                              throws HibernateException, SQLException {  
+                          Query query = createQuery(hql, values);  
+                          ScrollableResults sr = query.scroll();  
+                          sr.last();  
+                          int totalCount = sr.getRowNumber();  
+                          query.setFirstResult(length*(offset-1)).setMaxResults(length); 
+                          Page p=new Page(query.list());  
+                          p.setTotalCount(totalCount+1);  
+                          logger.info("查找指定HQL分页数据成功："+hql);  
+                          return p;    
+                      }    
+                  });    
+      } catch (RuntimeException e) {    
+          logger.error("分页查询异常，HQL：" + hql, e);    
+          throw e;    
       }
-      return (Page)getHibernateTemplate().execute(
-        new HibernateCallback()
-      {
-        public Object doInHibernate(org.hibernate.Session s) throws HibernateException, SQLException {
-          Query query = BaseDaoImpl.this.createQuery(hql, values);
-          ScrollableResults sr = query.scroll();
-          sr.last();
-          int totalCount = sr.getRowNumber();
-          query.setFirstResult(length.intValue() * (offset.intValue() - 1)).setMaxResults(length.intValue());
-          Page p = new Page(query.list());
-          p.setTotalCount(totalCount + 1);
-          BaseDaoImpl.this.logger.info("查找指定HQL分页数据成功：" + hql);
-          return p;
-        } } );
-    }
-    catch (RuntimeException e) {
-      this.logger.error("分页查询异常，HQL：" + hql, e);
-      throw e;
-    }
   }
 
   public Query createQuery(String hql, Object... objects)
@@ -131,7 +132,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     try {
       Query query = sessionFactory.getCurrentSession().createQuery(hql);
       List list = query.list();
-      if (OwnUtil.ListisNotEmpty(list)) {
+      if (OwnUtil.listisNotEmpty(list)) {
         return list;
       }
       return null;

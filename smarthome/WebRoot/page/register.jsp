@@ -104,6 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!-- jQuery 2.1.4 -->
     <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+ 	<script src="dist/js/jquery.cookie.js"></script>		
     <!-- Bootstrap 3.3.5 -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <!-- iCheck -->
@@ -123,9 +124,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- jQueryValidate -->
-    <script src="dist/js/register_form.js"></script>   
     <script src="plugins/jQueryValidate/jquery.validate.min.js"></script>  
     <script src="plugins/jQueryValidate/validate.expand.js"></script>  
+    <script src="dist/js/register_form.js"></script>   
 
      
     

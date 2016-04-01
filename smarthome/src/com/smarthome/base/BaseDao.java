@@ -72,7 +72,8 @@ public abstract interface BaseDao<T>
 
   public abstract List<T> findByExample(Object paramObject);
 
-  public abstract Page<T> findByPage(String paramString, Integer paramInteger1, Integer paramInteger2, Object[] paramArrayOfObject);
+  public abstract Page<T> findByPage(final String hql, final Integer offset,final Integer length,  
+          final Object... values);
 
 
 }

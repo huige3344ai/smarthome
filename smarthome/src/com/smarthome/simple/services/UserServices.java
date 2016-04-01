@@ -1,5 +1,7 @@
 package com.smarthome.simple.services;
 
+import java.util.List;
+
 import com.smarthome.base.BaseService;
 import com.smarthome.simple.entity.ResetPwd;
 import com.smarthome.simple.entity.User;
@@ -73,6 +75,13 @@ public abstract interface UserServices extends BaseService<User, UserQuery>
    * @param query
    */
   public int updatePwd(UserQuery  query);
+  
+  
+  /**
+   * 查询 返回 用户 id和用户名的信息 
+   * @return
+   */
+  public List<User> findAll();
   
   
 }

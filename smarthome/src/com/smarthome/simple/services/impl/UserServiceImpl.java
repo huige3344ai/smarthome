@@ -155,7 +155,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 
 	    String hql = "from User as u where userName =  '" + user.getUserName() + "' or phone ='" + user.getPhone() + "' or email ='"+user.getEmail()+"'";
 		List<User> users = (List<User>) baseDao.findByhql(hql);
-		if(OwnUtil.ListisNotEmpty(users)){
+		if(OwnUtil.listisNotEmpty(users)){
 			return users.get(0);
 		}else
 		return null;
@@ -165,7 +165,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 	public User findByEmail(String email) {
 	    String hql = "from User where email ='"+email+"'";
 		List<User> users = (List<User>) baseDao.findByhql(hql);
-		if(OwnUtil.ListisNotEmpty(users)){
+		if(OwnUtil.listisNotEmpty(users)){
 			return users.get(0);
 		}else
 		return null;
@@ -182,7 +182,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 		int status=0;
 		
 		List res= resetPwdDao.findByEmailAndValidate(query.getEmail(), query.getEmailVer());
-		if(OwnUtil.ListisNotEmpty(res)){
+		if(OwnUtil.listisNotEmpty(res)){
 			ResetPwd rp = (ResetPwd) res.get(0);
 			try {
 				if(DateUtil.compareTime(rp.getRecordTime(),30)){//是否在30分钟内
@@ -208,7 +208,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 		List list = baseDao.findByhql(hql);
 		status = findByEmailAndValidate(query);
 		
-		if(OwnUtil.ListisNotEmpty(list)&&status==1){
+		if(OwnUtil.listisNotEmpty(list)&&status==1){
 			ResetPwd rp = (ResetPwd) resetPwdDao.findByEmailAndValidate(query.getEmail(), query.getEmailVer()).get(0);
 			rp.setStatus((short) 0);
 			resetPwdDao.update(rp);//失效该验证码
@@ -220,5 +220,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 		
 		return status;
 		
+	}
+
+	@Override
+	public List<User> findAll() {
+		String hql ="select new User(u.id,u.userName) from User as u";
+		return (List<User>) baseDao.findByhql(hql);
 	}
 }

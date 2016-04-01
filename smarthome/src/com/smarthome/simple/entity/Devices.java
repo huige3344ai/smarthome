@@ -14,11 +14,26 @@ public class Devices
   private Integer userId;
   private String recordTime;
   private String exchangeTime;
+  
+  /*
+   * 自定义显示属性 用于多表查询结果显示
+   */
+  private String userName;
+  
 
   public Devices()
   {
   }
 
+  public Devices(Integer id, String deviceName,String userName, String status,String category,String recordTime){
+	  this.id=id;
+	  this.deviceName=deviceName;
+	  this.userName=userName;
+	  this.status=status;
+	  this.category=category;
+	  this.recordTime=recordTime;
+  }
+  
   public Devices(Integer homeId, Integer userId)
   {
     this.homeId = homeId;
@@ -109,4 +124,12 @@ public class Devices
   public void setExchangeTime(String exchangeTime) {
     this.exchangeTime = exchangeTime;
   }
+
+public String getUserName() {
+	return userName;
+}
+
+public void setUserName(String userName) {
+	this.userName = userName;
+}
 }

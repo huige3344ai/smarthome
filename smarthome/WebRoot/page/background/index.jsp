@@ -74,9 +74,9 @@
 					首页 <small>控制面板</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="page/background/index.jsp"><i
+					<li><a id="hy_dashboard_a" href="page/background/index.jsp"><i
 							class="fa fa-dashboard"></i> 主页</a></li>
-					<li class="active">首页控制面板</li>
+					<li  class="active">首页控制面板</li>
 				</ol>
 			</section>
 
@@ -378,6 +378,8 @@
 	<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<!-- jQuery cookie.js -->
+	<script src="dist/js/jquery.cookie.js"></script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
@@ -402,8 +404,7 @@
 	<!-- datepicker -->
 	<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
 	<!-- Bootstrap WYSIHTML5 -->
-	<script
-		src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+	<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 	<!-- Slimscroll -->
 	<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 	<!-- FastClick -->
@@ -415,6 +416,7 @@
 	<!-- base.js -->
 	<script src="dist/js/base.js"></script>
 	<script src="dist/js/back_index.js"></script>
+	
 	</body>
 </html>
 												

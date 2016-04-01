@@ -212,6 +212,8 @@
 	<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<!-- jQuery cookie.js -->
+	<script src="dist/js/jquery.cookie.js"></script>		
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
@@ -251,7 +253,7 @@
     <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- jQueryValidate -->
-    <script src="plugins/jQueryValidate/validate.expand.js"></script>  
+	
 	<!-- base.js -->
 	<script src="dist/js/base.js"></script>
 	<script type="text/javascript">

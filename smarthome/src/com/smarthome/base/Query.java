@@ -12,6 +12,8 @@ public class Query
    */
   protected Integer uid;
   protected String URI;
+  
+  
 
   public Integer getId()
   {

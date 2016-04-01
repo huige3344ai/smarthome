@@ -26,6 +26,16 @@ public class Home implements java.io.Serializable {
 	public Home() {
 	}
 
+	//自定义虚构函数
+	
+	public Home(Integer id,String country,String address,Integer ownerId) {
+		this.id = id;
+		this.country = country;
+		this.address = address;
+		this.ownerId = ownerId;
+		
+	}
+	
 	/** minimal constructor */
 	public Home(Integer ownerId) {
 		this.ownerId = ownerId;

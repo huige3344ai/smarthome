@@ -112,17 +112,6 @@
 				   }
 				   
 			},	
-/*			success: function(label) {
-				// set &nbsp; as text for IE
-				label.html("&nbsp;").addClass("glyphicon glyphicon-ok");
-				label.css('color','#00a65a');
-				
-			},
-			highlight: function(element, errorClass) {
-
-				$(element).parent().find("." + errorClass).removeClass("glyphicon glyphicon-ok");
-				$(element).parent().find("." + errorClass).css('color','red');
-			},*/
 			submitHandler: function(form) {
 				 form.submit();
 			},

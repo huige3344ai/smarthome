@@ -30,8 +30,10 @@ public class BaseAction<T extends Serializable, Q extends Query> extends ActionS
   protected HttpServletRequest request;
   protected T model;
   protected Q query;
-  protected int pageNum;
-  protected int numPerPage;
+
+	//分页相关参数
+  protected int pageNum = 1;
+  protected int numPerPage = 10;
   protected int totalCount;
   protected int currentPage;
   protected int totalPage;
@@ -190,4 +192,5 @@ public class BaseAction<T extends Serializable, Q extends Query> extends ActionS
 			}
 	  }
   }
+
 }

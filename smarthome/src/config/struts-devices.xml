@@ -3,7 +3,12 @@
 
 <struts>
 	<constant name="struts.multipart.saveDir" value="/tmp"/>
-	<package name="devices" namespace="/page" extends="struts">
+	<package name="devices" namespace="/" extends="struts">
+		<action name="devicesActionb_*" class="devicesAction" method="{1}">
+			<result name="direct_devicesList" type="redirect">devicesActionb_devicesList.action</result>
+			<result name="{1}">page/background/device/{1}.jsp</result>
+		</action>
+	
 	
 	</package>
 </struts>    

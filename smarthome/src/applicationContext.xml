@@ -138,42 +138,69 @@
 	</bean>
 	<bean id="taskQuery" class="com.smarthome.simple.query.MemoradumQuery">
 	</bean>
+	<bean id="devicesQuery" class="com.smarthome.simple.query.DevicesQuery">
+	</bean>
 	<!-- QueryBean ENDING -->	
 
 
 	
 	<!-- 配置ACTION层-->
-	<bean id="userAction" class="com.smarthome.simple.action.UserAction" scope="prototype">	
-	</bean>
-	<bean id="taskAction" class="com.smarthome.simple.action.TaskAction" scope="prototype">	
-	</bean>
-	
+		<!--用户  -->
+		<bean id="userAction" class="com.smarthome.simple.action.UserAction" scope="prototype">	
+		</bean>
+		<!-- 日程任务 -->
+		<bean id="taskAction" class="com.smarthome.simple.action.TaskAction" scope="prototype">	
+		</bean>
+		<!-- 设备 -->	
+		<bean id="devicesAction" class="com.smarthome.simple.action.DevicesAction" scope="prototype">	
+		</bean>
+		<!-- 房屋 -->	
+		<bean id="homeAction" class="com.smarthome.simple.action.HomeAction" scope="prototype">	
+		</bean>
 	<!-- ACTION E -->
 	
 	 <!-- 配置DAO层，必须提供DAO的实现类 -->	
-	<bean id="userDao" class="com.smarthome.simple.dao.impl.UserDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-		<property name="permissionDao" ref="permissionDao"></property>	
-	</bean>
-	<bean id="permissionDao" class="com.smarthome.simple.dao.impl.PermissionDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>	
-	</bean>
-	<bean id="memoradumDao" class="com.smarthome.simple.dao.impl.TaskDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>	
-	</bean>
-	<bean id="resetPwdDao" class="com.smarthome.simple.dao.impl.ResetPwdDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>	
-	</bean>
-	
-	
+	 	<!--用户  -->
+		<bean id="userDao" class="com.smarthome.simple.dao.impl.UserDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+			<property name="permissionDao" ref="permissionDao"></property>	
+		</bean>
+		<!-- 权限 -->
+		<bean id="permissionDao" class="com.smarthome.simple.dao.impl.PermissionDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 日程任务 -->
+		<bean id="memoradumDao" class="com.smarthome.simple.dao.impl.TaskDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 找回密码表 -->
+		<bean id="resetPwdDao" class="com.smarthome.simple.dao.impl.ResetPwdDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 设备 -->	
+		<bean id="devicesDao" class="com.smarthome.simple.dao.impl.DevicesDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 房屋 -->
+		<bean id="homeDao" class="com.smarthome.simple.dao.impl.HomeDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
 	<!-- DAO层 ENDING -->
 	
 	
 	<!-- 配置 SERVICE层 	-->
-	<bean id="userService" class="com.smarthome.simple.services.impl.UserServiceImpl">
-	</bean>
-	<bean id="taskService" class="com.smarthome.simple.services.impl.TaskServicesImpl">
-	</bean>
+		<!--用户  -->
+		<bean id="userService" class="com.smarthome.simple.services.impl.UserServiceImpl">
+		</bean>
+		<!-- 日程任务 -->
+		<bean id="taskService" class="com.smarthome.simple.services.impl.TaskServicesImpl">
+		</bean>
+		<!-- 设备 -->
+		<bean id="devicesService" class="com.smarthome.simple.services.impl.DevicesServicesImpl">
+		</bean>
+		<!-- 房屋 -->
+		<bean id="homeService" class="com.smarthome.simple.services.impl.HomeserviceImpl">
+		</bean>
 	<!-- SERVICE层 ENDING -->
 		
 </beans>

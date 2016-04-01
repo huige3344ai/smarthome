@@ -1,10 +1,6 @@
 package com.smarthome.base;
 
-import com.smarthome.simple.services.ServiceException;
-import com.smarthome.util.SpringUtils;
-
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -15,15 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.SessionFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.smarthome.util.SpringUtils;
 
 public class BaseServiceImpl<T extends Serializable, Q extends Query>
   implements BaseService<T, Q>
 {
   private Class<T> entityClass = null;
-  private BaseDao baseDao;
+  protected BaseDao baseDao;
   protected String returnStr;
   
 
@@ -56,7 +52,7 @@ public class BaseServiceImpl<T extends Serializable, Q extends Query>
 	}
   
   
-  @Transactional(rollbackFor={ServiceException.class})
+  @Transactional(rollbackFor={Exception.class})
   public void save(T t)
   {
     if (t == null) {
@@ -65,13 +61,13 @@ public class BaseServiceImpl<T extends Serializable, Q extends Query>
     this.baseDao.save(t);
   }
 
-  @Transactional(rollbackFor={ServiceException.class})
+  @Transactional(rollbackFor={Exception.class})
   public void delete(T t)
   {
     this.baseDao.delete(t);
   }
 
-  @Transactional(rollbackFor={ServiceException.class})
+  @Transactional(rollbackFor={Exception.class})
   public void update(T t)
   {
     if (t == null) {

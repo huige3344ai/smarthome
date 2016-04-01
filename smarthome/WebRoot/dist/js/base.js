@@ -2,6 +2,14 @@
  * (base on jq) base.js
  */
 
+
+//1.js的分层(功能) : jquery(tools)  组件(ui)  应用(app), mvc(backboneJs)
+//2.js的规划(管理) : 避免全局变量和方法(命名空间，闭包，面向对象) , 模块化(seaJs,requireJs)
+window.onload = function(){
+
+};
+var mv = {};//命名空间
+
 $.isNotBlank =function(str,ob){
 	var val=ob.val();
 	if(val==null||val.length<=0){
@@ -134,6 +142,182 @@ function judeTime(value1,value2){
 	  }else
 		  return false;
 }
+
+/**
+ * app 应用组
+ */
+mv.app = {};
+
+mv.app.pageSort = function(){
+	var sort = $("#pageSort").val();
+	$("#sort").val(sort);
+    $("#pagerSortForm").submit();
+}
+
+
+mv.app.pageSumSet = function(){
+    var perSum = $("#perNum").val();
+    $("#numPerPage").val(perSum);
+    $("#pagerForm").submit();
+}
+
+
+mv.app.pageFormForward = function(pageNum) {
+    $("#pageNum").val(pageNum+1);
+    $("#pagerForm").submit();
+};
+
+
+mv.app.pagerFormBack = function(pageNum){
+    $("#pageNum").val(pageNum-1);
+    $("#pagerForm").submit();
+};
+
+mv.app.pageFormSelect = function(page){
+    $("#pageNum").val(page);
+    $("#pagerForm").submit();
+}
+
+mv.app.loadPage = function(Page,MaxPage){
+
+	if(MaxPage != "" && MaxPage > 1){
+        document.getElementById("page").innerHTML = Pagehtml()
+	}
+	
+	function Pagehtml(){//分页代码
+	    var PageStr = "";
+	    Page = parseInt(Page);
+	    var xPage = Page - 2,dPage = Page + 2
+	    if(xPage < 1){
+	            xPage = 1
+	            dPage = 5
+	    }
+	    if(dPage > MaxPage){
+	            dPage = MaxPage
+	            xPage = (dPage - 4)
+	    }
+	    if(xPage < 1){
+	            xPage = 1
+	    }
+	    
+
+	    if (Page == 1){
+	            PageStr += "<li class='paginate_button previous disabled' ><a >上一页</a></li>"
+	    }else{
+	            PageStr += "<li class='paginate_button previous' ><a  href='javascript:mv.app.pagerFormBack("+ (Page) +")'>上一页</a> </li>"
+	    }
+	    if(xPage > 1){
+	            PageStr += "<li class='paginate_button active'><a href='javascript:mv.app.pagerFormSelect(1)'>1</a></li>"
+	    }
+	    if(xPage > 2){
+	            PageStr += " ..."
+	    }
+	    for(var j = xPage;j <= dPage;j++) {
+	            PageStr += (Page == j) ? "<li class='paginate_button active'> <a>" + j + "</a></li>" : " <li class='paginate_button'> <a href='javascript:mv.app.pageFormSelect("+ j +")'>" + j + "</a><li/>";
+	}
+	    if(dPage < MaxPage - 1){
+	            PageStr += " ..."
+	    }
+	    if(dPage < MaxPage){
+            PageStr += "<li class='paginate_button'> <a href=' javascript:mv.app.pageFormSelect("+ MaxPage +")'>" + MaxPage + "</a> </li>"
+	    }
+	    if (Page == MaxPage){
+	            PageStr += "<li class='paginate_button next disabled'> <a>下一页</a> </li>"
+	    }else{
+	            PageStr += "<li class='paginate_button next'><a href='javascript:mv.app.pageFormForward("+ (Page ) +")'>下一页</a></li>"
+	    }
+	    return PageStr;
+	}	
+	
+}
+
+
+/**
+ * 删除通用方法
+ */
+var deleteOp = function(url,id,msg){
+	if(confirm(msg)){
+		$.post(url,{'query.id':id},function(json){
+			if(json){
+				alert('删除成功');
+				self.location.reload();//刷新
+			}
+			
+		},'json');
+	}
+}	
+
+$(document).ready(function(){
+    var status=  $.cookie("sidebar_toggle");
+    if(status!=null&&status!=''){
+    	//$(document.body).removeClass('skin-blue sidebar-mini');
+    	$(document.body).addClass('sidebar-collapse');
+    }
+});
+
+
+	$(function(){
+		//首页链接  点击之后  清空导航保存cookie
+		$(".main-header a").click(function(){
+			$.cookie("navstation",null,{ path: "/" })
+		});
+		//右边 首页导航 点击之后     清空导航保存cookie
+		$(".breadcrumb li a").click(function(){
+			$.cookie("navstation",null,{ path: "/" })
+		});
+		
+		
+		$("#hy_sidebar-toggle").click(function(){
+			$.cookie("sidebar_toggle",null , { path: "/" });
+			var status="";
+			if($(document.body).hasClass('sidebar-collapse')){
+				$(document.body).addClass('sidebar-collapse');
+				var status="sidebar";
+			}else{
+				$(document.body).removeClass('sidebar-collapse');
+			}
+			$.cookie("sidebar_toggle",status , { path: "/" });
+		});
+		//一级菜单
+		$(".sidebar-menu li a").click(function(){
+			$.cookie("navstation", $(this).html(), { path: "/" });
+		});
+		//二级菜单
+	    $(".sidebar-menu li ul li a").click(function(){
+	        $.cookie("navstation", $(this).html(), { path: "/" });
+	    });
+	    
+	    
+	    
+	    var navstation = $.cookie("navstation");
+	    if(navstation != null){
+	    	
+	    	$(".sidebar-menu li a").each(function(){
+	    		if($(this).html() == navstation){
+	    			//$(this).parent().parent().parent().addClass(" active");
+	    			$(this).parent().addClass(" active");
+	    		}
+	    	});
+	    	
+	    	$(".sidebar-menu li ul li a").each(function(){
+	    		if($(this).html() == navstation){
+	    			$(this).parent().parent().parent().addClass(" active");
+	    			$(this).parent().addClass("active");
+	    		}
+	    	});
+	    	$.cookie("navstation", null, { path: "/" });
+	    	
+	    }
+	    
+	    
+	});
+	
+
+	
+	
+	
+	
+
 
 
 

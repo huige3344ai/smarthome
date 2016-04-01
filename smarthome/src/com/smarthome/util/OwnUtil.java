@@ -46,12 +46,17 @@ public class OwnUtil {
 	 * @param
 	 * @return
 	 */
-	public static boolean ListisNotEmpty(Collection<?> list) {
+	public static boolean listisNotEmpty(Collection<?> list) {
 		if ((list != null) && (list.size() > 0)) {
 			return true;
 		}
 		return false;
 	}
+	
+	public static boolean objectsIsEmpty(Object[] objects){
+		return (objects==null)||(objects.length==0);
+	}
+	
 
 	/**
 	 * 判断是否为超级管理员

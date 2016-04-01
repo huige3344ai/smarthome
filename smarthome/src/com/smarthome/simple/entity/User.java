@@ -40,6 +40,12 @@ public class User implements java.io.Serializable {
    {
      this.status = status;
    }
+   
+   public User(Integer  id, String userName)
+   {
+	   this.id = id;
+	   this.userName = userName;
+   }
 
 	/** minimal constructor */
 	public User(String userName, String pwd, Short status) {
