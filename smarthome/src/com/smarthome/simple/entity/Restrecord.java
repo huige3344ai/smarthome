@@ -1,7 +1,5 @@
 package com.smarthome.simple.entity;
 
-import java.sql.Timestamp;
-
 /**
  * Restrecord entity. @author MyEclipse Persistence Tools
  */
@@ -12,10 +10,10 @@ public class Restrecord implements java.io.Serializable {
 
 	private Integer id;
 	private Integer userId;
-	private Timestamp startTime;
-	private Timestamp endTime;
-	private Timestamp recommendRestTime;
-	private Timestamp recommendWakeTime;
+	private String startTime;
+	private String endTime;
+	private String recommendRestTime;
+	private String recommendWakeTime;
 	private Short recordNum;
 	private Short num;
 	private String recordTime;
@@ -27,14 +25,13 @@ public class Restrecord implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Restrecord(Integer userId, Timestamp startTime) {
+	public Restrecord(Integer userId) {
 		this.userId = userId;
-		this.startTime = startTime;
 	}
 
 	/** full constructor */
-	public Restrecord(Integer userId, Timestamp startTime, Timestamp endTime,
-			Timestamp recommendRestTime, Timestamp recommendWakeTime,
+	public Restrecord(Integer userId, String startTime, String endTime,
+			String recommendRestTime, String recommendWakeTime,
 			Short recordNum, Short num, String recordTime) {
 		this.userId = userId;
 		this.startTime = startTime;
@@ -64,35 +61,35 @@ public class Restrecord implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	public Timestamp getStartTime() {
+	public String getStartTime() {
 		return this.startTime;
 	}
 
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Timestamp getEndTime() {
+	public String getEndTime() {
 		return this.endTime;
 	}
 
-	public void setEndTime(Timestamp endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
-	public Timestamp getRecommendRestTime() {
+	public String getRecommendRestTime() {
 		return this.recommendRestTime;
 	}
 
-	public void setRecommendRestTime(Timestamp recommendRestTime) {
+	public void setRecommendRestTime(String recommendRestTime) {
 		this.recommendRestTime = recommendRestTime;
 	}
 
-	public Timestamp getRecommendWakeTime() {
+	public String getRecommendWakeTime() {
 		return this.recommendWakeTime;
 	}
 
-	public void setRecommendWakeTime(Timestamp recommendWakeTime) {
+	public void setRecommendWakeTime(String recommendWakeTime) {
 		this.recommendWakeTime = recommendWakeTime;
 	}
 

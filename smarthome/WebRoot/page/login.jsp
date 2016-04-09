@@ -10,7 +10,7 @@ String message = request.getParameter("message");
 if(!OwnUtil.stringIsEmpty(message)){
 	message = URLDecoder.decode(message,"UTF-8");
 }
-
+request.setAttribute("messages", message);
 %>
 
 
@@ -52,17 +52,16 @@ if(!OwnUtil.stringIsEmpty(message)){
        <a href="page/login.jsp"><b>SMARTHOME</b>C</a> 
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-<%--         		<c:if test="${param.message}!=null">
-        		${param.message}
-        		</c:if> --%>
-            	<s:if test="message!=null">
+            	<s:if test="#request.message!=null&&#request.message!=''">
 	            	<p class="login-box-msg" style="color: red;">
-	            		<s:property value="message"/>
+            			<s:property value="#request.message"/>
 	            	</p>	            		
-            	</s:if>   
-            	<s:elseif test="#messages!=null&&#messages!=''">
-            		<p class="login-box-msg"><%=message %></p>
-            	</s:elseif>  		
+            	</s:if> 
+            	<s:elseif test="#request.messages&&#request.messages!=''"> 
+            		<p class="login-box-msg" style="color: red;">
+            			<s:property value="#request.messages"/>
+            		</p>		
+            	</s:elseif>  	
             	<s:else>
 	            	<p class="login-box-msg">
 						请输入您的帐号和密码.

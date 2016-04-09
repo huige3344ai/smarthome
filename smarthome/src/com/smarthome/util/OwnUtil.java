@@ -1,16 +1,21 @@
 package com.smarthome.util;
 
-import com.smarthome.simple.entity.User;
-
-import java.sql.Timestamp;
-import java.text.ParseException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sf.json.JSONArray;
+import sun.misc.BASE64Decoder;
+
+import com.smarthome.simple.entity.User;
 
 public class OwnUtil {
 	/**
@@ -65,7 +70,7 @@ public class OwnUtil {
 	 * @return
 	 */
 	public static boolean isAdmin(User user) {
-		if ((!objectIsEmpty(user)) && (user.getUserName().equals("admin"))) {
+		if ((!objectIsEmpty(user)) && stringIsEqual(user.getUserName(), "admin")) {
 			return true;
 		}
 
@@ -154,5 +159,76 @@ public class OwnUtil {
        return flag;
 	}	
 	
+	/**
+	 * 变换文件名称
+	 * @param fileName
+	 * @return
+	 */
+	public static String generateFileName(String fileName){
+		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String formatdate = format.format(new Date());
+		int random = new Random().nextInt(10000);
+		int position = fileName.lastIndexOf(".");
+		String  extendstion  = fileName.substring(position);//后缀名		
+		String newfileNmae = formatdate+random+extendstion;
+		return newfileNmae;			
+	}
+	
+    /**
+     * base64转换成图片文件
+     * @param base64
+     * @param path
+     * @return
+     */
+    public static boolean base64ToImage(String base64, File path) {// 对字节数组字符串进行Base64解码并生成图片
+    	if (base64 == null){ // 图像数据为空
+    		return false;
+    	}
+    	BASE64Decoder decoder = new BASE64Decoder();
+    	try {
+    		// Base64解码
+    		byte[] bytes = decoder.decodeBuffer(base64);
+    		for (int i = 0; i < bytes.length; ++i) {
+    			if (bytes[i] < 0) {// 调整异常数据
+    				bytes[i] += 256;
+    			}
+    		}
+    		// 生成jpeg图片
+    		OutputStream out = new FileOutputStream(path);
+    		out.write(bytes);
+    		out.flush();
+    		out.close();
+    		return true;
+    	} catch (Exception e) {
+    		e.printStackTrace();	
+    		return false;
+    	}	
+    }
+    
+    /**
+     * int判断是否为空
+     * @param id
+     * @return
+     */
+    public static boolean intIsZero(Integer  id){
+    	if(id!=null&&id==0)
+    		return true;
+    	else
+    		return false;
+    }
+	
+    /**
+     * 判断int 是否为o  不为null并且为大于0  直接返回 数值 否则返回数值
+     * @param id
+     * @return
+     */
+    public static Integer returnZero(Integer  id){
+    	if(id!=null&&id!=0)
+    		return id;
+    	else
+    		return 0;
+    }
+    
+    
 
 }

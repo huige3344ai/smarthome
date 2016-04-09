@@ -4,11 +4,15 @@ import java.util.List;
 
 import com.smarthome.base.BaseService;
 import com.smarthome.simple.entity.ResetPwd;
+import com.smarthome.simple.entity.TipNews;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
+import com.smarthome.util.Page;
 
 public abstract interface UserServices extends BaseService<User, UserQuery>
 {
+	
+
 	/**
 	 * 登陆操作
 	 * @param paramUserQuery
@@ -82,6 +86,34 @@ public abstract interface UserServices extends BaseService<User, UserQuery>
    * @return
    */
   public List<User> findAll();
+  
+  /**
+   * 分页获取所有用户
+   * @param query
+   * @param offset
+   * @param length
+   * @return
+   */
+  public Page getCurrentPage(UserQuery query,Integer offset ,Integer length);
+  
+  
+  /**
+   * 删除用户并且删除相关联的数据
+   * @param model
+   */
+  public void deleteUser(User model);
+  
+  /**
+   *  上传头像
+   * @param query
+   */
+  public void uploadPic(UserQuery query);
+  
+  /**
+   * 获取 tip 即左菜单上面的 new 提示 b 并把 提醒保存到session里面
+   *@param i  (1:表示创建 0:代表清空)
+   */
+  public void getTipNews(int i);
   
   
 }

@@ -177,6 +177,7 @@
 							    	<th>设备名称</th>
 							    	<th>设备状态</th>
 							    	<th>设备所有者</th>
+							    	<th>设备所在位置</th>
 							    	<th>设备添加时间</th>
 							    	<th>操作</th>
 							    	
@@ -200,6 +201,10 @@
 								        </td>
 								        <td class="center ">
 									        <s:if test="#p.userName != ''">${p.userName}</s:if> 
+									        <s:else >未知</s:else>	        
+								        </td>
+								        <td class="center ">
+									        <s:if test="#p.address != ''">${p.address}</s:if> 
 									        <s:else >未知</s:else>	        
 								        </td>
 								        <td class="center ">

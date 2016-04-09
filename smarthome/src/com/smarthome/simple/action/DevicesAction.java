@@ -11,9 +11,12 @@ import com.smarthome.simple.entity.Home;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.DevicesQuery;
 import com.smarthome.simple.services.DevicesServices;
+import com.smarthome.simple.services.ServiceException;
 import com.smarthome.simple.services.UserServices;
+import com.smarthome.util.Constans;
 import com.smarthome.util.DateUtil;
 import com.smarthome.util.JSONSerializer;
+import com.smarthome.util.OwnUtil;
 
 public class DevicesAction extends
 		BaseAction<Devices, DevicesQuery> {
@@ -42,7 +45,7 @@ public class DevicesAction extends
 	public String devicesList(){
 	    page=devicesService.getCurrentPage(query,this.pageNum,this.numPerPage);  
         createPage(page);
-        if(page.size()>0&&page.getPageNum()>page.getTotalPage())
+        if(!OwnUtil.objectIsEmpty(page)&&page.size()>0&&page.getPageNum()>page.getTotalPage())
         	return "direct_devicesList";
 		return "devicesList";
         	
@@ -61,7 +64,7 @@ public class DevicesAction extends
 	}	
 	
 	/**
-	 * 获取用户住所
+	 * 根据用户id获取用户所有住所
 	 */
 	public void getHomeList(){
 		try {
@@ -81,7 +84,7 @@ public class DevicesAction extends
 		try {
 			model.setRecordTime(DateUtil.getCurrDateStr());
 			model.setStatus("0");
-			devicesService.save(model);
+			devicesService.saveDevices(model);
 			getResponse().getWriter().write(JSONSerializer.serialize(true).toString());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -116,7 +119,12 @@ public class DevicesAction extends
 	public void deleteDevices(){
 		try {
 			model = devicesService.get(query.getId());
-			devicesService.delete(model);
+			try {
+				devicesService.deleteDevices(model);
+			} catch (ServiceException e) {
+				getResponse().getWriter().write(JSONSerializer.serialize(e).toString());
+				e.printStackTrace();
+			}
 			getResponse().getWriter().write(JSONSerializer.serialize(true).toString());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,5 +132,79 @@ public class DevicesAction extends
 	
 	}
 	
+	
+	public String myDevices(){
+		query.setUid(getUserId());
+		if(OwnUtil.intIsZero(query.getHomeId())){
+			List<Home> list = devicesService.findHomeByUid(query);
+			if(OwnUtil.listisNotEmpty(list)){//取出第一个 
+				query.setHomeId(list.get(0).getId());
+			}
+		}
+	    page=devicesService.getMyDevices(query,this.pageNum,this.numPerPage);  
+        createPage(page);
+        if(!OwnUtil.objectIsEmpty(page)&&page.size()>0&&page.getPageNum()>page.getTotalPage())
+        	return "direct_myDevices";
+		return "myDevices";	
+		
+	}
+	
+	/**
+	 * 根据当前用户id获取用户所有住所
+	 */
+	public void getMyHomeList(){
+		try {
+			if(!OwnUtil.intIsZero(getUserId())){
+				query.setUid(getUserId());
+				List<Home> list = devicesService.findHomeByUid(query);
+				getResponse().getWriter().write(JSONSerializer.serialize(list).toString());
+			}else
+				getResponse().getWriter().write(JSONSerializer.serialize(false).toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 用户操更新设备
+	 */
+	public void updateMyDevices(){
+		String msg = Constans.RETRUN_FAILED_STATUS;
+		query.setUid(getUserId());
+		if(!OwnUtil.stringIsEmpty(query.getStatus())&&!OwnUtil.intIsZero(query.getId())){
+			model = devicesService.confirmDevices(query);
+			if(!OwnUtil.objectIsEmpty(model)){
+				model.setStatus(query.getStatus());
+				model.setExchangeTime(DateUtil.getCurrDateStr());
+				devicesService.update(model);
+				msg=Constans.RETRUN_SUCCESS_STATUS;		
+			}else
+				msg=Constans.RETRUN_EXCEPTION_STATUS;		
+		}
+		try {
+			getResponse().getWriter().write(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 关闭个人当前地区所有所有设备
+	 */
+	public void closeAllMyDevices(){
+		query.setUid(getUserId());
+		String msg = devicesService.closeAllMyDevices(query);
+		try {
+			if(OwnUtil.stringIsEmpty(msg)){
+				msg="";
+				getResponse().getWriter().write(msg);
+			}else
+				getResponse().getWriter().write(msg);
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 	
 }

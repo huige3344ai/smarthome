@@ -1,8 +1,5 @@
 package com.smarthome.base;
 
-import com.smarthome.util.OwnUtil;
-import com.smarthome.util.Page;
-
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +7,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
@@ -21,9 +17,11 @@ import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.util.Assert;
+
+import com.smarthome.util.OwnUtil;
+import com.smarthome.util.Page;
 
 public class BaseDaoImpl<T> extends HibernateDaoSupport
   implements BaseDao<T>
@@ -56,7 +54,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
     }
   }
 
-  public Page<T> findByPage(final String hql, final Integer offset,final Integer length,  
+  @SuppressWarnings("unchecked")
+public Page<T> findByPage(final String hql, final Integer offset,final Integer length,  
           final Object... values)
   {
 	  try {    
@@ -98,7 +97,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
   public Query createEQuery(String hql, Object... objects)
   {
     Query query = sessionFactory.getCurrentSession().createQuery(hql);
-    if (objects != null) {
+    if (!OwnUtil.objectsIsEmpty(objects)) {
       for (int i = 0; i < objects.length; i++) {
         query.setParameter(i, objects[i]);
       }
@@ -267,6 +266,35 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport
       log.error(sql + "：操作失败！！！");
     }
   }
+
+@SuppressWarnings({ "unchecked", "rawtypes" })
+@Override
+public Page<T> findByFinallyPage(final String hql, final Integer offset,final Integer length,  
+        final Object... values){
+	  try {    
+          if (logger.isDebugEnabled()) {    
+              logger.debug("开始查找指定HQL分页数据," + hql);    
+          }    
+          return (Page<T>) getHibernateTemplate().execute(    
+                  new HibernateCallback() {    
+                      public Object doInHibernate(Session s)    
+                              throws HibernateException, SQLException {  
+                          Query query = createEQuery(hql, values);  
+                    	  ScrollableResults sr = query.scroll();  
+                          sr.last();  
+                          int totalCount = sr.getRowNumber();  
+                          query.setFirstResult(length*(offset-1)).setMaxResults(length); 
+                          Page p=new Page(query.list());  
+                          p.setTotalCount(totalCount+1);  
+                          logger.info("查找指定HQL分页数据成功："+hql);  
+                          return p;    
+                      }    
+                  });    
+      } catch (RuntimeException e) {    
+          logger.error("分页查询异常，HQL：" + hql, e);    
+          throw e;    
+      }
+}
 
 
 }

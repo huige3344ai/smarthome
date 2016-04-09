@@ -6,7 +6,7 @@ public class Devices
   implements Serializable
 {
   private Integer id;
-  private Integer deviceNum;
+  private String deviceNum;
   private String deviceName;
   private String status;
   private Integer homeId;
@@ -15,23 +15,36 @@ public class Devices
   private String recordTime;
   private String exchangeTime;
   
+  
+  
   /*
    * 自定义显示属性 用于多表查询结果显示
    */
   private String userName;
-  
+  private String address;//详细地址
+
 
   public Devices()
   {
   }
 
-  public Devices(Integer id, String deviceName,String userName, String status,String category,String recordTime){
+  
+  //自定义 Devices(id, deviceName, userName, address, status, category,recordTime)
+  public Devices(Integer id, String deviceName,String userName,String address, String status,String category,String recordTime){
 	  this.id=id;
 	  this.deviceName=deviceName;
 	  this.userName=userName;
+	  this.address=address;
 	  this.status=status;
 	  this.category=category;
 	  this.recordTime=recordTime;
+  }
+  
+  //自定义 Devices(id, status,deviceName)
+  public Devices(Integer id,String status,String deviceName){
+	   this.id=id;
+	   this.status=status;
+	   this.deviceName=deviceName;
   }
   
   public Devices(Integer homeId, Integer userId)
@@ -40,7 +53,7 @@ public class Devices
     this.userId = userId;
   }
 
-  public Devices(Integer deviceNum, String deviceName, String status, Integer homeId, String category, Integer userId, String recordTime, String exchangeTime)
+  public Devices(String deviceNum, String deviceName, String status, Integer homeId, String category, Integer userId, String recordTime, String exchangeTime)
   {
     this.deviceNum = deviceNum;
     this.deviceName = deviceName;
@@ -61,11 +74,11 @@ public class Devices
     this.id = id;
   }
 
-  public Integer getDeviceNum() {
+  public String getDeviceNum() {
     return this.deviceNum;
   }
 
-  public void setDeviceNum(Integer deviceNum) {
+  public void setDeviceNum(String deviceNum) {
     this.deviceNum = deviceNum;
   }
 
@@ -131,5 +144,13 @@ public String getUserName() {
 
 public void setUserName(String userName) {
 	this.userName = userName;
+}
+
+public String getAddress() {
+	return address;
+}
+
+public void setAddress(String address) {
+	this.address = address;
 }
 }

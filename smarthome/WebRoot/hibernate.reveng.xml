@@ -4,8 +4,12 @@
 <hibernate-reverse-engineering>
 	<table name="hy_devices" catalog="smarthome" class="Devices"></table>
 	<table name="hy_health" catalog="smarthome" class="Health"></table>
-	<table name="hy_home" catalog="smarthome" class="Home"></table>
-	<table name="hy_memoradum" catalog="smarthome" class="Memoradum"></table>
+	<table name="hy_home" catalog="smarthome"
+		class="com.smarthome.simple.entity.Home">
+	</table>
+	<table name="hy_memoradum" catalog="smarthome"
+		class="com.smarthome.simple.entity.Memoradum">
+	</table>
 	<table name="hy_permission_user" catalog="smarthome"
 		class="PUser">
 	</table>
@@ -13,8 +17,14 @@
 		class="Permission">
 	</table>
 	<table name="hy_restrecord" catalog="smarthome"
-		class="Restrecord">
+		class="com.smarthome.simple.entity.Restrecord">
 	</table>
 	<table name="hy_roles" catalog="smarthome" class="Roles"></table>
-	<table name="hy_user" catalog="smarthome" class="User"></table>
+	<table name="hy_user" catalog="smarthome"
+		class="com.smarthome.simple.entity.User">
+	</table>
+	<table name="hy_resetsystem" catalog="smarthome"
+		class="com.smarthome.simple.entity.ResetSystem">
+	</table>
+	<table name="tip_news" catalog="smarthome" class="com.smarthome.simple.entity.TipNews"></table>
 </hibernate-reverse-engineering>

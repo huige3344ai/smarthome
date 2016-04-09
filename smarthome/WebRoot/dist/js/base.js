@@ -8,7 +8,28 @@
 window.onload = function(){
 
 };
+
+
+
+var status='0';//设置全局变量
 var mv = {};//命名空间
+
+/**
+ * 全局的ajax访问，处理ajax清求时sesion超时
+ */
+$.ajaxSetup({ 
+    contentType:"application/x-www-form-urlencoded;charset=utf-8", 
+    complete:function(XMLHttpRequest,textStatus){ 
+            var sessionstatus=XMLHttpRequest.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，
+            if(sessionstatus=="timeout"){ 
+            			alert('你没有相应权限，请登录相应具有权限的用户操作！！！')
+                        
+		                } else if(sessionstatus=="nopermisson"){
+		                	//如果超时就处理 ，指定要跳转的页面
+		                	window.location.replace("page/login.jsp"); 
+		                }
+             } 
+    });
 
 $.isNotBlank =function(str,ob){
 	var val=ob.val();
@@ -101,6 +122,44 @@ Date.prototype.pattern=function(fmt) {
      
 //var date = new Date();      
 //window.alert(date.pattern("yyyy-MM-dd hh:mm:ss"));
+
+
+/**
+ * 获取当前日期  yyyy/mm/dd
+ */
+function CurentTime()
+{ 
+    var now = new Date();
+   
+    var year = now.getFullYear();       //年
+    var month = now.getMonth() + 1;     //月
+    var day = now.getDate();            //日
+   
+    //var hh = now.getHours();            //时
+    //var mm = now.getMinutes();          //分
+   
+    var clock = year + "/";
+   
+    if(month < 10)
+        clock += "0";
+   
+    clock += month + "/";
+   
+    if(day < 10)
+        clock += "0";
+       
+      clock += day ;
+//    clock += day + " ";
+   
+//    if(hh < 10)
+//        clock += "0";
+       
+//    clock += hh + ":";
+//    if (mm < 10) clock += '0'; 
+//    clock += mm; 
+    
+    return(clock); 
+} 
 
 
 
@@ -236,16 +295,236 @@ mv.app.loadPage = function(Page,MaxPage){
  * 删除通用方法
  */
 var deleteOp = function(url,id,msg){
-	if(confirm(msg)){
+	if(confirm(msg+" 删除后，用户相关联的数据也会丢失，是否继续")){
 		$.post(url,{'query.id':id},function(json){
-			if(json){
+			if(!jQuery.isEmptyObject(json)){
 				alert('删除成功');
 				self.location.reload();//刷新
+			}else{
+				alert('删除失败');
 			}
 			
 		},'json');
 	}
 }	
+
+var updateOp = function(url,id,status,msg){
+	if(confirm(msg)){
+		$.post(url,{'query.id':id,'query.status':status},function(json){
+			if(!jQuery.isEmptyObject(json)){
+				alert('更新状态成功');
+				self.location.reload();//刷新
+			}else{
+				alert('更新状态失败');
+			}
+			
+		},'json');
+	}
+}	
+
+/**
+ * 重置form数据
+ */
+var resetForm = function(formID){
+	$(':input',formID)
+	.not(':button, :submit, :reset, :hidden')
+	.val('')
+	.removeAttr('checked')
+	.removeAttr('selected');
+}
+
+/*关闭模态框后刷新页面*/
+var setClosedModal=function(id){
+ $(id).on('hidden.bs.modal', function (e) {
+	 $(this).removeData("modal");//每次重新加载数据
+	  if(status=='1'){
+		  self.location.reload();
+	  }else
+		  status='0';
+  })
+}
+
+var judePicType = function(id){
+	
+	$(id).change(function(){
+			  var filepath=$("input[name='query.file']").val();
+			  var extStart=filepath.lastIndexOf(".");
+			  var ext=filepath.substring(extStart,filepath.length).toUpperCase();
+			  if(ext!=".BMP"&&ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"){
+			  alert("图片限于bmp,png,gif,jpeg,jpg格式");
+			  return false;
+			  }else{
+				  alert(ext+'可以上传');
+			  }
+			  var file_size = 0;
+			  if (/msie/.test(navigator.userAgent.toLowerCase())) {
+			  var img=new Image();
+			  img.src=filepath;
+				  while(true){
+					  if(img.fileSize > 0){
+						  if(img.fileSize>10240){
+						  alert("图片不大于10MB。");
+						  }else{
+						  var num03 = img.fileSize/1024;
+						  num04 = num03.toFixed(2)
+						  }
+					  break;
+					  }
+				  }
+			  } else {
+			  file_size = this.files[0].size;
+			  console.log(file_size/1024/1024 + " MB");
+			  var size = file_size / 1024;
+				  if(size > 10240){
+				  alert("上传的文件大小不能超过10M！");
+				  }else{
+				  var num01 = file_size/1024;
+				  num02 = num01.toFixed(2)
+				  }
+			  }
+			  return true;
+		  });
+	
+	
+}
+
+
+
+/**
+ * 不能为空动态添加校验
+ */
+var validateNotEmpty= function(id,str){
+	$(id).change( function() { 
+		if($(id).val()!=''){
+			$(id).rules("add",{
+				required:true,
+				messages:{
+					required:str+"不能为空"
+				}
+			});
+		}
+	});
+}
+
+/**
+ * 校验邮箱通用方法
+ */
+var validateEmail= function(id,object,url){
+	$(id).change( function() {
+		alert(object.email)
+		if($(id).val()!=object.email){
+			$(id).rules("add",{
+				required: true,
+				email:true,
+				remote: {
+					url: url,     //后台处理程序
+					type: "post",               //数据发送方式
+					data: {                     //要传递的数据
+						"model.email": function() {
+							return $(id).val();
+						}
+					}
+				},
+			messages:{
+					required:"邮箱不能为空",
+					email:'邮箱格式有误.例如:659174520@qq.com',
+					remote:"邮箱已经存在，请更换其他邮箱"
+			}
+			
+			});
+		}else
+			$(id).rules("remove");
+	});
+	
+}
+
+/**
+ * 校验手机通用方法
+ */
+var validatePhone = function(id,object,url){
+	
+	$(id).change(function(){
+		if($(id).val()!=object.phone){
+		$(id).rules("add",{
+				  required:true,
+				  rangelength:[11,11],
+				  isRighZHPhoneNum:true,
+				  remote: {
+					  url: url,     //后台处理程序
+					  type: "post",               //数据发送方式
+					  data: {                     //要传递的数据
+						  "model.phone": function() {
+							  return $(id).val();
+						  }
+					  }
+				  },
+				  messages:{
+					  required:"手机号码不能为空",
+					  rangelength:'手机号码必须为11位',
+					  remote:"手机号码已经存在"
+				  }
+			  					
+		});
+	}else
+	  	$(id).rules("remove");
+});
+	
+}	
+
+/**
+ * 校验两次密码通用方法
+ */		
+var validatePwd = function(id,confirmId,object){
+	$(id).change(function(){
+		if($(id).val()!=''){
+			$(id).rules("add",{
+			  required:true,
+			  minlength: 6,
+			  maxlength:20,
+			  messages:{
+				  required:'密码不能为空呢',
+				  minlength:"密码长度需要大6呢",
+				  maxlength:"密码长度需要小于20呢"	  
+			  }
+				
+			});
+			$(confirmId).add("rules",{
+			  required:true,
+			  equalTo:id,
+			  messages:{
+				  required:'确认密码不能为空',
+				  equalTo:"两次密码不一致呢"						  
+			  }
+				
+			});
+		}else
+		  	$(id).rules("remove");
+	});	
+	
+}	
+
+
+/**
+ * 生日 添加校验添加
+ */
+var validateBirthday = function(id,object){
+	$(id).change(function(){
+		if($(id).val()!=object.birthday){
+			$(id).rules("add",{
+				required:true,
+				dateISO:true,
+				compareDate:true,
+				messages:{
+					required:'出生日期不能为空',
+					dateISO:'日期有误请按照格式输入'
+				}
+			
+			});
+		}
+	});
+	
+}
+
 
 $(document).ready(function(){
     var status=  $.cookie("sidebar_toggle");
@@ -255,6 +534,12 @@ $(document).ready(function(){
     }
 });
 
+
+
+
+/**
+ * cookie 保存菜单操作情况
+ */
 
 	$(function(){
 		//首页链接  点击之后  清空导航保存cookie
@@ -313,9 +598,8 @@ $(document).ready(function(){
 	});
 	
 
-	
-	
-	
+
+      	
 	
 
 

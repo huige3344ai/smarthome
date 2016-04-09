@@ -12,9 +12,16 @@ import javax.servlet.http.Cookie;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smarthome.base.BaseServiceImpl;
+import com.smarthome.simple.dao.DevicesDao;
+import com.smarthome.simple.dao.HomeDao;
 import com.smarthome.simple.dao.ResetPwdDao;
+import com.smarthome.simple.dao.RestrecordDao;
 import com.smarthome.simple.dao.UserDao;
+import com.smarthome.simple.entity.Devices;
+import com.smarthome.simple.entity.Home;
 import com.smarthome.simple.entity.ResetPwd;
+import com.smarthome.simple.entity.Restrecord;
+import com.smarthome.simple.entity.TipNews;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 import com.smarthome.simple.services.ServiceException;
@@ -23,6 +30,7 @@ import com.smarthome.util.CookieManager;
 import com.smarthome.util.DateUtil;
 import com.smarthome.util.MD5Util;
 import com.smarthome.util.OwnUtil;
+import com.smarthome.util.Page;
 
 @Transactional
 public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
@@ -34,7 +42,14 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
   UserDao baseDao;
   @Resource
   ResetPwdDao resetPwdDao;
+  @Resource
+  DevicesDao deviesDao;
+  @Resource
+  HomeDao homeDao;
+  @Resource
+  RestrecordDao restrecordDao;
 
+  
   @Transactional(rollbackFor={ServiceException.class})
   public String login(UserQuery query)
     throws ServiceException
@@ -52,7 +67,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
         if ((users != null) && (users.size() > 0)) {
           User user = (User)users.get(0);
 
-          boolean f = OwnUtil.objectIsEqual(query.getIsAdmin(), user.getIsAdmin());
+         // boolean f = OwnUtil.objectIsEqual(query.getIsAdmin(), user.getIsAdmin());
           if(query.getIsAdmin()!=null&&query.getIsAdmin()==1&&OwnUtil.objectIsEqual(query.getIsAdmin(), user.getIsAdmin())){    	  
         	  returnStr="login_admin_sucess";
           }else if(query.getIsAdmin()!=null&&query.getIsAdmin()==1&&query.getIsAdmin()!=user.getIsAdmin()){
@@ -93,8 +108,20 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
           } else{
               hql = "update from User set loginTime = '" + loginTime + "' where (userName = '" +userName + "' or phone = '" + userName + "' or email ='" + userName + "') and pwd = '" + password + "'";
               this.baseDao.update(hql);    	  
-          }       
-          getRequest().getSession().setAttribute("user", user);
+          }
+          Restrecord rest=restrecordDao.findByUserId(user.getId());
+          if(!OwnUtil.objectIsEmpty(rest)){
+        	  user.setRecommendRestTime(rest.getRecommendRestTime());
+        	  user.setRecommendWakeTime(rest.getRecommendWakeTime());
+        	  getRequest().getSession().setAttribute("user", user);
+        	  getTipNews(1);
+          }else if(OwnUtil.objectIsEmpty(rest)&&OwnUtil.isAdmin(user)){
+        	  getRequest().getSession().setAttribute("user", user);
+        	  getTipNews(1);
+          }else{
+              throw new ServiceException("后台异常暂时无法登录！");       	  
+          }
+          
         }
         else {
           throw new ServiceException("用户名或者密码错误！");
@@ -123,7 +150,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 		if(!OwnUtil.objectIsEmpty(user)){
 			String hql = "update from User set sessionId ='' where (email = '" + user.getUserName() + "' or phone = '" + user.getPhone() + "' or email ='"+user.getEmail()+"') and pwd = '" + user.getPwd() + "'";
 			this.baseDao.update(hql);	
-			
+			getTipNews(0);
 			CookieManager cm = new CookieManager(); 			 
 			Cookie[] cookies = getRequest().getCookies();
 			//清空cookie
@@ -226,5 +253,48 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 	public List<User> findAll() {
 		String hql ="select new User(u.id,u.userName) from User as u";
 		return (List<User>) baseDao.findByhql(hql);
+	}
+
+	@Override
+	public Page getCurrentPage(UserQuery query, Integer offset, Integer length) {
+		return baseDao.getUserPage(query, offset, length);
+	}
+
+	@Override
+	public void deleteUser(User model) {
+		List<Home> homes = homeDao.getHomeList(model.getId());
+		if(OwnUtil.listisNotEmpty(homes)){//关联删除用户其他信息 设备 和 住所
+			for(Home home:homes){
+				List<Devices> devices = deviesDao.getDevicesList(home.getId());
+				if(OwnUtil.listisNotEmpty(devices)){
+					for(Devices device:devices){
+						deviesDao.delete(device);
+					}
+				}
+				homeDao.delete(home);
+			}
+		}
+		baseDao.delete(model);
+		
+	}
+
+	@Override
+	public void uploadPic(UserQuery query) {
+		User user = get(query.getUid());
+		user.setLogoImage(query.getDir());
+		user.setExchangeTime(DateUtil.getCurrDateStr());
+		update(user);
+	}
+
+	@Override
+	public void getTipNews(int i) {
+		TipNews tips = baseDao.getTipNews();
+		if(!OwnUtil.objectIsEmpty(tips)){
+			if(i==1){
+				getRequest().getSession().setAttribute("tips", tips);
+			}else{
+				getRequest().getSession().removeAttribute("tips");
+			}
+		}
 	}
 }

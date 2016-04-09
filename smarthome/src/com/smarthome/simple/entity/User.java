@@ -2,6 +2,8 @@ package com.smarthome.simple.entity;
 
 import java.sql.Timestamp;
 
+import com.smarthome.util.DateUtil;
+
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
@@ -28,6 +30,10 @@ public class User implements java.io.Serializable {
 	private String sessionId;
 	private Short isAdmin;
 	private String note;
+	
+	
+	private String recommendRestTime;//休息时间
+	private String recommendWakeTime;//休息时长
 
 	// Constructors
 
@@ -40,6 +46,22 @@ public class User implements java.io.Serializable {
    {
      this.status = status;
    }
+   
+   /**
+    * User( id, logoImage, userName, status, phone, email, registerTime)
+    */
+   public User(Integer id,String logoImage,String userName,Short status,String phone,String email,Object registerTime)
+   {
+	   this.id = id;
+	   this.userName = userName;
+	   this.logoImage = logoImage;
+	   this.status = status;
+	   this.phone = phone;
+	   this.email = email;
+	   this.registerTime = DateUtil.stringToTimestamp(registerTime.toString());//需要这样子转换，不然无法被注入值导致找不到该虚构函数
+   }
+   
+   
    
    public User(Integer  id, String userName)
    {
@@ -169,6 +191,14 @@ public class User implements java.io.Serializable {
 		this.exchangeTime = exchangeTime;
 	}
 
+	public String getRecommendRestTime() {
+		return recommendRestTime;
+	}
+
+	public void setRecommendRestTime(String recommendRestTime) {
+		this.recommendRestTime = recommendRestTime;
+	}
+
 	public Integer getAdminId() {
 		return this.adminId;
 	}
@@ -223,6 +253,14 @@ public class User implements java.io.Serializable {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getRecommendWakeTime() {
+		return recommendWakeTime;
+	}
+
+	public void setRecommendWakeTime(String recommendWakeTime) {
+		this.recommendWakeTime = recommendWakeTime;
 	}
 
 }

@@ -1251,6 +1251,26 @@ public class DateUtil {
 		return false;
 	}
 	
+	/**
+	 * stringToTimestamp 
+	 * 时间字符串转TimeStamp
+	 * @param dateStr
+	 * @return
+	 */
+	public static Timestamp stringToTimestamp(String dateStr){
+		   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		   Calendar cal = Calendar.getInstance();
+		   try {
+		    Date date = sdf.parse(dateStr);
+		    date.getTime();
+		    cal.setTime(date);
+		    return new Timestamp(cal.getTimeInMillis());
+		   } catch (ParseException e) {
+		    e.printStackTrace();
+		   }
+		   cal.setTime(new Date());
+		   return new Timestamp(cal.getTimeInMillis());
+		}	
 	
 	
 //	public static void main(String[] args) throws ParseException {

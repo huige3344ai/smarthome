@@ -10,8 +10,8 @@
             <column name="id" />
             <generator class="native" />
         </id>
-        <property name="deviceNum" type="java.lang.Integer">
-            <column name="deviceNum">
+        <property name="deviceNum" type="java.lang.String">
+            <column name="deviceNum" length="10">
                 <comment>自定义num</comment>
             </column>
         </property>

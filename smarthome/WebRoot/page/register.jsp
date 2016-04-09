@@ -52,9 +52,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
 			
       <div class="register-box-body">
-        <p class="login-box-msg">注册新用户</p>
+            	<s:if test="#request.message!=null&&#request.message!=''">
+	            	<p class="login-box-msg" style="color: red;">
+            			<s:property value="#request.message"/>
+	            	</p>	            		
+            	</s:if> 
+            	<s:elseif test="#request.messages&&#request.messages!=''"> 
+            		<p class="login-box-msg" style="color: red;">
+            			<s:property value="#request.messages"/>
+            		</p>		
+            	</s:elseif>  	
+            	<s:else>
+	            	<p class="login-box-msg">
+						注册新用户.
+	            	</p>            	
+            	</s:else>       
         <form action="page/loginAction_registerUser.action" id="hy_register_form" method="post">
-          <input type="hidden" id="nowDate" >
           <div class="form-group has-feedback">
             <input  class="form-control" id="userName" name="model.userName" placeholder="用户名" data-placement="bottom">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -113,12 +126,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="dist/js/base.js"></script>  
 	<!--Moment.js-->
 	<script src="//cdn.bootcss.com/moment.js/2.10.2/moment.min.js"></script>    
-	<script type="text/javascript">
-	$(function(){
-	        //set  now time
-        $("#nowDate").val(moment().format('YYYY/MM/DD'));
-        });
-	</script>    
     <!-- InputMask -->
     <script src="plugins/input-mask/jquery.inputmask.js"></script>
     <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
@@ -146,9 +153,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
         
     });
-    
-	 
-
 	        
     </script>
   </body>

@@ -213,7 +213,6 @@
 							} ],
 							dayClick : function(date, jsEvent, view) {
 								$("#add_task_modal").modal();
-								alert(date)
 								$('#reservationtime').daterangepicker({
 									timePicker : true,
 									timePickerIncrement : 10,

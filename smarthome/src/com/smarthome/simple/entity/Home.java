@@ -20,19 +20,38 @@ public class Home implements java.io.Serializable {
 	private Integer usreId;
 	private String logoImage;
 
+	private String userName;
 	// Constructors
 
 	/** default constructor */
 	public Home() {
 	}
 
-	//自定义虚构函数
-	
-	public Home(Integer id,String country,String address,Integer ownerId) {
+	//自定义虚构函数Home(id,country,address,ownerId)
+	public Home(Integer id,String country,String address,int ownerId) {
 		this.id = id;
 		this.country = country;
 		this.address = address;
 		this.ownerId = ownerId;
+		
+	}	
+	
+	//自定义虚构函数 Home( id, country, address, userName, temperature, humidity, recordTime)
+	public Home(Integer id,String country,String address,String userName,String temperature,String humidity,String recordTime) {
+		this.id = id;
+		this.country = country;
+		this.address = address;
+		this.userName = userName;
+		this.temperature = temperature;
+		this.humidity = humidity;
+		this.recordTime = recordTime;
+		
+	}
+	
+	public Home(Integer id,String country,String address,String userName) {
+		this.id = id;
+		this.country = country;
+		this.address = address;
 		
 	}
 	
@@ -146,6 +165,14 @@ public class Home implements java.io.Serializable {
 
 	public void setLogoImage(String logoImage) {
 		this.logoImage = logoImage;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Authority
 {
-  public abstract String roles();
+  public abstract String module();//模块
 
-  public abstract String privilege();
+  public abstract String privilege();//权限
 }
 

@@ -35,5 +35,23 @@ public class Constans
   
   
   
+  public static final String LOGINPAGE="login.jsp";//登录页面
+  
+  /**
+   * 设备状态  其他 字符串代表设备故障
+   */
+  public static final String STATUS_ON="1";
+  public static final String STATUS_OFF="0";
+  
+  /**
+   * ajax  返回判断
+   */
+  public static final String RETRUN_EXCEPTION_STATUS="-1";//异常
+  public static final String RETRUN_FAILED_STATUS="0";//失败 htm 会判断为空
+  public static final String RETRUN_SUCCESS_STATUS="1";//成功
+  
+  
+  
+  
   
 }

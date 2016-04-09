@@ -11,11 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smarthome.simple.dao.RestrecordDao;
+import com.smarthome.simple.entity.Restrecord;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 import com.smarthome.simple.services.UserServices;
@@ -40,14 +41,16 @@ public class LoginCheck
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest req = (HttpServletRequest)request;
     HttpServletResponse res = (HttpServletResponse)response;
-    HttpSession session = req.getSession(true);
     UserServices service = (UserServices)SpringUtils.getBeanById("userService");
-
+    RestrecordDao restrecordDao = (RestrecordDao)SpringUtils.getBeanById("restrecordDao");
+    StringBuffer URL  = new StringBuffer(req.getContextPath()); 
+    URL.append(req.getServletPath());
     UserQuery query = new UserQuery();
 
-    CookieManager cm = new CookieManager();
 
-    User user = (User)session.getAttribute("user");
+    User user = (User)req.getSession().getAttribute("user");
+    
+    CookieManager cm = new CookieManager();
     if (OwnUtil.objectIsEmpty(user)) {
       user = new User();
     }
@@ -62,14 +65,28 @@ public class LoginCheck
     if (OwnUtil.stringIsEqual(query.getAutologin(), "on")) {
       user = service.findBySessionUserName(query);
       if(!OwnUtil.objectIsEmpty(user)){
-    	  session.setAttribute("user", user);
-    	  chain.doFilter(request, response);  	  
+          Restrecord rest=restrecordDao.findByUserId(user.getId());
+          if(!OwnUtil.objectIsEmpty(rest)){
+        	  user.setRecommendRestTime(rest.getRecommendRestTime());
+        	  user.setRecommendWakeTime(rest.getRecommendWakeTime());
+        	  req.getSession().setAttribute("user", user);
+        	  service.getTipNews(1);
+          }else if(OwnUtil.objectIsEmpty(rest)&&OwnUtil.isAdmin(user)){
+        	  req.getSession().setAttribute("user", user);
+        	  service.getTipNews(1);        	  
+          }
+          else{
+        	  req.setAttribute("message", "自动登录失败，请登录之后再尝试!!!");
+        	  req.getRequestDispatcher("/page/login.jsp").forward(req, res);       	  
+          }  
+    	  //chain.doFilter(request, response);  	  
+    	  res.sendRedirect(URL.toString());
       }else{
-    	  session.setAttribute("message", "自动登录失败，请登录之后再尝试!!!");
+    	  req.setAttribute("message", "自动登录失败，请登录之后再尝试!!!");
     	  req.getRequestDispatcher("/page/login.jsp").forward(req, res);
       }
     } else if ((OwnUtil.objectIsEmpty(user)) || (OwnUtil.stringIsEmpty(user.getUserName()))) {
-      session.setAttribute("message", "你还没有登录，请登录之后再尝试");
+    	 req.setAttribute("message", "你还没有登录，请登录之后再尝试");
       req.getRequestDispatcher("/page/login.jsp").forward(req, res);
     } else {    	
       chain.doFilter(request, response);
@@ -79,4 +96,5 @@ public class LoginCheck
   public void destroy() {
     this.filterConfig = null;
   }
+  
 }

@@ -13,15 +13,22 @@ public class Permission
   private String exchangeTime;
   private Integer userId;
 
+  private String roleName;
+  
   public Permission()
   {
   }
 
-  public Permission(String permission, String permissionName)
+  
+
+  
+  public Permission(String permission, String module)
   {
-    this.permission = permission;
-    this.permissionName = permissionName;
+	  this.permission = permission;
+	  this.module = module;
   }
+  
+
 
   public Permission(String permission, String permissionName, String module, String recordTime, String exchangeTime, Integer userId)
   {
@@ -89,4 +96,14 @@ public class Permission
   public void setUserId(Integer userId) {
     this.userId = userId;
   }
+
+
+public String getRoleName() {
+	return roleName;
+}
+
+
+public void setRoleName(String roleName) {
+	this.roleName = roleName;
+}
 }

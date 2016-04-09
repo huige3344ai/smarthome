@@ -20,7 +20,20 @@ public interface DevicesServices extends BaseService<Devices, DevicesQuery> {
 	 */
 	public Page getCurrentPage(DevicesQuery query,Integer offset ,Integer length);
 
+	/**
+	 * 保存 设备
+	 * @param model
+	 */
+	public void saveDevices(Devices model) ;
+
+	/**
+	 * 保存 设备
+	 * @param model
+	 * 
+	 */
+	public void deleteDevices(Devices model) throws ServiceException ;
 	
+
 	/**
 	 * 通过用户id查询房屋信息
 	 * @param query
@@ -34,6 +47,30 @@ public interface DevicesServices extends BaseService<Devices, DevicesQuery> {
 	 * @return
 	 */
 	public Home findHomeByHid(DevicesQuery query);
+	
+	
+	/**
+	 * 获取用户一个房屋的所有设备
+	 * @param query
+	 * @return
+	 */
+	public Page getMyDevices(DevicesQuery query,Integer offset ,Integer length);
+	
+	/**
+	 * 确认该设备是否属于 当前该用户 是否属于返回 不属于返回Null
+	 * @param query
+	 * @return
+	 */
+	public Devices confirmDevices(DevicesQuery query);
+	
+	/**
+	 * 关闭  当前用户 选择的住所的所有设备
+	 * @param query
+	 * @return
+	 */
+	public String closeAllMyDevices(DevicesQuery query);
+		
+	
 	
 	
 }

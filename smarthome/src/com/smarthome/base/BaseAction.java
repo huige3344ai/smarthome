@@ -96,6 +96,13 @@ public class BaseAction<T extends Serializable, Q extends Query> extends ActionS
   public void setServletRequest(HttpServletRequest request) {
     this.request = request;
   }
+  public int getUserId(){
+	  User user = (User) getSession().getAttribute("user");
+	  if(!OwnUtil.objectIsEmpty(user)){
+		  return user.getId();
+	  }else
+		  return 0;
+  }
 
   protected HttpServletRequest getRequest()
   {

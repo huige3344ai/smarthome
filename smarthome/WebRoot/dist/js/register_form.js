@@ -3,7 +3,6 @@
  */
 	$().ready(function() {
 		
-		
 	    $("#hy_register_form").validate({
 	    	onkeyup:false,
 	    		rules: {
@@ -24,6 +23,7 @@
 	    				}
 	    		 }, 
 	    		 "model.email":{
+	    			 required:true,	    			 
 	    			 email:true,
 	    			 remote: {
 	    				    url: "page/loginAction_userNameIsExist.action",     //后台处理程序
@@ -78,6 +78,7 @@
 	    			 remote:"用户名已经存在"
 	    		 }, 
 	    		 "model.email":{
+	    			 required:'邮箱不能为空',
 	    			 email:'邮箱格式有误.例如:659174520@qq.com',
 	    			 remote:"邮箱已经存在，请更换其他邮箱"
 	    		 },

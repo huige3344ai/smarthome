@@ -4,13 +4,20 @@
 <struts>
 	<constant name="struts.multipart.saveDir" value="/tmp"/>
 	<package name="user" namespace="/page" extends="struts">
+       <global-results>
+       	<result name="login">login.jsp</result>
+       	<result name="input" type="redirect">404.jsp</result>
+       </global-results>	
+	
 		<action name="loginAction_*" method="{1}" class="userAction">
 			<result name="login_admin_sucess" type="redirect">background/index.jsp</result>
-			<result name="login_deault_sucess" type="redirect">foreground/index.jsp</result>
+			<result name="login_deault_sucess" type="redirect">foreground/device/myDevices.jsp</result>
 			<result name="logout_sucess" type="redirect">login.jsp</result>
 			<result name="failed_resetPwd">returnpwd.jsp</result>	
 			<result name="resetpwd">resetpwd.jsp</result>	
 			<result name="register_failed">register.jsp</result>
+			<!-- 登录失败 -->
+			<result name="login_failed">login.jsp</result>
 			<!-- 注册成功返回页面 -->
 			<result name="login_redirect" type="redirect">
 				<param name="location">login.jsp?message=${message}</param>
@@ -20,13 +27,21 @@
 		
 		<action name="userAction_*" method="{1}" class="userAction">
 			<interceptor-ref name="mydefault"/>	
-							
+			<result name="direct_userList">userAction_{1}.action</result>				
+			<result name="{1}">background/userm/{1}.jsp</result>				
 		</action>
 		
 		<action name="taskAction_*" method="{1}" class="taskAction">
 			<interceptor-ref name="mydefault"/>
 			<result name="{1}">background/{1}.jsp</result>			
 		</action>
+		
+		<action name="homeAction_*" method="{1}" class="homeAction">
+			<interceptor-ref name="mydefault"/>
+			<result name="direct_homesList">homeAction_{1}.action</result>			
+			<result name="{1}">background/homem/{1}.jsp</result>			
+		</action>
+		
 		
 	</package>
 </struts>    

@@ -72,8 +72,27 @@ public abstract interface BaseDao<T>
 
   public abstract List<T> findByExample(Object paramObject);
 
+  /**
+   * 模糊 查询分页
+   * @param hql
+   * @param offset
+   * @param length
+   * @param values
+   * @return
+   */
   public abstract Page<T> findByPage(final String hql, final Integer offset,final Integer length,  
           final Object... values);
+  
+  /**
+   *  不使用模糊查询分页
+   * @param hql
+   * @param offset
+   * @param length
+   * @param values
+   * @return
+   */
+  public abstract Page<T> findByFinallyPage(final String hql, final Integer offset,final Integer length,  
+		  final Object... values);
 
 
 }

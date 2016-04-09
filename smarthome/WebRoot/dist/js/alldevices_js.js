@@ -56,10 +56,12 @@ add_sucess='0';//全局变量
 								if(msg){
 									alert(str+"成功，请关闭当前对话框。");
 									add_sucess='1';
+								}else{
+									alert("网络异常，"+str+"失败");
 								}
 							},
 							erorr:function(){
-								alert('网络异常，添加失败');
+								alert("网络异常，"+str+"失败");
 							},
 							dataType: "json"
 						});
@@ -79,16 +81,16 @@ add_sucess='0';//全局变量
 		  if(add_sucess=='1'){
 			  self.location.reload();
 		  }else
-			  add_sucess=='0';
+			  add_sucess='0';
 	  })
   }
   });
 
 
   
-$(function() {
+$(function(){
 	
-    	$("#hy_deviceNum").inputmask("[9999999999]");
+    	//$("#hy_deviceNum").inputmask("[9999999999]");
     	//$("#hy_up_deviceNum").inputmask("[9999999999]");
     	
 		
@@ -127,7 +129,7 @@ $(function() {
 							  data: {},
 							  success: function(json){
 	        						
-									if(json!=null&&json!='null'){
+									if(jQuery.isEmptyObject(json)){
 										$.each(json, function(index,element){
 												var op = "<option value='"+element.id+"'>"+element.userName+"</option>";
 												$('#hy_userId').append(op)
@@ -158,9 +160,9 @@ $(function() {
 			async: true,
 			data:{"query.uid":data},
 			success: function(json){
-				$("#"+id).empty();
-				$("#"+id).append("<option value='0'>请选择</option>");
-				if(json!=null&&json!='null'){
+				if(!jQuery.isEmptyObject(json)){					
+					$("#"+id).empty();
+					$("#"+id).append("<option value='0'>请选择</option>");
 					$.each(JSON.parse(json),function(index,element){
 						if(selected==element.id){
 							var op = "<option value='"+element.id+"' selected='true'>"+element.country+"-"+element.address+"</option>";
@@ -186,11 +188,13 @@ var fillData = function(id){
 	  url: "devicesActionb_getDevice.action",
 	  data: {"query.id":id},
 	  success: function(json){
-	  	$('#hy_up_deviceNum').attr("value", json.deviceNum);
-	  	$('#hy_up_deviceName').attr("value", json.deviceName);
-	  	$('#hy_up_status').val(json.status);
-	  	$('#hy_up_id').attr("value", id);
-	  	getUser(json.userId,json.homeId);
+		  if(!jQuery.isEmptyObject(json)){
+			  $('#hy_up_deviceNum').attr("value", json.deviceNum);
+			  $('#hy_up_deviceName').attr("value", json.deviceName);
+			  $('#hy_up_status').val(json.status);
+			  $('#hy_up_id').attr("value", id);
+			  getUser(json.userId,json.homeId);
+		  }
 	  },
 	  dataType:"json", 
 	  error:function(){
@@ -208,9 +212,9 @@ var getUser = function(userId,homeId){
 			  async: false,
 			  data: {},
 			  success: function(json){
-			  	$('#hy_up_userId').empty();
-				$('#hy_up_userId').append("<option value='0'>请选择</option>");
-					if(json!=null&&json!='null'){
+				  if(!jQuery.isEmptyObject(json)){
+					  	$('#hy_up_userId').empty();
+						$('#hy_up_userId').append("<option value='0'>请选择</option>");
 						$.each(json, function(index,element){
 								if(userId==element.id){
 									var op = "<option value='"+element.id+"' selected='true'>"+element.userName+"</option>";

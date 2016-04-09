@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="${session.user.logoImage}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>${session.user.userName}</p>
@@ -28,16 +28,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="header">主菜单</li>
             
             <li>
-              <a href="page/background/userm/personcenter.jsp">
+              <a href="page/background/personcenter.jsp">
                 <i class="fa fa-user-secret"></i> <span>个人中心</span>
-                <small class="label pull-right bg-red">3</small>
+                <small class="label pull-right bg-green"></small>
               </a>
             </li>
             
             <li>
               <a href="devicesActionb_devicesList.action">
                 <i class="fa fa-laptop"></i> <span>设备管理</span>
-                <small class="label pull-right bg-red">3</small>
+                <s:if test="#session.tips.dnum!=null&&#session.tips.dnum!=0">
+                	<small class="label pull-right  bg-green">New&nbsp ${session.tips.dnum}</small>
+                </s:if>
+              </a>
+            </li>
+            
+            <li>
+              <a href="page/userAction_userList.action">
+                <i class="fa fa-users"></i> <span>用户管理</span>
+                <s:if test="#session.tips.unum!=null&&#session.tips.unum!=0">
+                	<small class="label pull-right  bg-green">New&nbsp ${session.tips.unum}</small>
+                </s:if>
+              </a>
+            </li>
+            
+            <li>
+              <a href="page/homeAction_homesList.action">
+                <i class="fa  fa-home"></i> <span>住所管理</span>
+                <s:if test="#session.tips.hnum!=null&&#session.tips.hnum!=0">
+                	<small class="label pull-right  bg-green">New&nbsp ${session.tips.hnum}</small>
+                </s:if>
               </a>
             </li>
             

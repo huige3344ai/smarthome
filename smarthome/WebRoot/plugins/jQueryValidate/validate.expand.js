@@ -11,7 +11,7 @@ $(function(){
 
 	//比较时间
 	$.validator.addMethod("compareDate",function(value,element){
-		var startDate =$('#nowDate').val();
+		var startDate = CurentTime();
 		var born=$(element).val();
 	    return new Date(Date.parse(startDate)) >= new Date(Date.parse(born.replace("-", "/"))); 
 	},"出生时间必须小于等于当前日期");
@@ -24,5 +24,17 @@ $(function(){
 		return this.optional(element) || (u.test(value));
 	},"用户名不能包含特殊符号");
 	
+    jQuery.validator.addMethod("sameToOldPwd", function(value, element) {  
+        return this.optional(element) || same(value);  
+    }, "新密码不能与老密码重复");  	
+	
+	var same=function(pwd) {  
+		alert($.md5(pwd));
+		var old_pwd =object.pwd;
+	    if (old_pwd == pwd)  
+	        return false;  
+	    else  
+	        return true;  
+	}  
 
 });

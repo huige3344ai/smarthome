@@ -30,7 +30,8 @@
   </filter>
   <filter-mapping>
 	<filter-name>login</filter-name>
-	<url-pattern>/page/*</url-pattern>
+	<url-pattern>/page/background/*</url-pattern>
+	<url-pattern>/page/foreground/*</url-pattern>
   </filter-mapping> 
 
   <listener>
