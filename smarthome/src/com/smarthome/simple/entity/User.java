@@ -1,6 +1,7 @@
 package com.smarthome.simple.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.smarthome.util.DateUtil;
 
@@ -34,6 +35,10 @@ public class User implements java.io.Serializable {
 	
 	private String recommendRestTime;//休息时间
 	private String recommendWakeTime;//休息时长
+	private String roleName;//角色名称
+	private Integer roleId;//角色名称
+	
+	private List<Roles> roles;
 
 	// Constructors
 
@@ -191,6 +196,8 @@ public class User implements java.io.Serializable {
 		this.exchangeTime = exchangeTime;
 	}
 
+
+
 	public String getRecommendRestTime() {
 		return recommendRestTime;
 	}
@@ -262,5 +269,31 @@ public class User implements java.io.Serializable {
 	public void setRecommendWakeTime(String recommendWakeTime) {
 		this.recommendWakeTime = recommendWakeTime;
 	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
+	public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
+	}
+
+
 
 }

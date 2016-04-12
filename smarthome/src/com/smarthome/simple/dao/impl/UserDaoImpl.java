@@ -1,12 +1,17 @@
 package com.smarthome.simple.dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smarthome.base.BaseDaoImpl;
 import com.smarthome.simple.dao.UserDao;
+import com.smarthome.simple.dao.UserRolesDao;
+import com.smarthome.simple.entity.Roles;
 import com.smarthome.simple.entity.TipNews;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
@@ -19,8 +24,9 @@ public class UserDaoImpl extends BaseDaoImpl<User>
   implements UserDao
 {
 
-
-
+	@Resource	
+	UserRolesDao userRolesDao;
+	
   @Transactional(rollbackFor={ServiceException.class})
   public String getAutoLoginStauts(UserQuery query)
   {
@@ -50,7 +56,7 @@ public User findBySessionUserName(UserQuery paramUserQuery) {
 
 @Override
 public Page getUserPage(UserQuery query, Integer offset, Integer length) {
-	StringBuffer hql = new StringBuffer("select new User(u.id, u.logoImage, u.userName, u.status, u.phone, u.email, u.registerTime) from User as u where 1=1 ");
+	StringBuffer hql = new StringBuffer("select new User(u.id, u.logoImage, u.userName, u.status, u.phone, u.email, u.registerTime) from User as u  where  1=1");
 	if(!OwnUtil.stringIsEmpty(query.getUserName())){
 		hql = HQLparam.appendAndLike("userName", hql,"u");
 	} 
@@ -61,14 +67,40 @@ public Page getUserPage(UserQuery query, Integer offset, Integer length) {
 		hql = HQLparam.appendAndLike("email", hql,"u");
 	}
 	Object[] objects = HQLparam.returnObjects(query, 3, "userName","phone","email");//动态获取变量
+	Page<User> page = new Page<User>();
 	if(OwnUtil.objectIsEmpty(objects)){
 		hql = HQLparam.appendAndLike("userName", hql,"u");
 		hql.append(" order by u.registerTime desc");
-		return findByPage(hql.toString(), offset, length,"");
+		page = findByPage(hql.toString(), offset, length,"");
 	}else{
 		hql.append(" order by u.registerTime desc");
-		return findByPage(hql.toString(), offset, length,objects);
+		page = findByPage(hql.toString(), offset, length,objects);
 	}
+	if(!OwnUtil.objectIsEmpty(page)){
+		for(int index = 0 ; index <page.size();index++){
+			int uid = page.get(index).getId();
+			List<Roles> roles= userRolesDao.findByUid(uid);
+			if(OwnUtil.listisNotEmpty(roles)){
+				page.get(index).setRoles(roles);
+			}
+		}
+	}
+//	for(Iterator<User> it = page.iterator();it.hasNext();){
+//		int uid = it.next().getId();
+//		List<Roles> roles= userRolesDao.findByUid(uid);
+//		it.next().setRoles(roles);
+//	}
+		
+		
+	
+	return page;
+	
+}
+
+
+
+private void findByUid(int uid) {
+	// TODO Auto-generated method stub
 	
 }
 
@@ -80,4 +112,6 @@ public TipNews getTipNews() {
 	List list = findByhql(hql.toString());
 	return OwnUtil.listisNotEmpty(list)?(TipNews)list.get(0):null;
 }
+
+
 }

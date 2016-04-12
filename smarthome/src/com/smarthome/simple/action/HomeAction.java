@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.annotation.Resource;
 
+import com.smarthome.base.Authority;
 import com.smarthome.base.BaseAction;
 import com.smarthome.simple.entity.Home;
 import com.smarthome.simple.query.HomeQuery;
@@ -21,6 +22,7 @@ public class HomeAction extends BaseAction<Home, HomeQuery> {
 	 * 房屋管理首页 分页数据 
 	 * @return
 	 */
+	@Authority(privilege="homeList",module ="home")										
 	public String homesList(){
 		page = homeServices.getCurrentPage(query,this.pageNum,this.numPerPage);
 		createPage(page);
@@ -45,6 +47,7 @@ public class HomeAction extends BaseAction<Home, HomeQuery> {
 	/**
 	 * 添加 住所信息
 	 */
+	@Authority(privilege="addHome",module ="home")											
 	public void addHome(){
 		try {
 			model.setRecordTime(DateUtil.getCurrDateStr());//设置添加时间
@@ -60,6 +63,7 @@ public class HomeAction extends BaseAction<Home, HomeQuery> {
 	/**
 	 * 更新住所信息
 	 */
+	@Authority(privilege="updateHome",module ="home")												
 	public void updateHome(){
 		try {
 			Home home = homeServices.get(query.getId());
@@ -74,7 +78,10 @@ public class HomeAction extends BaseAction<Home, HomeQuery> {
 			e.printStackTrace();
 		}		
 	}
-	
+	/**
+	 * 删除住所信息
+	 */
+	@Authority(privilege="deleteHome",module ="home")													
 	public void deleteHome(){
 		try {
 			model = homeServices.get(query.getId());

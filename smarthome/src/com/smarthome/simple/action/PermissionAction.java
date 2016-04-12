@@ -5,5 +5,7 @@ import com.smarthome.simple.entity.Permission;
 import com.smarthome.simple.query.PermissionQuery;
 
 public class PermissionAction extends BaseAction<Permission, PermissionQuery> {
+	
+	
 
 }

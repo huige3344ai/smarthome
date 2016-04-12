@@ -23,7 +23,6 @@ $.ajaxSetup({
             var sessionstatus=XMLHttpRequest.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，
             if(sessionstatus=="timeout"){ 
             			alert('你没有相应权限，请登录相应具有权限的用户操作！！！')
-                        
 		                } else if(sessionstatus=="nopermisson"){
 		                	//如果超时就处理 ，指定要跳转的页面
 		                	window.location.replace("page/login.jsp"); 
@@ -297,13 +296,12 @@ mv.app.loadPage = function(Page,MaxPage){
 var deleteOp = function(url,id,msg){
 	if(confirm(msg+" 删除后，用户相关联的数据也会丢失，是否继续")){
 		$.post(url,{'query.id':id},function(json){
-			if(!jQuery.isEmptyObject(json)){
+			if(json){
 				alert('删除成功');
 				self.location.reload();//刷新
 			}else{
 				alert('删除失败');
 			}
-			
 		},'json');
 	}
 }	

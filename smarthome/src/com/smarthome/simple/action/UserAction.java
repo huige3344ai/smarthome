@@ -166,28 +166,32 @@ public class UserAction extends BaseAction<User, UserQuery> {
 	 * @throws ParseException
 	 * @throws UnsupportedEncodingException
 	 */
+	@Authority(privilege="addUser",module ="user")	
 	public void registerBUser() throws ParseException,
 			UnsupportedEncodingException {
 		message="true";
 		model.setStatus((short) 1);// 用户状态
 		model.setRegisterTime(DateUtil.getCurrTimestamp());// 注册时间
 		model.setPwd(MD5Util.encode2hex(model.getPwd()));
-		// model.setAdminId(query.getUid());
+		model.setAdminId(query.getUid());
 		Date birthday = DateUtil.strToDate(model.getBirthday(), "yyyy-MM-dd");
 		int age = DateUtil.getAge(birthday);
 		model.setAge(age);
 		model.setAdminId(getUserId());
-
-		model.setPeriod(PeriodSum.getPeriod(birthday, age));// 后台自动生成人生阶段，方便日后计算客户生活作息规律表
+		Short period = PeriodSum.getPeriod(birthday, age);
+		model.setPeriod(period);// 后台自动生成人生阶段，方便日后计算客户生活作息规律表
 		model.setLogoImage("dist/img/user2-160x160.jpg");
 		
 		userService.save(model);
 		try {
-			Restrecord rest = new Restrecord();
-			rest.setUserId(model.getId());
-			restrecordServices.saveRecord(rest,query);
+			if(!OwnUtil.intIsZero((int)period)){
+				query.setPeroid(period);
+				Restrecord rest = new Restrecord();
+				rest.setUserId(model.getId());
+				restrecordServices.saveRecord(rest,query);
+			}
 		} catch (ServiceException e) {
-			message = e.getMessage();
+			message=Constans.RETRUN_FAILED_STATUS;
 		}		
 		
 		try {
@@ -217,6 +221,7 @@ public class UserAction extends BaseAction<User, UserQuery> {
 	/**
 	 * 更新用户
 	 */
+	@Authority(privilege="updateUser",module ="user")		
 	public void updateBUser() {
 		User user = userService.get(query.getId());
 
@@ -326,6 +331,7 @@ public class UserAction extends BaseAction<User, UserQuery> {
 	/**
 	 * 后台删除用户
 	 */
+	@Authority(privilege="deleteUser",module ="user")			
 	public void deleteUser() {
 		try {
 			User user = userService.get(query.getId());
@@ -342,6 +348,7 @@ public class UserAction extends BaseAction<User, UserQuery> {
 	/**
 	 * 后台更新用户状态
 	 */
+	@Authority(privilege="forbidUser",module ="user")				
 	public void forbiddenUser() {
 		try {
 			User user = userService.get(query.getId());

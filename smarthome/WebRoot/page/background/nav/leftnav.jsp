@@ -61,6 +61,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </a>
             </li>
             
+            <li>
+              <a href="page/rolesAction_getRoles.action">
+                <i class="fa fa-lock"></i> <span>角色管理</span>
+              </a>
+            </li>
+            
           </ul>
         </section>
         <!-- /.sidebar -->

@@ -42,6 +42,16 @@
 			<result name="{1}">background/homem/{1}.jsp</result>			
 		</action>
 		
+		<action name="rolesAction_*" method="{1}" class="rolesAction">
+			<interceptor-ref name="mydefault"/>
+			<result name="direct_getRoles">rolesAction_{1}.action</result>			
+			<result name="{1}">background/roles/{1}.jsp</result>			
+		</action>
+		
+		<action name="permissionAction_*" method="{1}" class="permissionAction">
+			<interceptor-ref name="mydefault"/>
+		</action>
+		
 		
 	</package>
 </struts>    

@@ -114,6 +114,12 @@
 
 				<value>
 					com/smarthome/simple/entity/TipNews.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/PermissionRoles.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/UserRoles.hbm.xml
 				</value></list>
 		</property>	
 	
@@ -138,7 +144,6 @@
 	</bean>	
 	<bean id="springUtils" class="com.smarthome.util.SpringUtils">
 	</bean>
-
 	<!--BASEBEAN END-->
 	
 	
@@ -164,6 +169,9 @@
 		<!--权限  -->
 		<bean id="permissionAction" class="com.smarthome.simple.action.PermissionAction" scope="prototype">	
 		</bean>
+		<!--权限 角色 -->
+		<bean id="rolesAction" class="com.smarthome.simple.action.RolesAction" scope="prototype">	
+		</bean>
 		<!-- 日程任务 -->
 		<bean id="taskAction" class="com.smarthome.simple.action.TaskAction" scope="prototype">	
 		</bean>
@@ -182,6 +190,14 @@
 		</bean>
 		<!-- 权限 -->
 		<bean id="permissionDao" class="com.smarthome.simple.dao.impl.PermissionDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 权限 角色 -->
+		<bean id="rolesDao" class="com.smarthome.simple.dao.impl.RolesDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 人员 角色 -->
+		<bean id="userRolesDaoImpl" class="com.smarthome.simple.dao.impl.UserRolesDaoImpl">
 			<property name="sessionFactory" ref="sessionFactory"></property>	
 		</bean>
 		<!-- 日程任务 -->
@@ -216,6 +232,9 @@
 		</bean>
 		<!--权限  -->
 		<bean id="permissionServices" class="com.smarthome.simple.services.impl.PermissionServicesImpl">
+		</bean>
+		<!--权限 角色  -->
+		<bean id="rolesServicesImpl" class="com.smarthome.simple.services.impl.RolesServicesImpl">
 		</bean>
 		<!-- 日程任务 -->
 		<bean id="taskService" class="com.smarthome.simple.services.impl.TaskServicesImpl">

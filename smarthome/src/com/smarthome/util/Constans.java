@@ -50,7 +50,12 @@ public class Constans
   public static final String RETRUN_FAILED_STATUS="0";//失败 htm 会判断为空
   public static final String RETRUN_SUCCESS_STATUS="1";//成功
   
-  
+  /**
+   * 操作
+   */
+  public static final String OPERA_DELETE="delete";//删除
+  public static final String OPERA_FIND="find";//查询
+  public static final String OPERA_SAVE="save";//保存
   
   
   

@@ -24,6 +24,16 @@ public class PermissionServicesImpl extends BaseServiceImpl<Permission, Query>
 	public List<String> getPermission(int uid) {
 		return permissionDao.hasPower(uid);
 	}
+
+	@Override
+	public List<Permission> getPermisson() {
+		return permissionDao.getPermisson();
+	}
+
+	@Override
+	public List<Permission> getUpdatePermisson(int roleId) {
+		return permissionDao.getSelectedPermisson(roleId);
+	}
 	
 	
 

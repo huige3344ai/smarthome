@@ -151,6 +151,7 @@
 							    	<th>手机号码</th>
 							    	<th>邮箱</th>
 							    	<th>注册时间</th>
+							    	<th>角色</th>
 							    	<th>操作</th>
 							    	
 							    </tr>
@@ -184,6 +185,7 @@
 									        <s:if test="#p.email != ''&&#p.email != null">${p.email}</s:if> 
 									        <s:else >未知</s:else>	        
 								        </td>
+
 								        <td class="center ">
 								        
 									        <s:if test="#p.registerTime !=null">
@@ -191,6 +193,16 @@
 									        </s:if> 
 									        <s:else >未知 </s:else>	        
 								        </td>
+								        
+								        <td class="center ">
+									        <s:if test="#p.roles != null">
+												<s:iterator value="#p.roles" var="var"> 
+												    ${var.roleName}&nbsp;
+												  </s:iterator> 									        
+									        </s:if> 
+									        <s:else >无</s:else>	        
+								        </td>	
+								        							        
 								        <td class="center">
 											
 								            <button  type="button" class="btn btn-info"  onclick="fillData(${p.id})" data-toggle="modal" data-target="#updateModal">
@@ -263,7 +275,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">添加设备</h4>
+                    <h4 class="modal-title">添加用户</h4>
                   </div>
                   
 	              <div class="modal-body">

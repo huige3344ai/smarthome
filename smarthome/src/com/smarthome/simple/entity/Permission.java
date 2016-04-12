@@ -13,7 +13,11 @@ public class Permission
   private String exchangeTime;
   private Integer userId;
 
+  /**
+   * 自定义 属性
+   */
   private String roleName;
+  private String selected;//是否勾选
   
   public Permission()
   {
@@ -29,15 +33,28 @@ public class Permission
   }
   
 
+  /**
+   * 自定义虚构
+   * @param id
+   * @param permissionName
+   * @param module
+   */
+  public Permission(Integer id, String permissionName, String module )
+  {
+    this.id = id;
+    this.permissionName = permissionName;
+    this.module = module;
+  }
+  
 
   public Permission(String permission, String permissionName, String module, String recordTime, String exchangeTime, Integer userId)
   {
-    this.permission = permission;
-    this.permissionName = permissionName;
-    this.module = module;
-    this.recordTime = recordTime;
-    this.exchangeTime = exchangeTime;
-    this.userId = userId;
+	  this.permission = permission;
+	  this.permissionName = permissionName;
+	  this.module = module;
+	  this.recordTime = recordTime;
+	  this.exchangeTime = exchangeTime;
+	  this.userId = userId;
   }
 
   public Integer getId()
@@ -105,5 +122,19 @@ public String getRoleName() {
 
 public void setRoleName(String roleName) {
 	this.roleName = roleName;
+}
+
+
+
+
+public String getSelected() {
+	return selected;
+}
+
+
+
+
+public void setSelected(String selected) {
+	this.selected = selected;
 }
 }

@@ -14,5 +14,18 @@ public interface PermissionServices extends BaseService<Permission, Query> {
 	 * @return
 	 */
   public  List<String>  getPermission(int uid);
+  
+  /**
+   * 获取所有 权限列表
+   * @return
+   */
+  public List<Permission> getPermisson();
+  
+  /**
+   * 获取所有 权限列表
+   * @param roleId
+   * @return
+   */
+  public List<Permission> getUpdatePermisson(int roleId);
 	
 }

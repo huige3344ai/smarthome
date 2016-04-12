@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.smarthome.base.Authority;
 import com.smarthome.base.BaseAction;
 import com.smarthome.simple.entity.Devices;
 import com.smarthome.simple.entity.Home;
@@ -40,8 +41,9 @@ public class DevicesAction extends
     
     
 	/**
-	 * 设备查询 设备首页
+	 * 设备查询 设备首页  后台
 	 */
+	@Authority(privilege="deviceList",module ="device")					
 	public String devicesList(){
 	    page=devicesService.getCurrentPage(query,this.pageNum,this.numPerPage);  
         createPage(page);
@@ -54,6 +56,7 @@ public class DevicesAction extends
 	/**
 	 * 获取所有用户
 	 */
+	@Authority(privilege="userList",module ="user")						
 	public void getAllUserList(){
 		try {
 			List<User> list = userService.findAll();
@@ -64,7 +67,7 @@ public class DevicesAction extends
 	}	
 	
 	/**
-	 * 根据用户id获取用户所有住所
+	 * 根据用户id获取用户所有住所  差权限
 	 */
 	public void getHomeList(){
 		try {
@@ -79,6 +82,7 @@ public class DevicesAction extends
 	/**
 	 * 保存 设备
 	 */
+	@Authority(privilege="addDevice",module ="device")							
 	public void saveDevices(){
 		
 		try {
@@ -96,6 +100,7 @@ public class DevicesAction extends
 	/**
 	 * 更新 设备信息
 	 */
+	@Authority(privilege="updateDevice",module ="device")								
 	public void updateDevices(){
 		try {
 
@@ -116,6 +121,7 @@ public class DevicesAction extends
 	/**
 	 * 删除设备
 	 */
+	@Authority(privilege="deleteDevice",module ="device")									
 	public void deleteDevices(){
 		try {
 			model = devicesService.get(query.getId());
@@ -166,7 +172,7 @@ public class DevicesAction extends
 	}
 	
 	/**
-	 * 用户操更新设备
+	 * 用户操作设备
 	 */
 	public void updateMyDevices(){
 		String msg = Constans.RETRUN_FAILED_STATUS;

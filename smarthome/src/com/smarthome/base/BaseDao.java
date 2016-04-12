@@ -10,6 +10,8 @@ public abstract interface BaseDao<T>
   public abstract void save(Object paramObject);
 
   public abstract void delete(Object paramObject);
+  
+  public abstract void deleteByList(List list);
 
   public abstract void deleteById(Serializable paramSerializable);
 

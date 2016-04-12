@@ -85,5 +85,6 @@
                 <comment>个人说明</comment>
             </column>
         </property>
+       
     </class>
 </hibernate-mapping>

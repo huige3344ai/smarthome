@@ -29,7 +29,7 @@ public class RestrecordServicesImpl extends
 			rest.setRecommendRestTime(system.getStartTime());
 			rest.setRecommendWakeTime(system.getRecommend());
 		}
-		save(rest);
+		restrecordDao.save(rest);
 	}
 	
 	 

@@ -201,6 +201,16 @@ public Page<T> findByPage(final String hql, final Integer offset,final Integer l
       log.error("delete  failed", re);
     }
   }
+  
+  @Override
+  public void deleteByList(List list) {
+	    try {
+	        getHibernateTemplate().deleteAll(list);;
+	      } catch (RuntimeException re) {
+	        log.error("delete  failed", re);
+	      } 	
+  }
+ 
 
   public void save(Object o)
   {
@@ -295,6 +305,7 @@ public Page<T> findByFinallyPage(final String hql, final Integer offset,final In
           throw e;    
       }
 }
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.smarthome.simple.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class Roles
   implements Serializable
@@ -12,6 +13,7 @@ public class Roles
   private String exchangeTime;
   private Integer userId;
 
+  
   public Roles()
   {
   }
@@ -81,4 +83,5 @@ public class Roles
   public void setUserId(Integer userId) {
     this.userId = userId;
   }
+
 }
