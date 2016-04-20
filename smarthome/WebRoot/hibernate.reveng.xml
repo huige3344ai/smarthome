@@ -19,12 +19,18 @@
 	<table name="hy_restrecord" catalog="smarthome"
 		class="com.smarthome.simple.entity.Restrecord">
 	</table>
-	<table name="hy_roles" catalog="smarthome" class="Roles"></table>
+	<table name="hy_roles" catalog="smarthome" class="com.smarthome.simple.entity.Roles"></table>
 	<table name="hy_user" catalog="smarthome"
 		class="com.smarthome.simple.entity.User">
 	</table>
 	<table name="hy_resetsystem" catalog="smarthome"
 		class="com.smarthome.simple.entity.ResetSystem">
 	</table>
-	<table name="tip_news" catalog="smarthome" class="com.smarthome.simple.entity.TipNews"></table>
+	<table name="tip_news" catalog="smarthome"
+		class="com.smarthome.simple.entity.TipNews">
+	</table>
+	<table name="hy_permission_roles" catalog="smarthome"
+		class="com.smarthome.simple.entity.PermissionRoles">
+	</table>
+	<table name="hy_user_roles" catalog="smarthome" class="com.smarthome.simple.entity.UserRoles"></table>
 </hibernate-reverse-engineering>

@@ -49,6 +49,7 @@ public class Constans
   public static final String RETRUN_EXCEPTION_STATUS="-1";//异常
   public static final String RETRUN_FAILED_STATUS="0";//失败 htm 会判断为空
   public static final String RETRUN_SUCCESS_STATUS="1";//成功
+  public static final String RETRUN_NOTHING_STATUS="2";//未有改变
   
   /**
    * 操作
@@ -56,6 +57,13 @@ public class Constans
   public static final String OPERA_DELETE="delete";//删除
   public static final String OPERA_FIND="find";//查询
   public static final String OPERA_SAVE="save";//保存
+  
+  /**
+   * 选择状态
+   * 
+   */
+  public static final String SELECT_TRUE="1";//被选择
+  public static final String SELECT_FALSE="0";//不被选择
   
   
   

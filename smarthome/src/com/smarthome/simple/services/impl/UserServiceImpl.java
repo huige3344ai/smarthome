@@ -207,8 +207,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 	@Override
 	public int findByEmailAndValidate(UserQuery query) {
 		int status=0;
-		
-		List res= resetPwdDao.findByEmailAndValidate(query.getEmail(), query.getEmailVer());
+		String emailVer = query.getEmailVer();
+		if(!OwnUtil.stringIsEmpty(emailVer)){
+			emailVer = emailVer.toUpperCase();
+		}
+		List res= resetPwdDao.findByEmailAndValidate(query.getEmail(), emailVer);
 		if(OwnUtil.listisNotEmpty(res)){
 			ResetPwd rp = (ResetPwd) res.get(0);
 			try {

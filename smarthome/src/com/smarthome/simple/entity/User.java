@@ -53,9 +53,9 @@ public class User implements java.io.Serializable {
    }
    
    /**
-    * User( id, logoImage, userName, status, phone, email, registerTime)
+    * User( id, logoImage, userName, status, phone, email, registerTim, isAdmin)
     */
-   public User(Integer id,String logoImage,String userName,Short status,String phone,String email,Object registerTime)
+   public User(Integer id,String logoImage,String userName,Short status,String phone,String email,Object registerTime,Short isAdmin)
    {
 	   this.id = id;
 	   this.userName = userName;
@@ -64,6 +64,7 @@ public class User implements java.io.Serializable {
 	   this.phone = phone;
 	   this.email = email;
 	   this.registerTime = DateUtil.stringToTimestamp(registerTime.toString());//需要这样子转换，不然无法被注入值导致找不到该虚构函数
+	   this.isAdmin = isAdmin;
    }
    
    

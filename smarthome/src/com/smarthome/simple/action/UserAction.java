@@ -376,7 +376,7 @@ public class UserAction extends BaseAction<User, UserQuery> {
 		if (!OwnUtil.objectIsEmpty(user)) {
 			String code = RandomStringUtils.randomAlphanumeric(6);
 			String validate = "您的验证码是:" + code;
-
+			code = code.toUpperCase();//转换成大写
 			ResetPwd reset = new ResetPwd();
 			reset.setEmailVer(code);
 			reset.setUid(user.getId());

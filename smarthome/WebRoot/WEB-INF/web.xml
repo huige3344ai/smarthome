@@ -11,7 +11,10 @@
 	 <param-name>charset</param-name> 
 	 <param-value>utf-8</param-value>
 	 </init-param> 
-	 </servlet> 
+	</servlet> 
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
   <filter>
     <filter-name>struts2</filter-name>
     <filter-class>

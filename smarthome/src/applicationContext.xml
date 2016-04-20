@@ -192,12 +192,12 @@
 		<bean id="permissionDao" class="com.smarthome.simple.dao.impl.PermissionDaoImpl">
 			<property name="sessionFactory" ref="sessionFactory"></property>	
 		</bean>
-		<!-- 权限 角色 -->
+		<!-- 角色 -->
 		<bean id="rolesDao" class="com.smarthome.simple.dao.impl.RolesDaoImpl">
 			<property name="sessionFactory" ref="sessionFactory"></property>	
 		</bean>
 		<!-- 人员 角色 -->
-		<bean id="userRolesDaoImpl" class="com.smarthome.simple.dao.impl.UserRolesDaoImpl">
+		<bean id="userRolesDao" class="com.smarthome.simple.dao.impl.UserRolesDaoImpl">
 			<property name="sessionFactory" ref="sessionFactory"></property>	
 		</bean>
 		<!-- 日程任务 -->

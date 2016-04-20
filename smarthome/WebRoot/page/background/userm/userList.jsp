@@ -27,6 +27,8 @@
 	<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
 	<!-- Ionicons -->
 	<link href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"> 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="plugins/select2/select2.min.css">   
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- base css -->
@@ -202,11 +204,14 @@
 									        </s:if> 
 									        <s:else >无</s:else>	        
 								        </td>	
-								        							        
 								        <td class="center">
-											
+								        	<s:if test="#p.isAdmin!=null&&#p.isAdmin==1">
+									            <button  type="button" class="btn btn-success"  onclick="setRole(${p.id})" data-toggle="modal" >
+									                <i class="glyphicon glyphicon-pencil"></i>&nbsp授权
+									            </button>
+								        	</s:if>
 								            <button  type="button" class="btn btn-info"  onclick="fillData(${p.id})" data-toggle="modal" data-target="#updateModal">
-								                <i class="glyphicon glyphicon-edit icon-white"></i>编辑
+								                <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp编辑
 								            </button>   
 								            <s:if test="#p.status == 1">
 									            <button  type="button" class="btn btn-warning"  onclick="updateOp('page/userAction_forbiddenUser.action',${p.id},'0','是否需要禁用该用户');" data-toggle="modal">
@@ -379,7 +384,36 @@
               </div><!-- /.modal-dialog -->
            </div>
 
-		<!-- ./add modal -->
+		<!-- ./update modal -->
+		
+		<!-- role modal -->
+		<div class="modal" id="roleModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">权限设置</h4>
+                  </div>
+                  
+	              <div class="modal-body">
+					        <form action="" id="hy_role_form" method="post">
+					          <input type="hidden" name="query.userId" id="roles_user_ud">
+				                  <div class="form-group">
+				                    <label>权限选择</label>
+				                    <select class="form-control select2" id="roles_select2" name="query.rids" multiple="multiple" data-placeholder="请选择" style="width: 100%;">
+				                    </select>
+				                  </div><!-- /.form-group -->
+			                 <div class="modal-footer">
+			                   <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			                   <button type="submit" id="hy_updte_user"  class="btn btn-primary">保存</button>
+			                 </div>					
+					  </form><!-- /.form -->
+					</div><!-- /.modal-body -->
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+           </div>
+
+		<!-- ./role modal -->
 
 
 	</div>
@@ -394,6 +428,8 @@
     <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- Select2 -->
+    <script src="plugins/select2/select2.full.min.js"></script>    
     <!-- AdminLTE App -->
     <script src="dist/js/app.min.js"></script>
     <!-- InputMask -->

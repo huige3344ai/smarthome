@@ -1,8 +1,9 @@
 package com.smarthome.simple.services;
 
+import java.util.List;
+
 import com.smarthome.base.BaseService;
 import com.smarthome.simple.entity.Roles;
-import com.smarthome.simple.query.DevicesQuery;
 import com.smarthome.simple.query.RolesQuery;
 import com.smarthome.util.Page;
 
@@ -38,5 +39,19 @@ public interface RolesServices extends BaseService<Roles, RolesQuery> {
 	 * @return
 	 */
 	public String deletRoles(RolesQuery query);
+	
+	/**
+	 * 获取该用户的所有角色
+	 * @param query
+	 * @return
+	 */
+	public List<Roles> getRolesList(RolesQuery query);
+	
+	/**
+	 * 更新用户角色
+	 * @param query
+	 * @return
+	 */
+	public String updateUserRoles(RolesQuery query);
 	
 }

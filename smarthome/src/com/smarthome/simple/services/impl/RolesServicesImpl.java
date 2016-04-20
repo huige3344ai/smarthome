@@ -1,10 +1,13 @@
 package com.smarthome.simple.services.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import com.smarthome.base.BaseServiceImpl;
 import com.smarthome.simple.dao.PermissionDao;
 import com.smarthome.simple.dao.RolesDao;
+import com.smarthome.simple.dao.UserRolesDao;
 import com.smarthome.simple.entity.Roles;
 import com.smarthome.simple.query.RolesQuery;
 import com.smarthome.simple.services.RolesServices;
@@ -19,6 +22,8 @@ public class RolesServicesImpl extends BaseServiceImpl<Roles, RolesQuery> implem
 	RolesDao rolesDao;
 	@Resource
 	PermissionDao permissionDao;
+	@Resource	
+	UserRolesDao userRolesDao;
 	
 	@Override
 	public Page getCurrentPage(RolesQuery query, Integer offset, Integer length) {
@@ -62,6 +67,27 @@ public class RolesServicesImpl extends BaseServiceImpl<Roles, RolesQuery> implem
 			permissionDao.deletePermissionRoles(query.getId());
 		}
 		return Constans.RETRUN_SUCCESS_STATUS;
+	}
+
+	@Override
+	public List<Roles> getRolesList(RolesQuery query) {
+		List<Roles> haveRoles = userRolesDao.findByUid(query.getUserId());
+		List<Roles> allRoles = rolesDao.findAll(Roles.class);
+		if(OwnUtil.listisNotEmpty(allRoles)){
+			for(int index = 0;index<allRoles.size();index++){
+				for(Roles haveRole:haveRoles){
+					if(allRoles.get(index).getId()==haveRole.getId()){
+						allRoles.get(index).setSelected(Constans.SELECT_TRUE);
+					}
+				}
+			}
+		}
+		return allRoles;
+	}
+
+	@Override
+	public String updateUserRoles(RolesQuery query) {
+		return userRolesDao.updateUserRoles(query.getRids(), query.getUserId(), query.getUid());
 	}
 
 }

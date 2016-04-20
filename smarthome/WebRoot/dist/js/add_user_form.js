@@ -211,13 +211,44 @@ object={};
 			});
 	 }
 	 
+	 var  setRole = function(id){
+		 
+		 $.ajax({
+			  type: 'POST',
+			  url: 'page/rolesAction_getRolesList.action',
+			  data: {"query.userId":id},
+			  async:'false',
+			  success: function(json){
+				  		$('#roles_select2').empty();
+						if(!jQuery.isEmptyObject(json)){
+							$.each(json, function(index,element){
+								if(element.selected=='1'){
+									var op = "<option value='"+element.id+"' selected='selected'>"+element.roleName+"</option>";
+								}else{
+									var op = "<option value='"+element.id+"'>"+element.roleName+"</option>";
+								}
+								$('#roles_select2').append(op);
+							});
+							$('#roles_user_ud').val(id);
+						}
+						$('#roles_select2').select2();						
+						
+							
+			  },
+			  dataType:"json", 
+			  error:function(){
+			  },
+			});
+		 $('#roleModal').modal();
+		 
+
+	 }
+	 
 	$(function(){
 		$.setValidate("#hy_register_form","添加","page/userAction_registerBUser.action","#hy_pwd","add_");
 		$.setCloseModal("#addModal");
-		
 		$.setCloseModal("#updateModal");		 
-
-		
+		$.setCloseModal("#roleModal");		 
 		
 		$('#up_email').change( function() { 
 			if($('#up_email').val()!=object.email){
@@ -302,8 +333,31 @@ object={};
 	  		}
 	  	});
 	  	
-
-	  	
-		
+	  	$('#hy_role_form').validate({
+	  		 submitHandler:function(form){
+					if(confirm('是否确认修改当前用户的权限？')){
+						var data = $('#hy_role_form').serialize();
+						$.ajax({
+							type: 'POST',
+							url: 'page/rolesAction_updateUserRoles.action',
+							data: data,
+							success: function(msg){
+								if(msg){
+									alert("成功，请关闭当前对话框。");
+									add_sucess='1';
+								}else if(msg=='2'){
+									alert("未作任何改变");
+								}else{
+									alert("更新失败，失败代码："+msg);
+								}
+							},
+							erorr:function(){
+								alert('网络异常，添加失败');
+							}
+						});
+					}	  			 
+	  		 }
+	  	});  	
+	  		
 		
 	});

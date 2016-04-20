@@ -12,6 +12,8 @@ public class Roles
   private String recordTime;
   private String exchangeTime;
   private Integer userId;
+  
+  private String selected;//是否需要选择
 
   
   public Roles()
@@ -83,5 +85,13 @@ public class Roles
   public void setUserId(Integer userId) {
     this.userId = userId;
   }
+
+public String getSelected() {
+	return selected;
+}
+
+public void setSelected(String selected) {
+	this.selected = selected;
+}
 
 }

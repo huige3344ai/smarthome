@@ -8,9 +8,11 @@ import javax.annotation.Resource;
 import com.smarthome.base.Authority;
 import com.smarthome.base.BaseAction;
 import com.smarthome.simple.entity.Roles;
+import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.RolesQuery;
 import com.smarthome.simple.services.PermissionServices;
 import com.smarthome.simple.services.RolesServices;
+import com.smarthome.simple.services.UserServices;
 import com.smarthome.util.Constans;
 import com.smarthome.util.JSONSerializer;
 import com.smarthome.util.OwnUtil;
@@ -20,6 +22,8 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	RolesServices rolesServices;
 	@Resource
 	PermissionServices permissionServices;
+	@Resource
+	UserServices userServices;
 	
 	/**
 	 * 查询角色列表
@@ -106,7 +110,9 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 		
 	}
 	
-	
+	/**
+	 * 删除角色
+	 */
 	public void deleteRoles(){
 		try {
 				if(!OwnUtil.objectIsEmpty(query.getId())){
@@ -119,7 +125,41 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 			e.printStackTrace();
 		}		
 	}
-
+	
+	/**
+	 * 获取用户的所有角色
+	 */
+	public void getRolesList(){
+		try {	
+			if(!OwnUtil.intIsZero(query.getUserId())){
+					User user = userServices.get(query.getUserId());
+					if(!OwnUtil.objectIsEmpty(user)//是否存在用戶
+							&&!OwnUtil.intIsZero((int)user.getIsAdmin())//是否拥有管理员属性
+								&&user.getIsAdmin()==1){//是否是管理员
+						List<Roles> roles = rolesServices.getRolesList(query);
+						getResponse().getWriter().write(JSONSerializer.serialize(roles));				
+					}else
+						getResponse().getWriter().write("");				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	
+	/**
+	 * 更新用户权限
+	 */
+	public void updateUserRoles(){
+		try {
+			query.setUid(getUserId());
+			String msg = rolesServices.updateUserRoles(query);
+			getResponse().getWriter().write(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}				
+		
+	}
 	
 	
 }

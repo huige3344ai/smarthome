@@ -14,5 +14,18 @@ public interface UserRolesDao extends BaseDao<UserRoles> {
 	 * @return
 	 */
 	public List<Roles> findByUid(int uid);
+	
+	
+	/**
+	 * 更新用户的角色
+	 * @param rids
+	 * 	角色id集
+	 * @param uid
+	 * 	用户id
+	 * @param adminId
+	 * 	操作员id
+	 * @return
+	 */
+	public String updateUserRoles(int []rids,int uid,int adminId);
 
 }

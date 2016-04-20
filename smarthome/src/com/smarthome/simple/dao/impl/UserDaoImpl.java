@@ -56,7 +56,7 @@ public User findBySessionUserName(UserQuery paramUserQuery) {
 
 @Override
 public Page getUserPage(UserQuery query, Integer offset, Integer length) {
-	StringBuffer hql = new StringBuffer("select new User(u.id, u.logoImage, u.userName, u.status, u.phone, u.email, u.registerTime) from User as u  where  1=1");
+	StringBuffer hql = new StringBuffer("select new User(u.id, u.logoImage, u.userName, u.status, u.phone, u.email, u.registerTime, u.isAdmin) from User as u  where  1=1");
 	if(!OwnUtil.stringIsEmpty(query.getUserName())){
 		hql = HQLparam.appendAndLike("userName", hql,"u");
 	} 
@@ -85,14 +85,7 @@ public Page getUserPage(UserQuery query, Integer offset, Integer length) {
 			}
 		}
 	}
-//	for(Iterator<User> it = page.iterator();it.hasNext();){
-//		int uid = it.next().getId();
-//		List<Roles> roles= userRolesDao.findByUid(uid);
-//		it.next().setRoles(roles);
-//	}
-		
-		
-	
+
 	return page;
 	
 }
