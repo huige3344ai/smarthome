@@ -167,7 +167,7 @@ var fillData = function(id){
 				  					$('#hy_update_role_home').append(fillCheck(element.id,element.permissionName,'true'));
 				  				}else
 				  					$('#hy_update_role_home').append(fillCheck(element.id,element.permissionName,''));
-				  			}else if(element.module=='roles'){
+				  			}else if(element.module=='role'){
 				  				if(element.selected=='1'){
 				  					$('#hy_update_role_power').append(fillCheck(element.id,element.permissionName,'true'));
 				  				}else

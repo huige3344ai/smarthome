@@ -94,9 +94,6 @@
 					com/smarthome/simple/entity/Permission.hbm.xml
 				</value>
 				<value>
-					com/smarthome/simple/entity/PermissionUser.hbm.xml
-				</value>
-				<value>
 					com/smarthome/simple/entity/Restrecord.hbm.xml
 				</value>
 				<value>

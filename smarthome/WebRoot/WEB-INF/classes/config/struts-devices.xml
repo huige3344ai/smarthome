@@ -3,7 +3,26 @@
 
 <struts>
 	<constant name="struts.multipart.saveDir" value="/tmp"/>
-	<package name="devices" namespace="/page" extends="struts">
+	<package name="devices" namespace="/" extends="struts">
+		<!-- 说明： 如果命名空间为page 或者其他的可能会导致链接直接加上命名空间名称 -->
+       <global-results>
+       	<result name="login">page/login.jsp</result>
+       	<result name="input" type="redirect">page/404.jsp</result>
+       </global-results>	
+		<!-- 后台 -->
+		<action name="devicesActionb_*" class="devicesAction" method="{1}">
+			<interceptor-ref name="mydefault"/>
+			<result name="direct_devicesList" type="redirect">devicesActionb_devicesList.action</result>
+			<result name="direct_myDevices" type="redirect">devicesActionb_myDevices.action</result>
+			<result name="{1}">page/background/device/{1}.jsp</result>
+		</action>
+		<!-- 前台 -->
+		<action name="devicesAction_*" class="devicesAction" method="{1}">
+			<interceptor-ref name="mydefault"/>
+			<result name="direct_myDevices" type="redirect">devicesAction_myDevices.action</result>
+			<result name="{1}">page/foreground/device/{1}.jsp</result>
+		</action>
+	
 	
 	</package>
 </struts>    

@@ -41,6 +41,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 获取权限列表
 	 */
+	@Authority(privilege="roleList",module ="role")															
 	public void getPermisson(){
 		try {
 			List permissions = permissionServices.getPermisson();
@@ -56,6 +57,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 保存角色
 	 */
+	@Authority(privilege="saveRole",module ="role")																
 	public void saveRoles(){
 		try {
 			query.setUid(getUserId());
@@ -70,6 +72,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 获取更新角色的权限列表
 	 */
+	@Authority(privilege="updateRole",module ="role")																	
 	public void getUpdatePermisson(){
 		try {
 			List permissions = permissionServices.getUpdatePermisson(query.getId());
@@ -82,6 +85,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 获取更新role的基本信息
 	 */
+	@Authority(privilege="updateRole",module ="role")																		
 	public void getUpdateRoles(){
 		try {
 			model = rolesServices.get(query.getId());
@@ -94,6 +98,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 更新权限信息
 	 */
+	@Authority(privilege="updateRole",module ="role")																		
 	public void updateRoles(){
 		try {
 			
@@ -113,6 +118,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 删除角色
 	 */
+	@Authority(privilege="deleteRole",module ="role")																		
 	public void deleteRoles(){
 		try {
 				if(!OwnUtil.objectIsEmpty(query.getId())){
@@ -129,6 +135,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 获取用户的所有角色
 	 */
+	@Authority(privilege="setRole",module ="role")																					
 	public void getRolesList(){
 		try {	
 			if(!OwnUtil.intIsZero(query.getUserId())){
@@ -150,6 +157,7 @@ public class RolesAction extends BaseAction<Roles, RolesQuery> {
 	/**
 	 * 更新用户权限
 	 */
+	@Authority(privilege="setRole",module ="role")																				
 	public void updateUserRoles(){
 		try {
 			query.setUid(getUserId());

@@ -1,6 +1,7 @@
 package com.smarthome.simple.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.smarthome.base.BaseDao;
 import com.smarthome.simple.entity.Permission;
@@ -13,7 +14,7 @@ public abstract interface PermissionDao extends BaseDao<Permission>
 		 * @param uid
 		 * @return
 		 */
-	  public abstract List<String> hasPower(int uid);
+	  public abstract Set<String> hasPower(int uid);
 	  
 	  /**
 	   * 获取所有权限

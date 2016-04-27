@@ -1,6 +1,7 @@
 package com.smarthome.simple.services;
 
 import java.util.List;
+import java.util.Set;
 
 import com.smarthome.base.BaseService;
 import com.smarthome.base.Query;
@@ -13,7 +14,7 @@ public interface PermissionServices extends BaseService<Permission, Query> {
 	 * @param uid
 	 * @return
 	 */
-  public  List<String>  getPermission(int uid);
+  public  Set<String>  getPermission(int uid);
   
   /**
    * 获取所有 权限列表

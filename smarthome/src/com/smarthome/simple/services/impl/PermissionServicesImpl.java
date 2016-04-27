@@ -1,6 +1,7 @@
 package com.smarthome.simple.services.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -21,7 +22,7 @@ public class PermissionServicesImpl extends BaseServiceImpl<Permission, Query>
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<String> getPermission(int uid) {
+	public Set<String> getPermission(int uid) {
 		return permissionDao.hasPower(uid);
 	}
 

@@ -21,12 +21,13 @@ $.ajaxSetup({
     contentType:"application/x-www-form-urlencoded;charset=utf-8", 
     complete:function(XMLHttpRequest,textStatus){ 
             var sessionstatus=XMLHttpRequest.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，
-            if(sessionstatus=="timeout"){ 
-            			alert('你没有相应权限，请登录相应具有权限的用户操作！！！')
-		                } else if(sessionstatus=="nopermisson"){
-		                	//如果超时就处理 ，指定要跳转的页面
-		                	window.location.replace("page/login.jsp"); 
-		                }
+    			if(sessionstatus=="nopermisson"){ 
+    				alert('你没有相应权限，请登录相应具有权限的用户操作！！！')
+                } else if(sessionstatus=="timeout"){
+                	//如果超时就处理 ，指定要跳转的页面
+                	var uri = encodeURI(encodeURI('page/login.jsp?message=你还没有登录呢~'));
+                	window.location.replace(uri); 
+                }
              } 
     });
 

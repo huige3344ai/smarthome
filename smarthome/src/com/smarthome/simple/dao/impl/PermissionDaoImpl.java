@@ -1,8 +1,10 @@
 package com.smarthome.simple.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,26 +21,26 @@ import com.smarthome.util.OwnUtil;
 public class PermissionDaoImpl extends BaseDaoImpl<Permission>
   implements PermissionDao
 {
-
 	@Override
-	public List<String> hasPower(int uid) {
+	public Set<String> hasPower(int uid) {
 	    List permissonsList = new ArrayList();
-	    StringBuffer hql = new StringBuffer("select new Permission( p.permission,  p.module) from Permission as p, PermissionUser as pu,UserRoles as ur where 1=1 and  ( p.id=pu.permissionId )");
+	    StringBuffer hql = new StringBuffer("select new Permission( p.permission,  p.module) from  Permission as p,PermissionRoles as pr,UserRoles as ur where 1=1 and  ( p.id=pr.permissionId )");
 	    hql = HQLparam.appendAnd("userId", hql, "ur");
 	    org.hibernate.Query query =  createEQuery(hql.toString(), uid);
-	    List permissons = query.list();
-	    if (!OwnUtil.objectIsEmpty(permissons))
+	    List permissions = query.list();	    
+	    Set pers = new HashSet();//过滤重复权限 提高权限核对速度
+	    if (!OwnUtil.objectIsEmpty(permissions))
 	    {
-	      Iterator iterator = permissons.iterator();
+	      Iterator iterator = permissions.iterator();
 	      while (iterator.hasNext()) {
 	        Permission permisson = (Permission)iterator.next();
 	        StringBuffer permission_str = new StringBuffer(permisson.getModule());
 	        permission_str.append("_");
 	        permission_str.append(permisson.getPermission());
-	        permissonsList.add(permission_str.toString());
+	        pers.add(permission_str.toString());
 	      }
 	    }
-	    return permissonsList;
+	    return pers;
 	}
 
 	@Override

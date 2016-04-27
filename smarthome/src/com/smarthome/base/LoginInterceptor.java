@@ -3,7 +3,7 @@ package com.smarthome.base;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -136,7 +136,7 @@ public class LoginInterceptor extends AbstractInterceptor
   {
 	PermissionServices services = (PermissionServices)SpringUtils.getBeanById("permissionServices");
     boolean flag = false;
-    List powers = services.getPermission(uid);
+    Set powers = services.getPermission(uid);
     if (OwnUtil.listisNotEmpty(powers)) {  	
       Iterator iterator = powers.iterator();
       while (iterator.hasNext()) {

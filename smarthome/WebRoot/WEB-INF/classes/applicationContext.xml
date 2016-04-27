@@ -53,9 +53,7 @@
         <!-- 因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的 时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable   
             等方法来提升连接测试的性能。Default: false -->  
         <property name="testConnectionOnCheckout" value="false" /> 
-	
 		<property name="preferredTestQuery" value="SELECT 1"/>    
-		  			
 	</bean>
 
 
@@ -69,7 +67,7 @@
 		</property>
 		<!-- 下面指定Hibernate的属性 -->
 		<property name="hibernateProperties">
-			<props>
+			<props>	
 				<!-- 下面指定Hibernate使用的数据库方言 -->
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQLDialect
@@ -80,14 +78,15 @@
 		<property name="mappingResources" >
 			<list>
 
-
 				<value>
 					com/smarthome/simple/entity/Devices.hbm.xml
 				</value>
 				<value>
 					com/smarthome/simple/entity/Health.hbm.xml
 				</value>
-				<value>com/smarthome/simple/entity/Home.hbm.xml</value>
+				<value>
+					com/smarthome/simple/entity/Home.hbm.xml
+				</value>
 				<value>
 					com/smarthome/simple/entity/Memoradum.hbm.xml
 				</value>
@@ -95,15 +94,30 @@
 					com/smarthome/simple/entity/Permission.hbm.xml
 				</value>
 				<value>
-					com/smarthome/simple/entity/PermissionUser.hbm.xml
-				</value>
-				<value>
 					com/smarthome/simple/entity/Restrecord.hbm.xml
 				</value>
-				<value>com/smarthome/simple/entity/Roles.hbm.xml</value>
-				<value>com/smarthome/simple/entity/User.hbm.xml</value>
-				
-			</list>
+				<value>
+					com/smarthome/simple/entity/Roles.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/User.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/ResetPwd.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/ResetSystem.hbm.xml
+				</value>
+
+				<value>
+					com/smarthome/simple/entity/TipNews.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/PermissionRoles.hbm.xml
+				</value>
+				<value>
+					com/smarthome/simple/entity/UserRoles.hbm.xml
+				</value></list>
 		</property>	
 	
 
@@ -124,11 +138,9 @@
 	 	
 	<!--BASEBEAN   -->
 	<bean id="LoginInterceptor" class="com.smarthome.base.LoginInterceptor">
-		<property name="userDao" ref="userDao"></property>	
 	</bean>	
 	<bean id="springUtils" class="com.smarthome.util.SpringUtils">
 	</bean>
-
 	<!--BASEBEAN END-->
 	
 	
@@ -137,38 +149,102 @@
 	</bean>
 	<bean id="taskQuery" class="com.smarthome.simple.query.MemoradumQuery">
 	</bean>
+	<bean id="devicesQuery" class="com.smarthome.simple.query.DevicesQuery">
+	</bean>
+	<bean id="restrecordQuery" class="com.smarthome.simple.query.RestrecordQuery">
+	</bean>
+	<bean id="permissionQuery" class="com.smarthome.simple.query.PermissionQuery">
+	</bean>
 	<!-- QueryBean ENDING -->	
 
 
 	
 	<!-- 配置ACTION层-->
-	<bean id="userAction" class="com.smarthome.simple.action.UserAction" scope="prototype">	
-	</bean>
-	<bean id="taskAction" class="com.smarthome.simple.action.TaskAction" scope="prototype">	
-	</bean>
-	
+		<!--用户  -->
+		<bean id="userAction" class="com.smarthome.simple.action.UserAction" scope="prototype">	
+		</bean>
+		<!--权限  -->
+		<bean id="permissionAction" class="com.smarthome.simple.action.PermissionAction" scope="prototype">	
+		</bean>
+		<!--权限 角色 -->
+		<bean id="rolesAction" class="com.smarthome.simple.action.RolesAction" scope="prototype">	
+		</bean>
+		<!-- 日程任务 -->
+		<bean id="taskAction" class="com.smarthome.simple.action.TaskAction" scope="prototype">	
+		</bean>
+		<!-- 设备 -->	
+		<bean id="devicesAction" class="com.smarthome.simple.action.DevicesAction" scope="prototype">	
+		</bean>
+		<!-- 房屋 -->	
+		<bean id="homeAction" class="com.smarthome.simple.action.HomeAction" scope="prototype">	
+		</bean>
 	<!-- ACTION E -->
 	
 	 <!-- 配置DAO层，必须提供DAO的实现类 -->	
-	<bean id="userDao" class="com.smarthome.simple.dao.impl.UserDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-		<property name="permissionDao" ref="permissionDao"></property>	
-	</bean>
-	<bean id="permissionDao" class="com.smarthome.simple.dao.impl.PermissionDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>	
-	</bean>
-	<bean id="memoradumDao" class="com.smarthome.simple.dao.impl.TaskDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>	
-	</bean>
-	
+	 	<!--用户  -->
+		<bean id="userDao" class="com.smarthome.simple.dao.impl.UserDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<!-- 权限 -->
+		<bean id="permissionDao" class="com.smarthome.simple.dao.impl.PermissionDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 角色 -->
+		<bean id="rolesDao" class="com.smarthome.simple.dao.impl.RolesDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 人员 角色 -->
+		<bean id="userRolesDao" class="com.smarthome.simple.dao.impl.UserRolesDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 日程任务 -->
+		<bean id="memoradumDao" class="com.smarthome.simple.dao.impl.TaskDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 找回密码表 -->
+		<bean id="resetPwdDao" class="com.smarthome.simple.dao.impl.ResetPwdDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 设备 -->	
+		<bean id="devicesDao" class="com.smarthome.simple.dao.impl.DevicesDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 房屋 -->
+		<bean id="homeDao" class="com.smarthome.simple.dao.impl.HomeDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<!-- 系统休息时间推荐-->
+		<bean id="resetSystemDao" class="com.smarthome.simple.dao.impl.ResetSystemDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
+		<bean id="restrecordDao" class="com.smarthome.simple.dao.impl.RestrecordDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>	
+		</bean>
 	<!-- DAO层 ENDING -->
 	
 	
 	<!-- 配置 SERVICE层 	-->
-	<bean id="userService" class="com.smarthome.simple.services.impl.UserServiceImpl">
-	</bean>
-	<bean id="taskService" class="com.smarthome.simple.services.impl.TaskServicesImpl">
-	</bean>
+		<!--用户  -->
+		<bean id="userService" class="com.smarthome.simple.services.impl.UserServiceImpl">
+		</bean>
+		<!--权限  -->
+		<bean id="permissionServices" class="com.smarthome.simple.services.impl.PermissionServicesImpl">
+		</bean>
+		<!--权限 角色  -->
+		<bean id="rolesServicesImpl" class="com.smarthome.simple.services.impl.RolesServicesImpl">
+		</bean>
+		<!-- 日程任务 -->
+		<bean id="taskService" class="com.smarthome.simple.services.impl.TaskServicesImpl">
+		</bean>
+		<!-- 设备 -->
+		<bean id="devicesService" class="com.smarthome.simple.services.impl.DevicesServicesImpl">
+		</bean>
+		<!-- 房屋 -->
+		<bean id="homeService" class="com.smarthome.simple.services.impl.HomeserviceImpl">
+		</bean>
+		<!-- 系统休息时间推荐-->
+		<bean id="restrecordServices" class="com.smarthome.simple.services.impl.RestrecordServicesImpl">
+		</bean>
 	<!-- SERVICE层 ENDING -->
 		
 </beans>

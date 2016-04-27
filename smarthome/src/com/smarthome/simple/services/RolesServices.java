@@ -41,7 +41,7 @@ public interface RolesServices extends BaseService<Roles, RolesQuery> {
 	public String deletRoles(RolesQuery query);
 	
 	/**
-	 * 获取该用户的所有角色
+	 * 授权时候获取所有角色 并且获取那些角色用户已经具备
 	 * @param query
 	 * @return
 	 */
