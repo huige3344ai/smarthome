@@ -17,6 +17,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>智能家居控制后台系统</title>
+<link rel="shortcut icon" href="dist/img/favicon.ico">
+<link rel="Bookmark" href="dist/img/favicon.ico"> 
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -56,7 +58,7 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					首页 <small>用户管理</small>
+					首页 <small>用户管理  fgdaf ${session.user.userName}</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="page/background/index.jsp"><i

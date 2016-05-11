@@ -1226,8 +1226,6 @@ public class DateUtil {
 						age--;
 					}
 				}
-			}else{
-				age--;
 			}
 		}
 		

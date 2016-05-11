@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -12,6 +13,7 @@ import javax.servlet.http.Cookie;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smarthome.base.BaseServiceImpl;
+import com.smarthome.base.PeriodSum;
 import com.smarthome.simple.dao.DevicesDao;
 import com.smarthome.simple.dao.HomeDao;
 import com.smarthome.simple.dao.ResetPwdDao;
@@ -294,10 +296,39 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 		TipNews tips = baseDao.getTipNews();
 		if(!OwnUtil.objectIsEmpty(tips)){
 			if(i==1){
-				getRequest().getSession().setAttribute("tips", tips);
+				TipNews oldTips = getRequest().getSession().getAttribute("tips")==null?new TipNews():(TipNews)getRequest().getSession().getAttribute("tips");
+				if(!oldTips.equals(tips)){
+					getRequest().getSession().setAttribute("tips", tips);
+				}
 			}else{
 				getRequest().getSession().removeAttribute("tips");
 			}
 		}
+	}
+
+	@Override
+	public boolean updateAllUserPeriod() {
+		List<User> users = baseDao.findAll(User.class);
+		boolean falg = true;
+		for(User user :users){
+			int age = 0;
+			String birthDay=user.getBirthday();
+			if(!OwnUtil.stringIsEmpty(birthDay)){
+				try {
+					Date birthday = DateUtil.strToDate(birthDay, "yyyy-MM-dd");
+					age = DateUtil.getAge(birthday);
+					short period = PeriodSum.getPeriod(birthday, age);
+					user.setAge(age);
+					if(user.getPeriod()!=null&&period!=user.getPeriod()){
+						user.setPeriod(period);
+						update(user);
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+					falg=false;
+				}
+			}
+		}
+		return falg;
 	}
 }

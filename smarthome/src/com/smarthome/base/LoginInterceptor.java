@@ -50,6 +50,7 @@ public class LoginInterceptor extends AbstractInterceptor
     Class clazz = invocation.getAction().getClass();
     Method currentMethod = clazz.getMethod(methodName, new Class[0]);
     if (OwnUtil.isAdmin(user)){
+    	service.getTipNews(1);  	   	
     	return invocation.invoke();
     }else if ((user != null) ){
      
@@ -65,6 +66,7 @@ public class LoginInterceptor extends AbstractInterceptor
     		if (checkIsNotPower(permission.toString(), user.getId().intValue())) {
     			String time = DateUtil.dateToString(new Date());
     			log.info("操作员：" + user.getUserName() + "操作了" + privilege + "执行时间：" + time);
+    	    	service.getTipNews(1);  	   	    			
     			return invocation.invoke();
     		}else if(preHandle(request,response,"nopermisson")){//action直接访问非 ajax
     			return null;
@@ -74,6 +76,7 @@ public class LoginInterceptor extends AbstractInterceptor
     		}
     		
     	}else{
+        	service.getTipNews(1);  	   	    		
         	return invocation.invoke();
     	}
     	
@@ -108,9 +111,9 @@ public class LoginInterceptor extends AbstractInterceptor
             	  service.getTipNews(1);        	  
                 }else{
                 	return Action.LOGIN;
-                }       
-                
-              return invocation.invoke();
+                }  
+	              service.getTipNews(1);        	                 
+	              return invocation.invoke();
             }else
     	    	return Action.LOGIN;
         }else{

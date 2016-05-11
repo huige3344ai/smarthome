@@ -26,15 +26,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="page/background/personcenter.jsp" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="${session.user.logoImage}" class="user-image" alt="User Image">
-                  <span class="hidden-xs">${session.user.userName}</span>
+                  <img src="${sessionScope.user.logoImage}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">${sessionScope.user.userName}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="${session.user.logoImage}" class="img-circle" alt="User Image">
+                    <img src="${sessionScope.user.logoImage}" class="img-circle" alt="User Image">
                     <p>
-                      ${session.user.userName}
+                      ${sessionScope.user.userName}
                       <small>Member since 2016</small>
                     </p>
                   </li>

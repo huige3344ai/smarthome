@@ -13,6 +13,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>用户注册</title>
+	<link rel="shortcut icon" href="dist/img/favicon.ico">
+	<link rel="Bookmark" href="dist/img/favicon.ico">    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->

@@ -15,10 +15,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="${session.user.logoImage}" class="img-circle" alt="User Image">
+              <img src="${sessionScope.user.logoImage}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>${session.user.userName}</p>
+              <p>${sessionScope.user.userName}</p>
               <i class="fa fa-circle text-success"></i> 在线
             </div>
           </div>
@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="devicesActionb_devicesList.action">
                 <i class="fa fa-laptop"></i> <span>设备管理</span>
                 <s:if test="#session.tips.dnum!=null&&#session.tips.dnum!=0">
-                	<small class="label pull-right  bg-green">New&nbsp ${session.tips.dnum}</small>
+                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.dnum}</small>
                 </s:if>
               </a>
             </li>
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="page/userAction_userList.action">
                 <i class="fa fa-users"></i> <span>用户管理</span>
                 <s:if test="#session.tips.unum!=null&&#session.tips.unum!=0">
-                	<small class="label pull-right  bg-green">New&nbsp ${session.tips.unum}</small>
+                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.unum}</small>
                 </s:if>
               </a>
             </li>
@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="page/homeAction_homesList.action">
                 <i class="fa  fa-home"></i> <span>住所管理</span>
                 <s:if test="#session.tips.hnum!=null&&#session.tips.hnum!=0">
-                	<small class="label pull-right  bg-green">New&nbsp ${session.tips.hnum}</small>
+                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.hnum}</small>
                 </s:if>
               </a>
             </li>

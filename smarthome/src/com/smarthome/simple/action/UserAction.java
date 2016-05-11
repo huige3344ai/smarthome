@@ -415,7 +415,6 @@ public class UserAction extends BaseAction<User, UserQuery> {
 		} else {
 			message = "验证码不正确或者不存在。";
 		}
-
 		return "failed_resetPwd";
 	}
 
@@ -425,16 +424,21 @@ public class UserAction extends BaseAction<User, UserQuery> {
 	 * @return
 	 */
 	public String updatePwd() {
-
-		int status = userService.updatePwd(query);
-		if (status == 1) {
-			message = "修改密码成功，请使用新密码登录";
-			return "login_redirect";
-		} else {// 重新开始 找回密码
-			message = "密码找回失败，请重新尝试。（原因:对话超时验证码失效等情况...）";
+		try {
+			int status = userService.updatePwd(query);
+			if (status == 1) {
+					message = "修改密码成功，请使用新密码登录";
+					message = URLEncoder.encode(message, "utf-8");				
+				return "login_redirect";
+			} else {// 重新开始 找回密码
+				message = "密码找回失败，请重新尝试。（原因:对话超时验证码失效等情况...）";
+				return "failed_resetPwd";
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();		
 			return "failed_resetPwd";
-
 		}
+
 	}
 
 	public void uploadPic() throws IOException {

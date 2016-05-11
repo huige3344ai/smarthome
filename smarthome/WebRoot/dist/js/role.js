@@ -103,7 +103,7 @@ $(function(){
 				  				check+="<input type='checkbox' name='query.permission' value='"+element.id+"'>"+element.permissionName;
 				  				check+="</label></div>";					  				
 				  				$('#hy_role_home').append(check);			  				
-				  			}else if(element.module=='roles'){
+				  			}else if(element.module=='role'){
 				  				var check = "<div class='col-xs-6 col-sm-4 col-md-4 permission'>";
 				  				check +="<label class='checkbox-inline'>";
 				  				check+="<input type='checkbox' name='query.permission' value='"+element.id+"'>"+element.permissionName;

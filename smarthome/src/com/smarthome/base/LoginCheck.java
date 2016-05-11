@@ -86,9 +86,11 @@ public class LoginCheck
     	  req.getRequestDispatcher("/page/login.jsp").forward(req, res);
       }
     } else if ((OwnUtil.objectIsEmpty(user)) || (OwnUtil.stringIsEmpty(user.getUserName()))) {
+    	 service.getTipNews(1);  	
     	 req.setAttribute("message", "你还没有登录，请登录之后再尝试");
-      req.getRequestDispatcher("/page/login.jsp").forward(req, res);
-    } else {    	
+	     req.getRequestDispatcher("/page/login.jsp").forward(req, res);
+    } else {    
+  	  service.getTipNews(1);  	
       chain.doFilter(request, response);
     }
   }

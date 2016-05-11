@@ -115,5 +115,11 @@ public abstract interface UserServices extends BaseService<User, UserQuery>
    */
   public void getTipNews(int i);
   
+  /**
+   * 每天更新用户的人生阶段 以达到动态更新人的作息时间
+   * @return
+   */
+  public boolean updateAllUserPeriod();
+  
   
 }
