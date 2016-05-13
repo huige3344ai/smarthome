@@ -120,33 +120,31 @@ $(function(){
 	        	home("hy_homeId",this.value,"0");
 	        });
 	        
-	        //Initialize modal
+	        //Initialize modal   
 	        $('#hy_add_button').click(function(){
-		        	$.ajax({
-							  type:'POST',
-							  url: "devicesActionb_getAllUserList.action",
-							  async: false,
-							  data: {},
-							  success: function(json){
-	        						
-									if(jQuery.isEmptyObject(json)){
-										$.each(json, function(index,element){
-												var op = "<option value='"+element.id+"'>"+element.userName+"</option>";
-												$('#hy_userId').append(op)
-												});
-												
-									}		
-							  },
-							  dataType: 'json'
-							});
-							
-				//Initialize Select2 Elements
-		        $("#hy_userId").select2();	
-		        
-		        $("#addModal").modal();
-
-					
-			});	
+	        	$.ajax({
+						  type:'POST',
+						  url: "devicesActionb_getAllUserList.action",
+						  async: false,
+						  data: {},
+						  success: function(json){
+							  if(!jQuery.isEmptyObject(json)){
+									$.each(json, function(index,element){
+											var op = "<option value='"+element.id+"'>"+element.userName+"</option>";
+											$('#hy_userId').append(op)
+											});
+											
+								}		
+						  },
+						  dataType: 'json'
+						});
+						
+			//Initialize Select2 Elements
+	        $("#hy_userId").select2();	
+	        
+	        $("#addModal").modal();
+				
+		});	
 	        
 		});
 
