@@ -100,10 +100,10 @@ private void findByUid(int uid) {
 
 
 @Override
-public TipNews getTipNews() {
+public List<TipNews> getTipNews() {
 	StringBuffer hql = new StringBuffer("from TipNews where 1=1 ");
 	List list = findByhql(hql.toString());
-	return OwnUtil.listisNotEmpty(list)?(TipNews)list.get(0):null;
+	return list;
 }
 
 

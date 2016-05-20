@@ -37,8 +37,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li>
               <a href="devicesActionb_devicesList.action">
                 <i class="fa fa-laptop"></i> <span>设备管理</span>
-                <s:if test="#session.tips.dnum!=null&&#session.tips.dnum!=0">
-                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.dnum}</small>
+                <s:if test="#session.tips.id.dnum!=null&&#session.tips.id.dnum!=0">
+                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.id.dnum}</small>
                 </s:if>
               </a>
             </li>
@@ -46,8 +46,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li>
               <a href="page/userAction_userList.action">
                 <i class="fa fa-users"></i> <span>用户管理</span>
-                <s:if test="#session.tips.unum!=null&&#session.tips.unum!=0">
-                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.unum}</small>
+                <s:if test="#session.tips.id.unum!=null&&#session.tips.id.unum!=0">
+                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.id.unum}</small>
                 </s:if>
               </a>
             </li>
@@ -55,8 +55,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li>
               <a href="page/homeAction_homesList.action">
                 <i class="fa  fa-home"></i> <span>住所管理</span>
-                <s:if test="#session.tips.hnum!=null&&#session.tips.hnum!=0">
-                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.hnum}</small>
+                <s:if test="#session.tips.id.hnum!=null&&#session.tips.id.hnum!=0">
+                	<small class="label pull-right  bg-green">New&nbsp ${sessionScope.tips.id.hnum}</small>
                 </s:if>
               </a>
             </li>

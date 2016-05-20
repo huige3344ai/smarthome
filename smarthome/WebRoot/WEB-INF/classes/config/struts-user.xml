@@ -11,7 +11,7 @@
 	
 		<action name="loginAction_*" method="{1}" class="userAction">
 			<result name="login_admin_sucess" type="redirect">background/index.jsp</result>
-			<result name="login_deault_sucess" type="redirect">foreground/device/myDevices.jsp</result>
+			<result name="login_deault_sucess" type="redirect">devicesAction_myDevices.action</result>
 			<result name="logout_sucess" type="redirect">login.jsp</result>
 			<result name="failed_resetPwd">returnpwd.jsp</result>	
 			<result name="resetpwd">resetpwd.jsp</result>	

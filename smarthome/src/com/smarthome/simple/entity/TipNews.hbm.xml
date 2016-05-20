@@ -6,15 +6,13 @@
 -->
 <hibernate-mapping>
     <class name="com.smarthome.simple.entity.TipNews" table="tip_news" catalog="smarthome">
-            <id name="unum" type="java.lang.Long">
-                <column name="uNum" />
-            	<generator class="native" />                
-            </id>
-            <property name="hnum" type="java.lang.Long">
-                <column name="hNum" />
-            </property>
-            <property name="dnum" type="java.lang.Long">
-                <column name="dNum" />
-            </property>
+        <composite-id name="id" class="com.smarthome.simple.entity.TipNewsId">
+            <key-property name="num" type="java.lang.Long">
+                <column name="num" />
+            </key-property>
+            <key-property name="type" type="java.lang.String">
+                <column name="type" length="7" />
+            </key-property>
+        </composite-id>
     </class>
 </hibernate-mapping>

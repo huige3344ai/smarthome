@@ -28,6 +28,6 @@ public abstract interface UserDao extends BaseDao<User>
    * 获取 tip 即左菜单上面的 new 提示
    * @return
    */
-  public TipNews getTipNews();
+  public List<TipNews> getTipNews();
   
 }

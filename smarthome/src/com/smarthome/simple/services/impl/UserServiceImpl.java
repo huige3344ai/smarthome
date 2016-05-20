@@ -24,6 +24,7 @@ import com.smarthome.simple.entity.Home;
 import com.smarthome.simple.entity.ResetPwd;
 import com.smarthome.simple.entity.Restrecord;
 import com.smarthome.simple.entity.TipNews;
+import com.smarthome.simple.entity.TipNewsId;
 import com.smarthome.simple.entity.User;
 import com.smarthome.simple.query.UserQuery;
 import com.smarthome.simple.services.ServiceException;
@@ -293,12 +294,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 
 	@Override
 	public void getTipNews(int i) {
-		TipNews tips = baseDao.getTipNews();
-		if(!OwnUtil.objectIsEmpty(tips)){
+		List<TipNews> tips = baseDao.getTipNews();
+		TipNews tip =returnOnlyTipsNews(tips);
+		if(!OwnUtil.objectIsEmpty(tip)){
 			if(i==1){
 				TipNews oldTips = getRequest().getSession().getAttribute("tips")==null?new TipNews():(TipNews)getRequest().getSession().getAttribute("tips");
-				if(!oldTips.equals(tips)){
-					getRequest().getSession().setAttribute("tips", tips);
+				if(!oldTips.equals(tip)){
+					getRequest().getSession().setAttribute("tips", tip);
 				}
 			}else{
 				getRequest().getSession().removeAttribute("tips");
@@ -330,5 +332,22 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserQuery>
 			}
 		}
 		return falg;
+	}
+	
+	
+	public TipNews returnOnlyTipsNews(List<TipNews> tips){
+		TipNews  tipNews = new TipNews();
+		TipNewsId tipId = new TipNewsId();
+		tipNews.setId(tipId);
+		for(TipNews tip : tips){
+			if(tip.getId().getType().trim().equals("user")){
+				tipNews.getId().setUnum(tip.getId().getNum()!=null?tip.getId().getNum():0);
+			}else if (tip.getId().getType().trim().equals("devices")) {
+				tipNews.getId().setDnum(tip.getId().getNum()!=null?tip.getId().getNum():0);
+			}else if (tip.getId().getType().trim().equals("home")) {
+				tipNews.getId().setHnum(tip.getId().getNum()!=null?tip.getId().getNum():0);
+			}
+		}
+		return tipNews;
 	}
 }
